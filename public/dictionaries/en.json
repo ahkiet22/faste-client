@@ -7,5 +7,10 @@
     "learn": "Learn",
     "examples": "Examples",
     "goToNextjs": "Go to nextjs.org →"
+  },
+  "header": {
+    "about": "",
+    "wishlist": "",
+    "support": ""
   }
 }

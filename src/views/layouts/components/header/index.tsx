@@ -1,3 +1,4 @@
+import LocaleSwitcher from '@/components/locale-switcher';
 import { ModeToggle } from '@/components/ModeToggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,7 +30,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="container mx-auto max-w-6xl text-xs text-[#6B7280] flex items-center justify-between p-2">
         <nav className="flex items-center gap-x-4">
           <ul className="flex items-center gap-x-3.5">
@@ -55,8 +56,8 @@ const Header = () => {
 
         {/* Menu bên phải */}
         <ul className="flex items-center gap-x-3.5">
-          <li>
-            <Link href="/about">English</Link>
+          <li className="cursor-pointer">
+            <LocaleSwitcher />
           </li>
           <li>
             <Link href="/my-account">My account</Link>
@@ -111,7 +112,7 @@ const Header = () => {
       <div className="w-full h-[1px] bg-gray-300"></div>
 
       <div className="bg-white border-t border-gray-100">
-        <div className="container mx-auto max-w-6xl px-4 text-sm">
+        <div className="container mx-auto max-w-6xl px-4 text-xs">
           <div className="flex items-center justify-between">
             <nav className="flex items-center space-x-6 py-4">
               <a
