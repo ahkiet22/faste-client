@@ -2,11 +2,25 @@ import LocaleSwitcher from '@/components/locale-switcher';
 import { ModeToggle } from '@/components/ModeToggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ROUTE_CONFIG } from '@/configs/router';
+import { createUrlQuery } from '@/utils/create-query-url';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Header = () => {
+  const router = useRouter();
+  const pathName = usePathname();
+  const handleNavigateLogin = () => {
+    if (pathName !== '/') {
+      router.replace(
+        ROUTE_CONFIG.LOGIN + '?' + createUrlQuery('returnUrl', pathName),
+      );
+    } else {
+      router.replace('/login');
+    }
+  };
   return (
     <header className=" bg-gray-50">
       <div className="bg-[#634C9F] p-2 flex items-center justify-around">
@@ -88,7 +102,10 @@ const Header = () => {
             <Icon icon="material-symbols-light:search" width="24" height="24" />
           </Button>
         </div>
-        <div>
+        <div
+          className="text-gray-600 hover:text-purple-600 transition-colors cursor-pointer"
+          onClick={handleNavigateLogin}
+        >
           <Icon icon="lucide:user-round" width="24" height="24" />
         </div>
         <div className="flex flex-col items-center text-gray-600 hover:text-purple-600 transition-colors relative">
