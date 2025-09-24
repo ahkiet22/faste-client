@@ -70,7 +70,7 @@ export const metadata: Metadata = {
 
 async function getProductsData(): Promise<TProps> {
   const page = 1;
-  const limit = 10;
+  const limit = 48;
 
   try {
     const response = await getAllProductsPublic({ page, limit });

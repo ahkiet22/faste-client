@@ -16,6 +16,7 @@ export const SkeletonCardCategory = () => {
               flex flex-col items-center justify-between
               p-2
               bg-white
+              dark:bg-black
               ${index === 10 || index === 0 ? 'border' : ' border border-l-0'}
               border-gray-200`}
           >

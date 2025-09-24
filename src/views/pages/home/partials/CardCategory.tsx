@@ -36,7 +36,7 @@ const CardCategory = () => {
                 key={item.id}
                 className={`
                 flex flex-col items-center justify-between p-2 h-40
-                bg-white border-gray-200
+                bg-white dark:bg-black border-gray-200
                 ${index === data.length || index === 0 ? 'border' : ' border border-l-0'}
                 w-[10%]
                 hover:shadow-xl
@@ -56,7 +56,7 @@ const CardCategory = () => {
             ))}
           </div>
         ) : (
-          <div>Mo</div>
+          <div>No data</div>
         )}
       </div>
     </>
