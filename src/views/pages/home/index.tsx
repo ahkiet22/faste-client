@@ -41,9 +41,13 @@ const HomePage = (props: TProps) => {
             </div>
 
             {/* Other products */}
-            {products.map((product, index) => (
-              <CartProduct key={index} data={product} />
-            ))}
+            {products ? (
+              products.map((product, index) => (
+                <CartProduct key={index} data={product} />
+              ))
+            ) : (
+              <div>Not found</div>
+            )}
           </div>
         </div>
 

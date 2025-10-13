@@ -5,6 +5,7 @@ export const ROUTE_CONFIG = {
       CHANGE_PASSWORD: '/user/change-password',
       ADDRESS: '/user/address',
       SETTINGS: '/user/settings',
+      SECURITYS: '/user/securitys',
     },
     NOTIFICATION: '/user/notification',
     PRODUCT: {
