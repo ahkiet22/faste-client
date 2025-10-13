@@ -28,6 +28,7 @@ import {
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { StoreConfig } from '@/types/widget';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 interface MobilePreviewProps {
   config: StoreConfig;
@@ -62,7 +63,7 @@ export default function MobilePreview({
         newIndex,
       ).map((widget, index) => ({
         ...widget,
-        order: index,
+        widgetIndex: index,
       }));
 
       onReorderWidgets(reorderedWidgets);
@@ -117,15 +118,18 @@ export default function MobilePreview({
                 <h2 className="text-lg font-bold text-white">
                   {config.storeName}
                 </h2>
-                <Badge
+                {/* <Badge
                   variant="secondary"
                   className="h-5 bg-white/20 text-white text-xs border-0"
                 >
                   ✓
-                </Badge>
+                </Badge> */}
               </div>
               <div className="flex items-center gap-1 text-sm text-white/90">
-                <span>👥 {config.followers}</span>
+                  <Icon icon={'ri:user-add-line'} width={18} height={18} />
+                <span>
+                  {config.followers}
+                </span>
               </div>
             </div>
             <div className="flex flex-col gap-2">

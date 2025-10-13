@@ -21,6 +21,7 @@ import {
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { StoreConfig } from '@/types/widget';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 interface DesktopPreviewProps {
   config: StoreConfig;
@@ -55,7 +56,7 @@ export default function DesktopPreview({
         newIndex,
       ).map((widget, index) => ({
         ...widget,
-        order: index,
+        widgetIndex: index,
       }));
 
       onReorderWidgets(reorderedWidgets);
@@ -94,8 +95,8 @@ export default function DesktopPreview({
                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                     0.0 / 5
                   </span>
-                  <span>|</span>
-                  <span>👥 Theo dõi: {config.followers}</span>
+                  <Icon icon={'ri:user-add-line'} width={18} height={18} />{' '}
+                  <span>Theo dõi: {config.followers}</span>
                 </div>
               </div>
             </div>

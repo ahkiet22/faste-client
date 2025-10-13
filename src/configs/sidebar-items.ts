@@ -23,8 +23,16 @@ export const USER_MENU_ITEMS: IMenuItem[] = [
         url: ROUTE_CONFIG.USER.INFO.ADDRESS,
       },
       {
+        title: 'Bảo mật',
+        url: ROUTE_CONFIG.USER.INFO.SECURITYS,
+      },
+      {
         title: 'Đổi mật khẩu',
         url: ROUTE_CONFIG.USER.INFO.CHANGE_PASSWORD,
+      },
+      {
+        title: 'Cài đặt thông báo',
+        url: ROUTE_CONFIG.USER.INFO.NOTIFICATION,
       },
       {
         title: 'Cài đặt cá nhân',

@@ -56,7 +56,7 @@ export default function WidgetPanel({
       const reorderedWidgets = arrayMove(widgets, oldIndex, newIndex).map(
         (widget, index) => ({
           ...widget,
-          order: index,
+          widgetIndex: index,
         }),
       );
 
