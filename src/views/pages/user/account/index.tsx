@@ -124,7 +124,6 @@ export default function AccountPage() {
   // }
 
   const onSubmit = (formData: TProfileForm) => {
-    console.log('OK');
     const { day, month, year, email, ...rest } = formData;
 
     const dateOfBirth = new Date(
