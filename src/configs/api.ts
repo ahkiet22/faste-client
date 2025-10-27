@@ -15,6 +15,9 @@ export const API_ENDPOINT = {
   USER: {
     INDEX: `${BASE_URL}/users`,
   },
+  CART: {
+    INDEX: `${BASE_URL}/cart`,
+  },
   SETTING: {
     CITY: {
       INDEX: `${BASE_URL}/city`,
