@@ -2,21 +2,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import type { PaymentStatus } from '@/hooks/use-payment-state';
+import CountdownTimer from './countdown-timer';
+import { formatCurrencyWithExchange } from '@/utils';
+import { useTranslation } from 'react-i18next';
 
 interface PaymentSummaryProps {
-  orderData: {
-    orderId: string;
-    total: number;
-    currency: string;
-    description: string;
-  };
+  transactionData: any;
   paymentStatus?: PaymentStatus;
 }
 
 export default function PaymentSummary({
-  orderData,
+  transactionData,
   paymentStatus = 'idle',
 }: PaymentSummaryProps) {
+  const { i18n } = useTranslation();
+
   const getStatusBadge = () => {
     switch (paymentStatus) {
       case 'success':
@@ -37,7 +37,7 @@ export default function PaymentSummary({
   };
 
   return (
-    <Card className="border-0 shadow-lg sticky top-8">
+    <Card className="border-0 shadow-lg sticky top-8 max-h-[450px]">
       <CardHeader className="border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Order Summary</CardTitle>
@@ -49,10 +49,10 @@ export default function PaymentSummary({
           {/* Order ID */}
           <div>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">
-              Order ID
+              Transaction ID
             </p>
             <p className="font-mono text-sm font-semibold text-slate-900 dark:text-white">
-              {orderData.orderId}
+              {transactionData?.id}
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export default function PaymentSummary({
               Description
             </p>
             <p className="text-sm text-slate-900 dark:text-white">
-              {orderData.description}
+              {`DH${transactionData?.id}`}
             </p>
           </div>
 
@@ -76,15 +76,9 @@ export default function PaymentSummary({
               Total Amount
             </p>
             <p className="text-3xl font-bold text-slate-900 dark:text-white">
-              {orderData.currency} {orderData.total.toFixed(2)}
-            </p>
-          </div>
-
-          {/* Payment Status */}
-          <div className="pt-2">
-            <p className="text-xs text-slate-500 dark:text-slate-500">
-              Status:{' '}
-              {paymentStatus.charAt(0).toUpperCase() + paymentStatus.slice(1)}
+              {formatCurrencyWithExchange(Number(transactionData?.total), {
+                language: i18n.language as 'vi' | 'en',
+              })}
             </p>
           </div>
         </div>

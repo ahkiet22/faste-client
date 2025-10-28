@@ -10,6 +10,8 @@ import { usePaymentState } from '@/hooks/use-payment-state';
 import { validateAmount, validateBankDetails } from '@/lib/payment-validation';
 import { ERROR_CODES } from '@/lib/error-handler';
 import Image from 'next/image';
+import { formatCurrencyWithExchange } from '@/utils';
+import { useTranslation } from 'react-i18next';
 
 interface SepayPaymentProps {
   amount: number;
@@ -28,6 +30,7 @@ export default function SepayPayment({
 }: SepayPaymentProps) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const paymentState = usePaymentState();
+  const {i18n} = useTranslation()
 
   const amountValidation = validateAmount(amount);
   const bankValidation = validateBankDetails('1234567890', 'Vietcombank');
@@ -86,7 +89,7 @@ export default function SepayPayment({
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
           Scan QR Code to Pay
         </p>
-        <div className='w-56 h-56'>
+        <div className="w-56 h-56">
           <Image
             width={100}
             height={100}
@@ -173,12 +176,14 @@ export default function SepayPayment({
             htmlFor="amount"
             className="text-sm font-medium text-slate-700 dark:text-slate-300"
           >
-            Amount (USD)
+            Amount (VND)
           </Label>
           <div className="flex gap-2 mt-2">
             <Input
               id="amount"
-              value={sepayData.amount}
+              value={formatCurrencyWithExchange(Number(sepayData.amount), {
+                language: i18n.language as 'vi' | 'en',
+              })}
               readOnly
               className="bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700"
             />

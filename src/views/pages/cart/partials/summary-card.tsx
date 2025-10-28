@@ -32,8 +32,6 @@ export function SummaryCard({
 
   const pathname = usePathname();
 
-  console.log('pathname', pathname);
-
   return (
     <Card className="p-6 sticky top-4 h-fit">
       {/* Delivery Address */}

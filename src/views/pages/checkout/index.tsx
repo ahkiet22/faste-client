@@ -17,6 +17,7 @@ import { LoadingDialog } from '@/components/loading/LoadingDialog';
 import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { clearCheckoutItems } from '@/helpers/storage/clear';
+import { createOrder } from '@/services/order';
 
 interface CheckoutFormData {
   deliveryId: number;
@@ -128,21 +129,21 @@ export const CheckoutPage = () => {
     setSubmitStatus('loading');
 
     try {
-      const payloads = checkoutItems?.map((shop) => ({
-        shopId: shop.shop.shopid,
-        addressShipId: 1,
-        deliveryId: pendingFormData.deliveryId,
-        paymentMethod: pendingFormData.paymentMethod,
-        cartItemIds: shop.cartItems.map((item: { id: number }) => item.id),
-      }));
-      // const response = await fetch('/api/checkout', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(payload),
-      // });
+      let payloads: CreateOrderType = [];
 
-      // if (!response.ok) throw new Error('Checkout failed');
-      console.log('payload data', payloads);
+      if (checkoutItems) {
+        payloads = checkoutItems.map((shop) => ({
+          shopId: shop.shop.shopid,
+          addressShipId: 1,
+          deliveryId: pendingFormData.deliveryId,
+          paymentMethod: pendingFormData.paymentMethod,
+          cartItemIds: shop.cartItems.map((item: { id: number }) => item.id),
+        }));
+      }
+      const res = await createOrder(payloads);
+
+      if (res.statusCode !== 201) throw new Error('Checkout failed');
+      console.log('payload data', payloads, res);
 
       setSubmitStatus('success');
       setTimeout(() => {
