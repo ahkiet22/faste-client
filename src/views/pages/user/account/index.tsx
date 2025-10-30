@@ -148,7 +148,7 @@ export default function AccountPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Profile Avatar */}
           <div className="flex items-start gap-4">
-            <ProfileAvatar />
+            <ProfileAvatar  avatar={data.avatar}/>
             <div className="flex-1 space-y-4">
               <div>
                 <Label htmlFor="name" className="text-sm font-medium">

@@ -10,8 +10,10 @@ import {
 import { USER_MENU_ITEMS } from '@/configs/sidebar-items';
 import { NavMain } from './nav-main-user';
 import Image from 'next/image';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function AppSidebar() {
+  const { user } = useAuth();
   return (
     <Sidebar
       side="right"
@@ -23,16 +25,28 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel className="gap-4 mb-4 w-full h-auto">
             <div>
-              <Image
-                src={'/nftt-1.png'}
-                alt={'ok'}
-                width={100}
-                height={100}
-                className="rounded-full w-15 h-15 object-cover object-center"
-              />
+              {user ? (
+                <Image
+                  src={user.avatar}
+                  alt={user.name}
+                  width={100}
+                  height={100}
+                  className="rounded-full w-15 h-15 object-cover object-center"
+                />
+              ) : (
+                <Image
+                  src={'/nftt-1.png'}
+                  alt={'ok'}
+                  width={100}
+                  height={100}
+                  className="rounded-full w-15 h-15 object-cover object-center"
+                />
+              )}
             </div>
             <div>
-              <h3 className="font-medium">customer_user_name</h3>
+              <h3 className="font-medium">
+                {user?.name ? user?.name : 'customer_user_name'}
+              </h3>
             </div>
           </SidebarGroupLabel>
           <div className="w-full bg-[#dddd] h-[1px]"></div>

@@ -7,7 +7,10 @@ import { User, Edit3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
-export function ProfileAvatar() {
+type TProps = {
+  avatar: string;
+};
+export function ProfileAvatar(props: TProps) {
   const [image, setImage] = useState<string | null>(null);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +31,7 @@ export function ProfileAvatar() {
           <Image
             width={100}
             height={100}
-            src={image || '/placeholder.svg'}
+            src={image || props.avatar}
             alt="Profile"
             className="w-full h-full object-cover"
           />
@@ -40,7 +43,7 @@ export function ProfileAvatar() {
         size="sm"
         variant="secondary"
         className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full p-0 bg-gray-600 hover:bg-gray-700 cursor-pointer"
-        type='button'
+        type="button"
         onClick={() => document.getElementById('avatar-upload')?.click()}
       >
         <Edit3 className="w-3 h-3 text-white" />

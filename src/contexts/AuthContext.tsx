@@ -15,16 +15,25 @@ import { ToastNotifications } from '@/components/ToastNotification';
 import { getLocalUserData } from '@/helpers/storage/get';
 import { set } from 'react-hook-form';
 import { injectAuthDependencies } from '@/utils/axios';
+import { useGetProfile } from '@/hooks/queries/useGetProfile';
+import { keepPreviousData } from '@tanstack/react-query';
 
 // Định nghĩa kiểu cho AuthContext
-type User = {
+type UserDataType = {
+  id: number;
+  name: string;
   email: string;
+  phoneNumber: string;
+  dateOfBirth: string;
+  gender: 'MALE' | 'FEMALE' | 'OTHER';
+  avatar: string;
+  addresses: any[];
 } | null;
 
 type AuthContextType = {
-  user: User;
+  user: UserDataType;
   loading: boolean;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  setUser: React.Dispatch<React.SetStateAction<UserDataType>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   login: (data: TLoginAuth) => void;
   logout: () => void;
@@ -46,7 +55,7 @@ const defaultValueProvider: AuthContextType = {
 export const AuthContext = createContext<AuthContextType>(defaultValueProvider);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -55,15 +64,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // inject to axios when App mount
 
+  const { userData } = getLocalUserData();
+
+  const enabled = !!userData;
+
+  const { data, isLoading } = useGetProfile({
+    enabled,
+    select: (data) => data,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    placeholderData: keepPreviousData,
+  });
+
   useEffect(() => {
-    const { userData } = getLocalUserData();
-    if (!!userData) {
-      setUser({ email: 'lekiett2201@gmail.com' });
-    } else {
+    if (!enabled) {
       setUser(null);
+      setLoading(false);
+      return;
     }
-    setLoading(false);
-  }, []);
+
+    if (data) {
+      setUser(data);
+    }
+
+    // khi react-query load xong thì setLoading = false
+    if (!isLoading) {
+      setLoading(false);
+    }
+  }, [enabled, data]);
 
   useEffect(() => {
     injectAuthDependencies(router, setUser, pathName);
@@ -72,7 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   console.log('Auth Context User:', user);
 
   const login = (data: TLoginAuth) => {
-    setUser({ email: data.email });
+    // setUser({ email: data.email });
     loginAuth(data)
       .then((response) => {
         setLocalUserData(response.data.accessToken);
@@ -93,7 +123,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    router.push('/login');
+    router.push('/');
   };
 
   const loginGoogle = async () => {
