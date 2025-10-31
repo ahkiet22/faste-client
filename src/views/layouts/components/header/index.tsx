@@ -86,6 +86,7 @@ const Header = React.memo(
         const res = await getCartByMe();
         if (res.statusCode === 200) {
           console.log('RES CART', res.data.data);
+
           SetCartItemList(res.data.data);
         }
       } catch (error) {
@@ -97,6 +98,10 @@ const Header = React.memo(
       console.log('REUN!');
       fetchDataCartItem();
     }, []);
+
+    const totalCartItem = cartItemList?.reduce((total, item) => {
+      return total + (item.cartItems.length ?? 0);
+    }, 0);
 
     return (
       <header className="bg-background border-b border-border">
@@ -295,7 +300,7 @@ const Header = React.memo(
                         variant="destructive"
                         className="absolute -top-1 -right-1 w-5 h-5 rounded-full p-0 flex items-center justify-center text-xs bg-orange-500"
                       >
-                        {cartItemList.length}
+                        {totalCartItem}
                       </Badge>
                     )}
                   </Button>

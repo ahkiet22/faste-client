@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 interface CartItemProps {
   item: any;
-  onQuantityChange: (id: number, quantity: number) => void;
+  onQuantityChange: (id: number, skuId: number, quantity: number) => void;
   onDelete: (id: number) => void;
   onSelect: (id: number, selected: boolean) => void;
 }
@@ -26,19 +26,22 @@ export function CartItem({
   if (item.sku.attributes) {
     attributeKeys = Object.keys(item.sku.attributes);
   }
+
+  console.log(item);
+
   return (
-    <tr className="bg-white border-b border-border transition-colors">
-      {/* Checkbox */}
-      <td className="px-4 py-4 align-top">
+    <div className="w-full flex flex-col gap-4 border-b border-border py-4 bg-white">
+      {/* Row: Checkbox + Content */}
+      <div className="flex items-start gap-4 px-4">
+        {/* Checkbox */}
         <Checkbox
           checked={item.isSelected}
           onCheckedChange={(checked) => onSelect(item.id, checked as boolean)}
+          className="mt-2"
         />
-      </td>
 
-      {/* Product Image + Title + Attributes */}
-      <td className="px-4 py-4 align-top">
-        <div className="flex gap-4">
+        {/* Product Image + Info */}
+        <div className="flex gap-4 flex-1">
           <Image
             src={item.sku.image || item.sku.product.images[0]}
             alt={item.sku.product.name.slice(0, 5)}
@@ -46,16 +49,17 @@ export function CartItem({
             height={80}
             className="rounded-md object-cover"
           />
-          <div className="flex flex-col gap-2">
+
+          <div className="flex flex-col gap-2 flex-1">
             <h3 className="text-sm font-medium text-foreground line-clamp-2">
               {item.sku.product.name}
             </h3>
 
             {/* Attributes */}
             <div className="flex flex-wrap gap-2">
-              {attributeKeys.map((key, index) => (
+              {attributeKeys.map((key) => (
                 <span
-                  key={index + key}
+                  key={key}
                   className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded"
                 >
                   {key}: {item.sku.attributes[key]}
@@ -63,54 +67,65 @@ export function CartItem({
               ))}
             </div>
 
-            <p className="text-xs text-muted-foreground">
-              Giao từ 2-4 ngày
-            </p>
+            <p className="text-xs text-muted-foreground">Giao từ 2-4 ngày</p>
           </div>
         </div>
-      </td>
 
-      {/* Price */}
-      <td className="px-4 py-4 align-top text-right">
-        <span className="text-lg font-semibold text-destructive">
-          {formatPrice(item.sku.price)}
-        </span>
-      </td>
-
-      {/* Quantity Selector */}
-      <td className="px-4 py-4 align-top text-center">
-        <div className="inline-flex items-center gap-2 border border-border rounded-md">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0"
-            onClick={() =>
-              onQuantityChange(item.id, Math.max(1, item.quantity - 1))
-            }
-          >
-            <Minus className="h-4 w-4" />
-          </Button>
-          <span className="w-8 text-center text-sm font-medium">
-            {item.quantity}
+        {/* Giá */}
+        <div className="text-right min-w-[110px]">
+          <span className="text-lg font-semibold text-destructive">
+            {formatPrice(item.sku.price)}
           </span>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0"
-            onClick={() => onQuantityChange(item.id, item.quantity + 1)}
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
         </div>
-      </td>
 
-      {/* Total Price */}
-      <td className="px-4 py-4 align-top text-right font-semibold">
-        {formatPrice(item.sku.price * item.quantity)}
-      </td>
+        {/* Quantity Selector */}
+        <div className="text-center min-w-[120px]">
+          <div className="inline-flex items-center gap-2 border border-border rounded-md">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              disabled={item.quantity === 1}
+              onClick={() =>
+                onQuantityChange(
+                  item.id,
+                  item.skuId,
+                  Math.max(1, item.quantity - 1),
+                )
+              }
+              // disabled={}
+            >
+              <Minus className="h-4 w-4" />
+            </Button>
 
-      {/* Delete Button */}
-      <td className="px-4 py-4 align-top text-center">
+            <span className="w-8 text-center text-sm font-medium">
+              {item.quantity}
+            </span>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              disabled={item.sku.quantity === item.quantity}
+              onClick={() =>
+                onQuantityChange(
+                  item.id,
+                  item.skuId,
+                  Math.min(item.sku.quantity, item.quantity + 1),
+                )
+              }
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Total Price */}
+        <div className="text-right min-w-[120px] font-semibold">
+          {formatPrice(item.sku.price * item.quantity)}
+        </div>
+
+        {/* Delete Button */}
         <Button
           variant="ghost"
           size="sm"
@@ -119,7 +134,7 @@ export function CartItem({
         >
           <Trash2 className="h-4 w-4" />
         </Button>
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }

@@ -180,7 +180,7 @@ export const CheckoutPage = () => {
         >
           {/* Left Panel - Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3 px-4 py-3 bg-white border border-border rounded-t-lg">
+            <div className="flex items-center gap-3 px-4 py-3 bg-card border border-border rounded-t-lg">
               <div className="flex-1 text-sm font-medium text-muted-foreground">
                 Sản phẩm
               </div>
@@ -196,7 +196,7 @@ export const CheckoutPage = () => {
             </div>
             {checkoutItems?.map((shop, index) => (
               <div
-                className="space-y-4 w-full bg-white p-4 rounded-md"
+                className="space-y-4 w-full bg-card p-4 rounded-md"
                 key={shop.shop.shopid + index}
               >
                 <div className="flex items-center gap-2 flex-1">
@@ -226,7 +226,7 @@ export const CheckoutPage = () => {
                         <div className="flex gap-4">
                           <div className="w-14 h-14 border border-gray-200">
                             <Image
-                              src={'/next.svg'}
+                              src={item.sku.product.images[0] || '/next.svg'}
                               alt={'ok'}
                               width={80}
                               height={80}
@@ -287,7 +287,7 @@ export const CheckoutPage = () => {
             ))}
             {/* Product  */}
 
-            <div className="space-y-4 w-full bg-white p-2 rounded-md">
+            <div className="space-y-4 w-full bg-card p-2 rounded-md">
               <div>
                 <h2 className="text-xl font-semibold mb-2">
                   Chọn hình thức giao hàng
@@ -318,7 +318,7 @@ export const CheckoutPage = () => {
                 )}
               />
             </div>
-            <div className="space-y-4 w-full bg-white p-2 rounded-md">
+            <div className="space-y-4 w-full bg-card p-2 rounded-md">
               <div>
                 <h2 className="text-xl font-semibold mb-2">
                   Chọn hình thức thanh toán

@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '@/configs/api';
-import { AddToCartRequest } from '@/types/cart';
+import { AddToCartRequest, UpdateCartQuantityRequest } from '@/types/cart';
 import axiosInstance from '@/utils/axios';
 
 /**
@@ -27,6 +27,30 @@ export const getCartByMe = async (
 export const addToCart = async (data: AddToCartRequest) => {
   try {
     const res = await axiosInstance.post(`${API_ENDPOINT.CART.INDEX}`, data);
+
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateCartQuantity = async (data: UpdateCartQuantityRequest) => {
+  const { id, ...rest } = data;
+  try {
+    const res = await axiosInstance.put(
+      `${API_ENDPOINT.CART.INDEX}/${id}`,
+      rest,
+    );
+
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteCartItem = async (id: number) => {
+  try {
+    const res = await axiosInstance.delete(`${API_ENDPOINT.CART.INDEX}/${id}`);
 
     return res.data;
   } catch (error) {

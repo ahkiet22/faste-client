@@ -10,12 +10,19 @@ import { ShopSection } from './partials/shop-section';
 import { SummaryCard } from './partials/summary-card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Trash2 } from 'lucide-react';
-import { getCartByMe } from '@/services/cart';
+import {
+  deleteCartItem,
+  getCartByMe,
+  updateCartQuantity,
+} from '@/services/cart';
 import { setCheckoutItems } from '@/helpers/storage/set';
 import { useRouter } from 'next/navigation';
+import useDebounce from '@/hooks/use-debounce';
+import { UpdateCartQuantityRequest } from '@/types/cart';
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>(mockCartItems);
+  const [cartItems, setCartItems] = useState<any[]>(mockCartItems);
+  const [pendingUpdate, setPendingUpdate] = useState<any>(null);
 
   const [cartItemList, SetCartItemList] = useState<any[] | null>(null);
   const router = useRouter();
@@ -24,26 +31,43 @@ export default function CartPage() {
     try {
       const res = await getCartByMe();
       if (res.statusCode === 200) {
-        console.log('RES CART', res.data.data);
         SetCartItemList(res.data.data);
       }
-    } catch (error) {
-      console.log('ERROR', error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     fetchDataCartItem();
   }, []);
 
-  const handleQuantityChange = (id: number, quantity: number) => {
-    // setCartItems((items) =>
-    //   items.map((item) => (item.id === id ? { ...item, quantity } : item)),
-    // );
+  const handleQuantityChange = (
+    id: number,
+    skuId: number,
+    quantity: number,
+  ) => {
+    SetCartItemList((prev: any) => {
+      return prev?.map((group: any) => {
+        return {
+          ...group,
+          cartItems: group.cartItems.map((item: any) =>
+            item.id === id ? { ...item, quantity } : item,
+          ),
+        };
+      });
+    });
+    setPendingUpdate({ id, skuId, quantity });
   };
 
-  const handleDelete = (id: number) => {
-    // setCartItems((items) => items.filter((item) => item.id !== id));
+  const handleDelete = async (id: number) => {
+    SetCartItemList((prev: any) => {
+      return prev?.map((group: any) => {
+        return {
+          ...group,
+          cartItems: group.cartItems.filter((item: any) => item.id !== id),
+        };
+      });
+    });
+    await deleteCartItem(id);
   };
 
   const handleSelect = (id: number, selected: boolean) => {
@@ -105,7 +129,6 @@ export default function CartPage() {
       }))
       .filter((shop) => shop.cartItems.length > 0);
 
-    console.log(checkoutData);
     setCheckoutItems(checkoutData!);
 
     router.push('/checkout');
@@ -127,6 +150,16 @@ export default function CartPage() {
   const shipping = selectedItems.length > 0 ? 0 : 0; // Free shipping for demo
   const discount = 0;
   const total = subtotal + shipping - discount;
+
+  const debouncedUpdate = useDebounce(pendingUpdate, 400);
+
+  const updateCartQuantityApi = async (data: UpdateCartQuantityRequest) => {
+    await await updateCartQuantity(data);
+  };
+  useEffect(() => {
+    if (!debouncedUpdate) return;
+    updateCartQuantityApi(debouncedUpdate);
+  }, [debouncedUpdate]);
 
   return (
     <main className="min-h-screen">
@@ -159,13 +192,13 @@ export default function CartPage() {
                   <div className="flex-1 text-sm font-medium text-muted-foreground">
                     Sản phẩm
                   </div>
-                  <div className="flex-shrink-1 w-30 text-left text-sm font-medium text-muted-foreground">
+                  <div className="flex-shrink-1 min-w-[120px] text-center text-sm font-medium text-muted-foreground">
                     Đơn giá
                   </div>
-                  <div className="flex-shrink-0 text-sm text-left font-medium text-muted-foreground">
+                  <div className="flex-shrink-0 text-sm min-w-[120px] text-center font-medium text-muted-foreground">
                     Số lượng
                   </div>
-                  <div className="flex-shrink-0 w-24 text-left text-sm font-medium text-muted-foreground">
+                  <div className="flex-shrink-0 min-w-[120px] text-center text-sm font-medium text-muted-foreground">
                     Thành tiền
                   </div>
                   <div className="flex-shrink-0 w-6">

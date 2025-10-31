@@ -19,10 +19,10 @@ const CartProduct = (props: { data: any; className?: string }) => {
         <CardContent className="p-0 h-full">
           <div>
             <Image
-              src={'/nftt-1.png'}
+              src={!!data.images[0] ? data.images[0] : '/nftt-1.png'}
               width={190}
               height={190}
-              alt="nft"
+              alt={data.name}
               className="w-full h-[190px]"
               style={{
                 objectFit: 'cover',

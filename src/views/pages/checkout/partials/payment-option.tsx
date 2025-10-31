@@ -18,8 +18,10 @@ interface PaymentOptionProps {
 export default function PaymentOption({ method, value }: PaymentOptionProps) {
   return (
     <Label className="cursor-pointer group">
-      <div className='w-full'>
-        <div className="p-4 hover:bg-gray-50">
+      <div className="w-full">
+        <div
+          className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+        >
           <div className="flex items-center gap-4">
             {/* Radio Button */}
             <div className="flex-shrink-0">

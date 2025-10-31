@@ -71,7 +71,7 @@ export function ImageGallery({
             <button
               key={`${img}-${idx}`}
               onClick={() => setSelectedImage(img)}
-              className={`flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 border-2 ${
+              className={`flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 border-2 cursor-pointer ${
                 selectedImage === img
                   ? 'border-red-500 ring-2 ring-red-300 dark:ring-red-800'
                   : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'
@@ -120,7 +120,7 @@ export function ImageGallery({
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(img)}
-                  className={`relative rounded-md overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
+                  className={`relative h-20 w-20 rounded-md overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
                     selectedImage === img
                       ? 'border-red-500 ring-2 ring-red-300'
                       : 'border-transparent hover:border-gray-400'
@@ -129,7 +129,7 @@ export function ImageGallery({
                   <Image
                     src={img}
                     alt={`Thumbnail ${idx + 1}`}
-                    width={80}
+                    width={100}
                     height={100}
                     className="object-cover w-full h-full"
                   />
