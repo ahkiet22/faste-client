@@ -26,7 +26,7 @@ import { keepPreviousData, useMutation } from '@tanstack/react-query';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
 import { C } from 'vitest/dist/chunks/reporters.d.BFLkQcL6.js';
 import { useMutationUpdateProfile } from '@/hooks/mutations/use-update-profile';
-import { ToastNotifications } from '@/components/ToastNotification';
+import { toastify } from '@/components/ToastNotification';
 
 type TProfileForm = {
   name: string;
@@ -92,10 +92,10 @@ export default function AccountPage() {
 
   const { isPending, mutate: mutateUpdateProfile } = useMutationUpdateProfile({
     onSuccess: () => {
-      ToastNotifications.success('Notify', 'Update profile successfully!');
+      toastify.success('Notify', 'Update profile successfully!');
     },
     onError: (err) => {
-      ToastNotifications.error('Notify', 'Update profile error!');
+      toastify.error('Notify', 'Update profile error!');
     },
   });
 

@@ -16,7 +16,7 @@ import { Copy } from 'lucide-react';
 import { DropdownMenuCheckboxes } from './MultiSelectProducts';
 import { getAllProductPublicBySeller } from '@/services/product';
 import { useEffect, useState } from 'react';
-import { ToastNotifications } from '@/components/ToastNotification';
+import { toastify } from '@/components/ToastNotification';
 import { TableData } from './TableData';
 
 const tabs = [
@@ -47,7 +47,7 @@ export default function Page() {
         setProducts(res.data);
       }
     } catch (error) {
-      ToastNotifications.success('Product', 'Error server');
+      toastify.success('Product', 'Error server');
     }
   };
 

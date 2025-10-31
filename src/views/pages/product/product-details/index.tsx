@@ -2,9 +2,10 @@
 
 import CartProduct from '@/components/CardProduct';
 import InputNumberCustom from '@/components/InputNumberCustom';
-import { ToastNotifications } from '@/components/ToastNotification';
+import { toastify } from '@/components/ToastNotification';
 import { Button } from '@/components/ui/button';
 import { Rating, RatingButton } from '@/components/ui/shadcn-io/rating';
+import { addToCart } from '@/services/cart';
 import { getAllProductsPublic } from '@/services/product';
 import { formatCurrencyWithExchange } from '@/utils';
 import { Icon } from '@iconify/react';
@@ -12,6 +13,7 @@ import Image from 'next/image';
 import { useState, useMemo, useCallback, useEffect, use } from 'react';
 import { set } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { ImageGallery } from './partials/image-gallery';
 
 type TProps = {
   product: any;
@@ -44,7 +46,7 @@ const ProductDetails = (props: TProps) => {
       const response = await getAllProductsPublic({ page: 1, limit: 12 });
       setProducts(response?.data.data || []);
     } catch (error) {
-      ToastNotifications.error('Server', 'Server error!');
+      toastify.error('Server', 'Server error!');
     }
   };
 
@@ -85,6 +87,33 @@ const ProductDetails = (props: TProps) => {
     });
   };
 
+  const handleAddToCart = async () => {
+    try {
+      const res = await addToCart({
+        skuId: matchedSku.id,
+        quantity: quantityProduct,
+      });
+
+      // Axios trả về status mặc định trong res.status
+      if (res.status === 201 || res.statusCode === 201) {
+        toastify.success('Thành công', 'Thêm vào giỏ hàng thành công!');
+      } else {
+        toastify.info('Thông tin', `Đã có lỗi xảy ra vui lòng thử lại!`);
+      }
+    } catch (error) {
+      toastify.error('Lỗi', 'Không thể thêm sản phẩm vào giỏ hàng.');
+    }
+  };
+
+  function collectProductImages(product: any): string[] {
+    const productImages = product.images.filter(Boolean);
+    const skuImages = product.skus
+      .map((sku: { image: string }) => sku.image)
+      .filter(Boolean);
+    return [...productImages, ...skuImages];
+  }
+
+  const allImages = collectProductImages(product);
   console.log('ProductDetails -> product', product);
   // console.log('skus attributes', product.skus[0].attributes);
   // console.log('matchedSku & selected', matchedSku, selected);
@@ -93,18 +122,38 @@ const ProductDetails = (props: TProps) => {
     <div className="flex flex-col gap-y-4">
       <div className="flex items-start justify-between gap-x-8 bg-white dark:bg-black w-full p-4">
         <div className="w-2/5">
-          <Image
-            src={
-              'https://salt.tikicdn.com/cache/w750/ts/tikimsp/cb/3f/52/5ed5314cabc00d10d36c789df95b4348.png.webp'
-            }
-            width={1000}
-            height={1000}
-            alt={product.name}
-            className="w-full rounded-lg my-4"
-          />
+          <ImageGallery images={allImages} productName={product.name} />
+          {/* <div className='cursor-pointer'>
+            <Image
+              src={
+                allImages[0] ||
+                'https://salt.tikicdn.com/cache/w750/ts/tikimsp/cb/3f/52/5ed5314cabc00d10d36c789df95b4348.png.webp'
+              }
+              width={1000}
+              height={1000}
+              alt={product.name}
+              className="w-full rounded-lg my-4"
+            />
+          </div>
+          <div className="flex gap-x-2 items-center justify-between max-w-[374px]">
+            {allImages.map((item, index) => (
+              <div
+                key={index}
+                className="w-20 h-20 overflow-hidden relative rounded-lg transition duration-300 hover:border hover:border-red-500"
+              >
+                <Image
+                  src={item}
+                  width={1000}
+                  height={1000}
+                  alt={product.name}
+                  className="w-full h-full rounded-lg transition duration-300 ease-in-out hover:scale-110 "
+                />
+              </div>
+            ))}
+          </div> */}
         </div>
         <div className="w-3/5">
-          <h5 className="text-3xl font-bold">{product.name}</h5>
+          <h5 className="text-xl font-[450]">{product.name}</h5>
           <div className="flex items-center gap-x-2 my-2">
             <Rating defaultValue={3} readOnly className="gap-x-0">
               {Array.from({ length: 5 }).map((_, index) => (
@@ -121,7 +170,6 @@ const ProductDetails = (props: TProps) => {
             <div>Đã bán {totalSold}</div>
           </div>
 
-          <p className="text-gray-600">{product.description}</p>
           <p className="text-xl font-semibold mt-4">
             {matchedSku ? (
               <span>
@@ -159,7 +207,7 @@ const ProductDetails = (props: TProps) => {
                 </div>
               </div>
             ))}
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <p className="font-semibold">Kết quả SKU:</p>
             {matchedSku ? (
               <pre className="bg-green-100 p-2 rounded">
@@ -168,13 +216,21 @@ const ProductDetails = (props: TProps) => {
             ) : (
               <p className="text-gray-500">Chưa match SKU nào</p>
             )}
-          </div>
+          </div> */}
           <div className="flex items-center gap-4 mt-4">
-            <InputNumberCustom
-              setValue={setQuantityProduct}
-              value={quantityProduct}
-              max={matchedSku?.quantity}
-            />
+            <button
+              className="disabled:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+              disabled={
+                Object.keys(selected).length < product.variants.length ||
+                matchedSku?.quantity === 0
+              }
+            >
+              <InputNumberCustom
+                setValue={setQuantityProduct}
+                value={quantityProduct}
+                max={matchedSku?.quantity}
+              />
+            </button>
             <div>
               {matchedSku ? `${matchedSku.quantity} sản phẩm có sẵn` : ''}
             </div>
@@ -182,7 +238,11 @@ const ProductDetails = (props: TProps) => {
           <div className="flex gap-4 mt-4">
             <Button
               variant="outline"
-              disabled={Object.keys(selected).length < product.variants.length}
+              disabled={
+                Object.keys(selected).length < product.variants.length ||
+                matchedSku?.quantity === 0
+              }
+              onClick={handleAddToCart}
               className="bg-red-100 text-red-500 border-red-500 hover:bg-red-50 hover:text-red-500"
             >
               <Icon icon="tdesign:cart-add" width="96" height="96" />
@@ -190,7 +250,10 @@ const ProductDetails = (props: TProps) => {
             </Button>
             <Button
               variant={'default'}
-              disabled={Object.keys(selected).length < product.variants.length}
+              disabled={
+                Object.keys(selected).length < product.variants.length ||
+                matchedSku?.quantity === 0
+              }
               className="bg-red-500 hover:bg-red-400"
             >
               Mua ngay
@@ -272,7 +335,7 @@ const ProductDetails = (props: TProps) => {
         </div>
       </div>
       <div className="bg-white dark:bg-black w-full p-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-gray-50">
           <h3 className="uppercase font-medium">Mô tả sản phẩm</h3>
           <div className="flex items-center gap-x-4">
             <span className="text-sm text-gray-400">Chia sẻ:</span>
@@ -304,7 +367,10 @@ const ProductDetails = (props: TProps) => {
             </div>
           </div>
         </div>
-        <div>{product.description}</div>
+        <div
+          className="py-4"
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        />
       </div>
       <div className="flex items-start justify-between gap-x-8 bg-white dark:bg-black w-full p-4">
         <div className="uppercase font-medium">Đánh giá sản phẩm</div>

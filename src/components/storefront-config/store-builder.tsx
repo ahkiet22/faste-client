@@ -8,7 +8,7 @@ import DesktopPreview from '@/components/storefront-config/desktop-preview';
 import WidgetPanel from '@/components/storefront-config/widget-panel';
 import { StoreConfig, Widget, WidgetType } from '@/types/widget';
 import { AddWidgets } from './add-widgets';
-import { ToastNotifications } from '../ToastNotification';
+import { toastify } from '../ToastNotification';
 
 const initialWidgets: Widget[] = [
   {
@@ -128,7 +128,7 @@ export default function StoreBuilder() {
 
   const handleAddWidgetTemplete = (data: Omit<Widget, 'widgetIndex'>) => {
     if (config.widgets.length > 10) {
-      ToastNotifications.error(
+      toastify.error(
         '',
         'Đã có 10 widget được hiện (không tính tiêu đề), hãy ẩn bớt để thêm widget.',
       );

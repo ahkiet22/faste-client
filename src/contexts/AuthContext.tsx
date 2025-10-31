@@ -11,7 +11,7 @@ import { TLoginAuth, UserDataType } from '@/types/auth';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { loginAuth, logoutAuth } from '@/services/auth';
 import { setLocalAccessToken, setLocalUserData } from '@/helpers/storage/set';
-import { ToastNotifications } from '@/components/ToastNotification';
+import { toastify } from '@/components/ToastNotification';
 import { getLocalUserData } from '@/helpers/storage/get';
 import { injectAuthDependencies } from '@/utils/axios';
 import { useGetProfile } from '@/hooks/queries/useGetProfile';
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { accessToken } = response.data;
 
       setLocalAccessToken(accessToken);
-      ToastNotifications.success('Login', 'Login successfully!');
+      toastify.success('Login', 'Login successfully!');
 
       await refetch();
 
@@ -107,9 +107,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       router.replace(returnUrl && returnUrl !== '/' ? returnUrl : '/');
     } catch (error: any) {
       if (error.response?.status === 400) {
-        ToastNotifications.error('Login', 'Email or password invalid!');
+        toastify.error('Login', 'Email or password invalid!');
       } else {
-        ToastNotifications.error('Login', 'Server error!');
+        toastify.error('Login', 'Server error!');
       }
     } finally {
       setLoading(false);
@@ -120,10 +120,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const res = await logoutAuth();
       if (res.statusCode === 201) {
-        ToastNotifications.success('Logout', 'Logout successfully');
+        toastify.success('Logout', 'Logout successfully');
       }
     } catch (error) {
-      ToastNotifications.error('Logout', 'Something went wrong');
+      toastify.error('Logout', 'Something went wrong');
     } finally {
       setUser(null);
       clearLocalUserData();

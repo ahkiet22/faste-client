@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { toast } from 'sonner';
 
-export const ToastNotifications = {
+export const toastify = {
   success: (title: string, description?: string) =>
     toast.success(title, {
       description,

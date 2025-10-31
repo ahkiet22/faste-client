@@ -40,7 +40,7 @@ import { getAllBrands } from '@/services/brand';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { TSKUs, VariantsType } from '@/types/product';
 import { generateSKUsV2 } from '@/helpers/generate-skus';
-import { ToastNotifications } from '@/components/ToastNotification';
+import { toastify } from '@/components/ToastNotification';
 import { createProductBySeller } from '@/services/product';
 import { useRouter } from 'next/navigation';
 import { generateSlug } from '@/helpers/generate-slug';
@@ -194,10 +194,10 @@ export const CreateProductPage = () => {
         console.log(data);
         const res = await createProductBySeller(data);
         if (res.statusCode === 201) {
-          ToastNotifications.success('product', 'Create product successfully');
+          toastify.success('product', 'Create product successfully');
           router.refresh();
         } else {
-          ToastNotifications.error(
+          toastify.error(
             'product',
             'An error occurred, please try again',
           );
@@ -205,7 +205,7 @@ export const CreateProductPage = () => {
       }
     } catch (error) {
       console.log(error);
-      ToastNotifications.error(
+      toastify.error(
         'product',
         'An error occurred while submitting the form',
       );

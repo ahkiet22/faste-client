@@ -4,8 +4,7 @@ import LayoutPublic from '@/views/layouts/LayoutPublic';
 import { Metadata } from 'next';
 import { ReactElement } from 'react';
 import Script from 'next/script';
-import Image from 'next/image';
-import ProductDetails from '@/views/pages/product-details';
+import ProductDetails from '@/views/pages/product/product-details';
 
 type Product = {
   id: string;

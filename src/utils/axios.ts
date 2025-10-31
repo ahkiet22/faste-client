@@ -53,11 +53,14 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError & { config?: AxiosRequestConfig }) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !(originalRequest as any)?._retry) {
+    console.log(error.response?.status);
+
+    if (error.response?.status === 500 && !(originalRequest as any)?._retry) {
       if (isRefreshing) {
         return new Promise(function (resolve, reject) {
           failedQueue.push({ resolve, reject });
         }).then((token) => {
+          console.log(token);
           originalRequest!.headers.Authorization = `Bearer ${token}`;
           return axiosInstance(originalRequest!);
         });
@@ -68,10 +71,10 @@ axiosInstance.interceptors.response.use(
 
       try {
         const res = await refreshToken();
-        setLocalAccessToken(res.accessToken);
-        processQueue(null, res.accessToken);
+        setLocalAccessToken(res.data.accessToken);
+        processQueue(null, res.data.accessToken);
 
-        originalRequest!.headers.Authorization = `Bearer ${res.accessToken}`;
+        originalRequest!.headers.Authorization = `Bearer ${res.data.accessToken}`;
         return axiosInstance(originalRequest!);
       } catch (err) {
         processQueue(err, null);

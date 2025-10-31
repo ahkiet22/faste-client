@@ -94,7 +94,7 @@ const Header = React.memo(
     };
 
     useEffect(() => {
-      console.log("REUN!")
+      console.log('REUN!');
       fetchDataCartItem();
     }, []);
 
@@ -290,12 +290,14 @@ const Header = React.memo(
                     className="relative text-muted-foreground hover:text-purple-600 transition-colors"
                   >
                     <Icon icon="f7:cart" className="w-5 h-5" />
-                    <Badge
-                      variant="destructive"
-                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full p-0 flex items-center justify-center text-xs bg-orange-500"
-                    >
-                      2
-                    </Badge>
+                    {cartItemList && (
+                      <Badge
+                        variant="destructive"
+                        className="absolute -top-1 -right-1 w-5 h-5 rounded-full p-0 flex items-center justify-center text-xs bg-orange-500"
+                      >
+                        {cartItemList.length}
+                      </Badge>
+                    )}
                   </Button>
                   <div
                     className={`absolute right-0 z-10 py-2 hidden w-90 space-y-1 bg-white dark:bg-gray-900 shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all duration-300 rounded-sm ${user ? 'group-hover:block' : ''}`}
