@@ -66,7 +66,7 @@
     "react": "19.1.0",
     "react-day-picker": "^9.11.1",
     "react-dom": "19.1.0",
-    "react-hook-form": "^7.62.0",
+    "react-hook-form": "^7.66.0",
     "react-i18next": "^15.7.3",
     "react-quilljs": "^2.0.5",
     "react-redux": "^9.2.0",
