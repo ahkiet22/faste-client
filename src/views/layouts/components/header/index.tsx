@@ -85,7 +85,7 @@ const Header = React.memo(
       try {
         const res = await getCartByMe();
         if (res.statusCode === 200) {
-          console.log('RES CART', res.data.data);
+          // console.log('RES CART', res.data.data);
 
           SetCartItemList(res.data.data);
         }

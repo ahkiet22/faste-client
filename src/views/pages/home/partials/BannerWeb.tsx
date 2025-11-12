@@ -10,7 +10,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const BannerWeb = () => {
   const isMobile = useIsMobile();
-  console.log('isMobile', isMobile);
   return (
     <div className="bg-white dark:bg-black w-full mb-5 p-4">
       <div className="w-full">

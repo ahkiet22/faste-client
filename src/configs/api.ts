@@ -12,6 +12,7 @@ export const API_ENDPOINT = {
   },
   PROFILE: {
     INDEX: `${BASE_URL}/profile`,
+    CHANGE_PASSWORD: `${BASE_URL}/profile/change-password`,
   },
   ROLE: {
     INDEX: `${BASE_URL}/roles`,

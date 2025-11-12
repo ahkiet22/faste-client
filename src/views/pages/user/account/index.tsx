@@ -22,9 +22,7 @@ import ContactInfoCard from './partials/ContactInfoCard';
 import { ProfileAvatar } from './partials/ProfileAvatar';
 import { GENDER } from '@/constants';
 import { useGetProfile } from '@/hooks/queries/useGetProfile';
-import { keepPreviousData, useMutation } from '@tanstack/react-query';
-import { LoadingDialog } from '@/components/loading/LoadingDialog';
-import { C } from 'vitest/dist/chunks/reporters.d.BFLkQcL6.js';
+import { keepPreviousData } from '@tanstack/react-query';
 import { useMutationUpdateProfile } from '@/hooks/mutations/use-update-profile';
 import { toastify } from '@/components/ToastNotification';
 
