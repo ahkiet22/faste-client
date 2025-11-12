@@ -1,213 +1,242 @@
-'use client';
+// app/m/[eventSlug]/page.tsx
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import EventHero from './components/EventHero';
+import CountdownTimer from './components/CountdownTimer';
+import ProductTabs from './components/ProductTabs';
+import VoucherSection from './components/VoucherSection';
+import CategoryGrid from './components/CategoryGrid';
+import { EventPageData, PageProps } from '@/types/event';
+import GuardLayoutWrapper from '@/hocs/GuardLayoutWrapper';
+import LayoutPublic from '@/views/layouts/LayoutPublic';
+import { ReactElement } from 'react';
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  salePrice: number;
-  image: string;
-  soldPercent: number;
-};
-
-type FlashSaleData = {
-  eventName: string;
-  endsAt: string;
-  banner: string;
-  products: Product[];
-};
-
-// Mock flash sale data
-const mockEvents: Record<string, FlashSaleData> = {
+// Mock data với eventSlug support
+export const mockEventData: Record<string, EventPageData> = {
+  'flash-sale': {
+    eventSlug: 'flash-sale',
+    eventConfig: {
+      theme: {
+        primaryColor: '#EE4D2D',
+        secondaryColor: '#FF6B35',
+        backgroundColor: '#FFF5F3',
+      },
+      seo: {
+        title: 'Flash Sale - Ưu đãi siêu tốc | Shopee',
+        description:
+          'Khám phá ưu đãi flash sale với giá sốc, giờ vàng duy nhất trong ngày',
+        keywords: ['flash sale', 'sale', 'ưu đãi', 'giá rẻ'],
+      },
+      timing: {
+        startTime: '2024-01-15T09:00:00Z',
+        endTime: '2024-01-15T12:00:00Z',
+        timezone: 'Asia/Ho_Chi_Minh',
+      },
+    },
+    page: {
+      config: {
+        displayMap: {
+          hero: 1,
+          countdown: 1,
+          vouchers: 1,
+          categories: 1,
+          products: 1,
+        },
+      },
+    },
+    layout: {
+      component_list: [
+        {
+          id: 1,
+          biz_component_id: 101,
+          fe_id: 'event-hero',
+          properties: '{"title": "FLASH SALE", "subtitle": "Ưu đãi siêu tốc"}',
+          extend_info: '{}',
+        },
+      ],
+    },
+  },
   '11-11': {
-    eventName: 'Flash Sale 11.11',
-    endsAt: '2025-11-13T00:00:00Z',
-    banner:
-      'https://images.unsplash.com/photo-1606813902915-dce093cda7e2?q=80&w=1200',
-    products: [
-      {
-        id: 1,
-        name: 'Wireless Bluetooth Earbuds',
-        price: 499000,
-        salePrice: 299000,
-        image:
-          'https://images.unsplash.com/photo-1585386959984-a41552231693?q=80&w=600',
-        soldPercent: 75,
+    eventSlug: '11-11',
+    eventConfig: {
+      theme: {
+        primaryColor: '#FF6B35',
+        secondaryColor: '#FF8C42',
+        backgroundColor: '#FFF8F0',
       },
-      {
-        id: 2,
-        name: 'Gaming Mouse RGB',
-        price: 450000,
-        salePrice: 199000,
-        image:
-          'https://images.unsplash.com/photo-1587202372775-98927b95c83b?q=80&w=600',
-        soldPercent: 50,
+      seo: {
+        title: 'Sale 11.11 - Siêu hội mua sắm | Shopee',
+        description: 'Sale 11.11 - Cơ hội mua sắm với ưu đãi lớn nhất năm',
+        keywords: ['11.11', 'sale', 'mua sắm', 'ưu đãi'],
       },
-      {
-        id: 3,
-        name: 'Mechanical Keyboard',
-        price: 950000,
-        salePrice: 599000,
-        image:
-          'https://images.unsplash.com/photo-1593642532744-d377ab507dc8?q=80&w=600',
-        soldPercent: 88,
+      timing: {
+        startTime: '2024-11-11T00:00:00Z',
+        endTime: '2024-11-11T23:59:59Z',
+        timezone: 'Asia/Ho_Chi_Minh',
       },
-      {
-        id: 4,
-        name: 'Smartwatch Waterproof',
-        price: 1299000,
-        salePrice: 799000,
-        image:
-          'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=600',
-        soldPercent: 30,
+    },
+    page: {
+      config: {
+        displayMap: {
+          hero: 1,
+          countdown: 1,
+          vouchers: 1,
+          categories: 1,
+          products: 1,
+        },
       },
-    ],
+    },
+    layout: {
+      component_list: [],
+    },
   },
   'black-friday': {
-    eventName: 'Black Friday Mega Sale',
-    endsAt: '2025-11-30T00:00:00Z',
-    banner:
-      'https://images.unsplash.com/photo-1607083206173-6b9b36a6cf3f?q=80&w=1200',
-    products: [
-      {
-        id: 1,
-        name: 'Noise Cancelling Headphones',
-        price: 2499000,
-        salePrice: 1799000,
-        image:
-          'https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=600',
-        soldPercent: 60,
+    eventSlug: 'black-friday',
+    eventConfig: {
+      theme: {
+        primaryColor: '#000000',
+        secondaryColor: '#333333',
+        backgroundColor: '#F5F5F5',
       },
-      {
-        id: 2,
-        name: '4K Smart TV 50-inch',
-        price: 8990000,
-        salePrice: 6490000,
-        image:
-          'https://images.unsplash.com/photo-1587825140708-6b850a69d44d?q=80&w=600',
-        soldPercent: 40,
+      seo: {
+        title: 'Black Friday - Siêu sale cuối năm | Shopee',
+        description: 'Black Friday - Ưu đãi đặc biệt, giảm giá sâu',
+        keywords: ['black friday', 'sale', 'giảm giá'],
       },
-    ],
+      timing: {
+        startTime: '2024-11-29T00:00:00Z',
+        endTime: '2024-11-29T23:59:59Z',
+        timezone: 'Asia/Ho_Chi_Minh',
+      },
+    },
+    page: {
+      config: {
+        displayMap: {
+          hero: 1,
+          countdown: 1,
+          vouchers: 1,
+          categories: 1,
+          products: 1,
+        },
+      },
+    },
+    layout: {
+      component_list: [],
+    },
   },
 };
 
-function CountdownTimer({ endsAt }: { endsAt: string }) {
-  const [timeLeft, setTimeLeft] = useState('');
+const getEventData = async (eventSlug: string): Promise<EventPageData> => {
+  // Simulate API call
+  await new Promise((resolve) => setTimeout(resolve, 100));
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const end = new Date(endsAt).getTime();
-      const now = Date.now();
-      const diff = end - now;
-
-      if (diff <= 0) {
-        setTimeLeft('Expired');
-        clearInterval(timer);
-        return;
-      }
-
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      setTimeLeft(
-        `${hours.toString().padStart(2, '0')}:${minutes
-          .toString()
-          .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
-      );
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [endsAt]);
-
-  return (
-    <div className="text-xl font-bold text-red-600 bg-red-100 px-4 py-2 rounded-lg inline-block">
-      ⏰ {timeLeft}
-    </div>
-  );
-}
-
-export default function FlashSalePage({
-  params,
-}: {
-  params: { eventSlug: string };
-}) {
-  const [data, setData] = useState<FlashSaleData | null>(null);
-
-  useEffect(() => {
-    // Simulate API fetch
-    const event = mockEvents[params.eventSlug];
-    setTimeout(() => setData(event || null), 500);
-  }, [params.eventSlug]);
-
-  if (!data) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen text-gray-500">
-        <p className="text-lg">Event not found or loading...</p>
-      </div>
-    );
+  const eventData = mockEventData[eventSlug];
+  if (!eventData) {
+    notFound();
   }
 
-  const expired = new Date(data.endsAt).getTime() < Date.now();
+  return eventData;
+};
+
+const getEventTheme = (eventSlug: string) => {
+  const themes = {
+    'flash-sale': { primary: '#EE4D2D', secondary: '#FF6B35' },
+    '11-11': { primary: '#FF6B35', secondary: '#FF8C42' },
+    'black-friday': { primary: '#000000', secondary: '#333333' },
+  };
+  return themes[eventSlug as keyof typeof themes] || themes['flash-sale'];
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const eventData = await getEventData(params.eventSlug);
+
+  return {
+    title: eventData.eventConfig.seo.title,
+    description: eventData.eventConfig.seo.description,
+    keywords: eventData.eventConfig.seo.keywords,
+    openGraph: {
+      title: eventData.eventConfig.seo.title,
+      description: eventData.eventConfig.seo.description,
+      type: 'website',
+      url: `https://shopee.vn/m/${params.eventSlug}`,
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  return [
+    { eventSlug: 'flash-sale' },
+    { eventSlug: '11-11' },
+    { eventSlug: 'black-friday' },
+  ];
+}
+
+export default async function EventPage({ params, searchParams }: PageProps) {
+  const eventData = await getEventData(params.eventSlug);
+  const theme = getEventTheme(params.eventSlug);
 
   return (
-    <div className="flex flex-col items-center">
-      {/* Banner */}
-      <div className="relative w-full h-56 md:h-80">
-        <Image
-          src={data.banner}
-          alt={data.eventName}
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white">
-          <h1 className="text-3xl md:text-4xl font-bold">{data.eventName}</h1>
-          <div className="mt-3">
-            <CountdownTimer endsAt={data.endsAt} />
+    <GuardLayoutWrapper
+      getLayout={(page: ReactElement) => <LayoutPublic>{page}</LayoutPublic>}
+      authGuard={false}
+      guestGuard={false}
+    >
+      <div
+        className="min-h-screen"
+        style={{ backgroundColor: eventData.eventConfig.theme.backgroundColor }}
+      >
+        <div className="container mx-auto px-4 py-6">
+          {/* Event Hero */}
+          {eventData.page.config.displayMap.hero && (
+            <EventHero
+              eventSlug={params.eventSlug}
+              theme={theme}
+              config={eventData.layout.component_list.find(
+                (comp) => comp.fe_id === 'event-hero',
+              )}
+            />
+          )}
+
+          {/* Countdown Timer */}
+          {eventData.page.config.displayMap.countdown && (
+            <CountdownTimer
+              startTime={eventData.eventConfig.timing.startTime}
+              endTime={eventData.eventConfig.timing.endTime}
+              timezone={eventData.eventConfig.timing.timezone}
+              theme={theme}
+              eventSlug={params.eventSlug}
+            />
+          )}
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
+            <div className="lg:col-span-1">
+              {/* Voucher Section */}
+              {eventData.page.config.displayMap.vouchers && (
+                <VoucherSection eventSlug={params.eventSlug} theme={theme} />
+              )}
+
+              {/* Category Grid */}
+              {eventData.page.config.displayMap.categories && (
+                <CategoryGrid eventSlug={params.eventSlug} />
+              )}
+            </div>
+
+            <div className="lg:col-span-3">
+              {/* Product Tabs */}
+              {eventData.page.config.displayMap.products && (
+                <ProductTabs
+                  eventSlug={params.eventSlug}
+                  initialTab={searchParams.tab}
+                  initialCategory={searchParams.category}
+                  theme={theme}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Products Grid */}
-      <div className="max-w-7xl w-full px-4 py-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {data.products.map((product) => (
-          <Card
-            key={product.id}
-            className="overflow-hidden hover:shadow-lg transition"
-          >
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={300}
-              height={300}
-              className="w-full h-40 object-cover"
-            />
-            <CardContent className="p-3">
-              <p className="font-semibold line-clamp-1">{product.name}</p>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-red-600 font-bold">
-                  {product.salePrice.toLocaleString()}₫
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  {product.price.toLocaleString()}₫
-                </span>
-              </div>
-              <Progress value={product.soldPercent} className="mt-2 h-2" />
-              <Button
-                className="w-full mt-3 bg-red-500 hover:bg-red-600"
-                disabled={expired}
-              >
-                {expired ? 'Ended' : 'Buy Now'}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
+    </GuardLayoutWrapper>
   );
 }
