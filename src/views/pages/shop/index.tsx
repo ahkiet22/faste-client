@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -14,116 +13,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Search, Star } from 'lucide-react';
+import { getAllShopsIsPublic } from '@/services/shop';
+import { toastify } from '@/components/ToastNotification';
 
-/**
- * Shop List Page Component
- *
- * Displays a grid of seller shops with:
- * - Responsive grid layout (4 cols desktop, 2 tablet, 1 mobile)
- * - Search functionality (filter by shop name)
- * - Sort dropdown (by name, rating, products)
- * - Client-side pagination
- * - Shop cards with logo, name, description, rating, product count
- * - Click to view shop details at /shop/[slug]
- *
- * TODO: Replace MOCK_SHOPS with API call to fetch shops
- * Example: const shops = await fetch('/api/shops').then(r => r.json())
- */
-
-interface Shop {
+interface TShop {
   id: number;
   slug: string;
   name: string;
   description: string;
-  rating: number;
-  totalProducts: number;
+  ratingStar: number;
+  itemCount: number;
   logo: string;
-  category?: string;
 }
-
-// Mock shop data - replace with API call in production
-const MOCK_SHOPS: Shop[] = [
-  {
-    id: 1,
-    slug: 'tech-hub-store',
-    name: 'Tech Hub Store',
-    description: 'Premium electronics and gadgets for tech enthusiasts',
-    rating: 4.8,
-    totalProducts: 256,
-    logo: '/tech-store-logo.jpg',
-    category: 'Electronics',
-  },
-  {
-    id: 2,
-    slug: 'fashion-forward',
-    name: 'Fashion Forward',
-    description: 'Latest trends in clothing, shoes, and accessories',
-    rating: 4.6,
-    totalProducts: 512,
-    logo: '/fashion-store-logo.jpg',
-    category: 'Fashion',
-  },
-  {
-    id: 3,
-    slug: 'home-comfort-co',
-    name: 'Home Comfort Co',
-    description: 'Quality furniture and home decor for every room',
-    rating: 4.5,
-    totalProducts: 189,
-    logo: '/home-store-logo.jpg',
-    category: 'Home',
-  },
-  {
-    id: 4,
-    slug: 'beauty-essentials',
-    name: 'Beauty Essentials',
-    description: 'Skincare, makeup, and beauty products from top brands',
-    rating: 4.7,
-    totalProducts: 342,
-    logo: '/beauty-store-logo.jpg',
-    category: 'Beauty',
-  },
-  {
-    id: 5,
-    slug: 'sports-gear-pro',
-    name: 'Sports Gear Pro',
-    description: 'Athletic equipment and sportswear for all activities',
-    rating: 4.4,
-    totalProducts: 278,
-    logo: '/sports-store-logo.jpg',
-    category: 'Sports',
-  },
-  {
-    id: 6,
-    slug: 'book-lovers-paradise',
-    name: 'Book Lovers Paradise',
-    description: 'Extensive collection of books across all genres',
-    rating: 4.9,
-    totalProducts: 1024,
-    logo: '/book-store-logo.jpg',
-    category: 'Books',
-  },
-  {
-    id: 7,
-    slug: 'kitchen-masters',
-    name: 'Kitchen Masters',
-    description: 'Professional and home kitchen equipment and cookware',
-    rating: 4.3,
-    totalProducts: 156,
-    logo: '/kitchen-store-logo.jpg',
-    category: 'Kitchen',
-  },
-  {
-    id: 8,
-    slug: 'pet-paradise',
-    name: 'Pet Paradise',
-    description: 'Everything your pets need - food, toys, and accessories',
-    rating: 4.6,
-    totalProducts: 423,
-    logo: '/pet-store-logo.jpg',
-    category: 'Pets',
-  },
-];
 
 type SortOption = 'name-asc' | 'name-desc' | 'rating-high' | 'products-high';
 
@@ -131,15 +32,18 @@ export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataShops, setDataShops] = useState<TShop[]>();
   const shopsPerPage = 8;
 
   // Filter and sort shops
   const filteredAndSortedShops = useMemo(() => {
-    const filtered = MOCK_SHOPS.filter(
-      (shop) =>
-        shop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        shop.description.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+    const filtered = dataShops
+      ? dataShops.filter(
+          (shop) =>
+            shop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            shop.description.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
+      : [];
 
     // Apply sorting
     switch (sortBy) {
@@ -150,15 +54,15 @@ export default function ShopPage() {
         filtered.sort((a, b) => b.name.localeCompare(a.name));
         break;
       case 'rating-high':
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => b.ratingStar - a.ratingStar);
         break;
       case 'products-high':
-        filtered.sort((a, b) => b.totalProducts - a.totalProducts);
+        filtered.sort((a, b) => b.itemCount - a.itemCount);
         break;
     }
 
     return filtered;
-  }, [searchQuery, sortBy]);
+  }, [searchQuery, sortBy, dataShops]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredAndSortedShops.length / shopsPerPage);
@@ -179,6 +83,16 @@ export default function ShopPage() {
     setCurrentPage(1);
   };
 
+  // Fetch data
+  const fetchDataShopsIsPublic = async () => {
+    const res = await getAllShopsIsPublic();
+    if (!res.error) {
+      setDataShops(res.data.data);
+    } else {
+      toastify.error('', res.message);
+    }
+  };
+
   // Render star rating
   const renderStars = (rating: number) => {
     return (
@@ -195,6 +109,10 @@ export default function ShopPage() {
       </div>
     );
   };
+
+  useEffect(() => {
+    fetchDataShopsIsPublic();
+  }, []);
 
   return (
     <main className="min-h-screen bg-background">
@@ -266,16 +184,18 @@ export default function ShopPage() {
                 {paginatedShops.map((shop) => (
                   <article key={shop.id}>
                     <Link href={`/shop/${shop.slug}`}>
-                      <Card className="h-full overflow-hidden transition-all hover:shadow-lg hover:scale-105">
+                      <Card className="h-full overflow-hidden transition-all hover:shadow-lg gap-y-4">
                         {/* Shop Logo */}
-                        <div className="relative h-32 w-full overflow-hidden bg-muted flex items-center justify-center">
-                          <Image
-                            src={shop.logo || '/placeholder.svg'}
-                            alt={`${shop.name} logo`}
-                            width={100}
-                            height={100}
-                            className="object-contain"
-                          />
+                        <div className='relative h-32 w-full overflow-hidden bg-muted flex items-center justify-center'>
+                          <div className="relative flex h-20 w-20 items-center justify-center rounded-full overflow-hidden bg-white">
+                            <Image
+                              src={shop.logo || '/placeholder.png'}
+                              alt={`${shop.name} logo`}
+                              width={100}
+                              height={100}
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
                         </div>
 
                         <CardHeader className="pb-3">
@@ -293,15 +213,15 @@ export default function ShopPage() {
 
                           {/* Rating */}
                           <div className="flex items-center justify-between border-t border-border pt-3">
-                            {renderStars(shop.rating)}
+                            {renderStars(shop.ratingStar)}
                           </div>
 
                           {/* Product Count */}
                           <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span>{shop.totalProducts} products</span>
-                            {shop.category && (
+                            <span>{shop.itemCount} products</span>
+                            {/* {shop.category && (
                               <Badge variant="secondary">{shop.category}</Badge>
-                            )}
+                            )} */}
                           </div>
 
                           {/* View Shop Button */}
