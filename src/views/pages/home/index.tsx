@@ -5,6 +5,8 @@ import BannerWeb from './partials/BannerWeb';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Card } from '@/components/ui/card';
 import PrimaryProductCard from './partials/PrimaryProductCard';
+import Image from 'next/image';
+import WelcomePopup from './partials/WelcomePopup';
 
 interface TProps {
   data: [];
@@ -19,6 +21,7 @@ const HomePage = (props: TProps) => {
   return (
     <>
       <div className="container mx-auto max-w-6xl px-4">
+        <WelcomePopup /> 
         <BannerWeb />
         <CardCategory />
 
@@ -34,7 +37,7 @@ const HomePage = (props: TProps) => {
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 items-stretch">
             {/* Primary product card */}
             <div className="col-span-2">
-              <Card className="rounded-none bg-white dark:bg-black max-h-[261.19px] h-full w-full hover:shadow-accent-foreground text-xs gap-y-1 p-0 border-none transition-all duration-300 ease-in-out overflow-hidden">
+              <Card className="rounded-none bg-white dark:bg-black max-h-[288px] h-full w-full hover:shadow-accent-foreground text-xs gap-y-1 p-0 border-none transition-all duration-300 ease-in-out overflow-hidden">
                 <PrimaryProductCard />
               </Card>
             </div>
@@ -48,6 +51,16 @@ const HomePage = (props: TProps) => {
               <div>Not found</div>
             )}
           </div>
+        </div>
+
+        <div className="w-full mb-5 rounded-2xl overflow-hidden">
+          <Image
+            src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/2f/bf/2fbff17f2d97cb69d9d10194b17611aa.png"
+            alt="primary product"
+            width={1200}
+            height={1000}
+            className="w-full h-[380px] object-cover"
+          />
         </div>
 
         {/* New Products Section */}

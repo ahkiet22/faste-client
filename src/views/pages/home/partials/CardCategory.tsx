@@ -52,7 +52,7 @@ const CardCategory = () => {
                       alt="category image"
                     />
                   </div>
-                  <div className="text-wrap max-w-24 text-center">
+                  <div className="text-wrap max-w-[100px] text-center text-sm">
                     {item.name}
                   </div>
                 </Link>
