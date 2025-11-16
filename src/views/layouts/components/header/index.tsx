@@ -376,7 +376,7 @@ const Header = React.memo(
                 </div>
 
                 {/* Theme Toggle */}
-                {/* <ModeToggle /> */}
+                <ModeToggle />
 
                 {/* Mobile Menu */}
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>

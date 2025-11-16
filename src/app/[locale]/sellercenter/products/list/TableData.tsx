@@ -103,7 +103,7 @@ export function TableData(props: TProps) {
             </TableCell>
             <TableCell>
               <Image
-                src={'/vercel.svg'}
+                src={item.images[0] ? item.images[0] : '/vercel.svg'}
                 width={100}
                 height={100}
                 alt="product"

@@ -39,7 +39,7 @@ export const ROUTE_CONFIG = {
     },
 
     ORDER: {
-      LIST: '/sellercenter/orders',
+      LIST: '/sellercenter/orders/list',
       RETURN: '/sellercenter/orders/returns',
       REVIEW: '/sellercenter/orders/reviews',
     },
