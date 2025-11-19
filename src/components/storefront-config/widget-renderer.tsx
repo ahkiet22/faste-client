@@ -16,7 +16,7 @@ interface WidgetRendererProps {
 }
 
 export default function WidgetRenderer({ widget, shopId }: WidgetRendererProps) {
-  console.log("shopId", shopId)
+  console.log("[WidgetRenderer] shopId", shopId)
   switch (widget.type) {
     case WidgetType.TITLE:
       return <TitleWidget widget={widget} />;

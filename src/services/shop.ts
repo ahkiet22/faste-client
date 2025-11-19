@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from '@/configs/api';
 import { ApiResponse } from '@/types/api-response';
+import axiosInstance from '@/utils/axios';
 import axios from 'axios';
 
 export const getAllShopsPublic = async (
@@ -60,6 +61,31 @@ export const getDetailShopPublicBySlug = async (
 ): Promise<ApiResponse> => {
   try {
     const res = await axios.get(`${API_ENDPOINT.SHOP.INDEX}/slug/${slug}`);
+    return {
+      status: 'success',
+      message: 'Fetch shop details success.',
+      data: res.data.data,
+      error: null,
+      errorCode: null,
+    };
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || 'Unknown error occurred';
+    const errorCode = error?.response?.status || 500;
+
+    return {
+      status: 'error',
+      message: 'Unable to fetch shop details. Please try again later.',
+      data: null,
+      error: errorMessage,
+      errorCode: errorCode,
+    };
+  }
+};
+
+export const getDetailShopById = async (id: number): Promise<ApiResponse> => {
+  try {
+    const res = await axiosInstance.get(`${API_ENDPOINT.SHOP.INDEX}/${id}`);
     return {
       status: 'success',
       message: 'Fetch shop details success.',

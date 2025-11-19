@@ -23,6 +23,15 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Widget } from '@/types/widget';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { widgetIconLabel } from '@/configs/template';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog';
 
 interface WidgetPanelProps {
   widgets: Widget[];
@@ -152,12 +161,12 @@ function SortableWidgetItem({ widget, onToggle, onDelete }: WidgetItemProps) {
 
       {/* Widget Icon */}
       <div className="flex h-8 w-8 items-center justify-center rounded bg-muted text-lg">
-        <Icon icon={widget.icon} width={24} height={24} />
+        <Icon icon={widgetIconLabel[widget.type].icon} width={24} height={24} />
       </div>
 
       {/* Widget Label */}
       <div className="flex-1">
-        <p className="text-sm">{widget.label}</p>
+        <p className="text-sm">{widgetIconLabel[widget.type].label}</p>
       </div>
 
       {/* Toggle Switch */}
@@ -178,13 +187,26 @@ function SortableWidgetItem({ widget, onToggle, onDelete }: WidgetItemProps) {
         >
           <Trash2 className="h-4 w-4" />
         </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 text-muted-foreground"
-        >
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
+        <Dialog>
+          <DialogTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

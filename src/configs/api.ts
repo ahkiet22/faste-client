@@ -10,6 +10,11 @@ export const API_ENDPOINT = {
     REGISTER: `${BASE_URL}/auth/register`,
     OTP: `${BASE_URL}/auth/otp`,
   },
+  SELLER_STORE: {
+    TEMPLATE: `${BASE_URL}/template`,
+    WIDGET: `${BASE_URL}/widget`,
+    INFO: `${BASE_URL}/seller-store/info`,
+  },
   PROFILE: {
     INDEX: `${BASE_URL}/profile`,
     CHANGE_PASSWORD: `${BASE_URL}/profile/change-password`,

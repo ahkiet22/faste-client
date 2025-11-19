@@ -22,6 +22,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { StoreConfig } from '@/types/widget';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useBreakpoint } from '@/hooks/use-breakpoint';
 
 interface DesktopPreviewProps {
   config: StoreConfig;
@@ -32,6 +35,9 @@ export default function DesktopPreview({
   config,
   onReorderWidgets,
 }: DesktopPreviewProps) {
+  const basePath = '/sellercenter/seller-store/template';
+  const [maxWidthClass, setMaxWidthClass] = useState('max-w-[1400px]');
+  const pathname = usePathname();
   const enabledWidgets = config.widgets
     .filter((w) => w.isVisible)
     .sort((a, b) => a.widgetIndex - b.widgetIndex);
@@ -42,6 +48,8 @@ export default function DesktopPreview({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  const breakpoint = useBreakpoint();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -62,9 +70,25 @@ export default function DesktopPreview({
       onReorderWidgets(reorderedWidgets);
     }
   };
+  useEffect(() => {
+    const isPathName =
+      pathname === basePath || pathname.startsWith(basePath + '/');
+
+    let newMaxWidthClass = 'max-w-[1400px]'; // default
+
+    if (isPathName) {
+      if (breakpoint === 'xl' || breakpoint === 'lg') {
+        newMaxWidthClass = 'max-w-4xl';
+      } else if (breakpoint === '2xl') newMaxWidthClass = 'max-w-5xl';
+    }
+
+    if (newMaxWidthClass !== maxWidthClass) {
+      setMaxWidthClass(newMaxWidthClass);
+    }
+  }, [pathname, breakpoint, maxWidthClass]);
 
   return (
-    <div className="mx-auto w-full max-w-[1400px]">
+    <div className={`mx-auto w-full ${maxWidthClass}`}>
       {/* Desktop Browser Frame */}
       <div className="overflow-hidden rounded-lg border-2 border-gray-300 bg-white shadow-2xl">
         {/* Browser Chrome */}
@@ -128,7 +152,7 @@ export default function DesktopPreview({
                 Giá Sốc Hôm Nay
               </button>
               <button className="pb-2 text-sm font-medium text-white/70 hover:text-white">
-                Hỏi Sơ Của Hàng
+                Hồ Sơ Cửa Hàng
               </button>
             </div>
             <div className="flex items-center gap-2 rounded-lg bg-white px-4 py-2">
