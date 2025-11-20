@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,43 @@ import { useAuth } from '@/hooks/use-auth';
 import { getCartByMe } from '@/services/cart';
 import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
+import { getStoreSearchHistory } from '@/helpers/storage/get';
+import { clearStoreSearchHistory } from '@/helpers/storage/clear';
+import { setStoreSearchHistory } from '@/helpers/storage/set';
+import SearchHeader from './SearchHeader';
+
+const navigationItems = [
+  {
+    href: '/',
+    label: 'Home',
+    icon: 'material-symbols:home-outline',
+    hasDropdown: true,
+  },
+  { href: '/shop', label: 'Shop', icon: 'iconoir:shop', hasDropdown: true },
+  {
+    href: '/fruits-vegetables',
+    label: 'Fruits & Vegetables',
+    icon: 'lucide:apple',
+  },
+  { href: '/beverages', label: 'Beverages', icon: 'line-md:coffee-loop' },
+  { href: '/blog', label: 'Blog', icon: 'mdi:file-text-outline' },
+  {
+    href: '/contact',
+    label: 'Contact',
+    icon: 'material-symbols:mail-outline',
+  },
+];
+
+const topNavItems = [
+  { href: '/about', label: 'About us' },
+  { href: '/sellercenter/dashboard', label: 'My Shop' },
+  { href: '/wishlist', label: 'Wishlist' },
+];
+
+const rightNavItems = [
+  { href: '/my-account', label: 'My account' },
+  { href: '/support', label: 'Support' },
+];
 
 const Header = React.memo(
   () => {
@@ -48,45 +85,10 @@ const Header = React.memo(
       router.replace(path);
     };
 
-    const navigationItems = [
-      {
-        href: '/',
-        label: 'Home',
-        icon: 'material-symbols:home-outline',
-        hasDropdown: true,
-      },
-      { href: '/shop', label: 'Shop', icon: 'iconoir:shop', hasDropdown: true },
-      {
-        href: '/fruits-vegetables',
-        label: 'Fruits & Vegetables',
-        icon: 'lucide:apple',
-      },
-      { href: '/beverages', label: 'Beverages', icon: 'line-md:coffee-loop' },
-      { href: '/blog', label: 'Blog', icon: 'mdi:file-text-outline' },
-      {
-        href: '/contact',
-        label: 'Contact',
-        icon: 'material-symbols:mail-outline',
-      },
-    ];
-
-    const topNavItems = [
-      { href: '/about', label: 'About us' },
-      { href: '/sellercenter/dashboard', label: 'My Shop' },
-      { href: '/wishlist', label: 'Wishlist' },
-    ];
-
-    const rightNavItems = [
-      { href: '/my-account', label: 'My account' },
-      { href: '/support', label: 'Support' },
-    ];
-
     const fetchDataCartItem = async () => {
       try {
         const res = await getCartByMe();
         if (res.statusCode === 200) {
-          // console.log('RES CART', res.data.data);
-
           SetCartItemList(res.data.data);
         }
       } catch (error) {
@@ -95,7 +97,6 @@ const Header = React.memo(
     };
 
     useEffect(() => {
-      console.log('REUN!');
       fetchDataCartItem();
     }, []);
 
@@ -182,24 +183,7 @@ const Header = React.memo(
               </div>
 
               {/* Search Bar */}
-              <div className="flex-1 max-w-2xl hidden md:flex items-center gap-2">
-                <div className="relative w-full">
-                  <Input
-                    type="text"
-                    placeholder="Search for products, categories or brands..."
-                    className="pr-10 bg-muted/50 border-0 rounded-2xl"
-                  />
-                  <Button
-                    size="sm"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl"
-                  >
-                    <Icon
-                      icon="material-symbols-light:search"
-                      className="w-4 h-4"
-                    />
-                  </Button>
-                </div>
-              </div>
+              <SearchHeader />
 
               {/* User Actions */}
               <div className="flex items-center gap-2 sm:gap-4">

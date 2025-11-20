@@ -1,3 +1,5 @@
+'use client'
+
 import CartProduct from '@/components/CardProduct';
 import CardCategory from './partials/CardCategory';
 import { Button } from '@/components/ui/button';
@@ -7,6 +9,7 @@ import { Card } from '@/components/ui/card';
 import PrimaryProductCard from './partials/PrimaryProductCard';
 import Image from 'next/image';
 import WelcomePopup from './partials/WelcomePopup';
+import { useRouter } from 'next/navigation';
 
 interface TProps {
   data: [];
@@ -18,6 +21,7 @@ interface TProps {
 
 const HomePage = (props: TProps) => {
   const { data: products, limit, page, totalItem, totalPage } = props;
+  const router = useRouter()
   return (
     <>
       <div className="container mx-auto max-w-6xl px-4">
@@ -82,6 +86,7 @@ const HomePage = (props: TProps) => {
               <Button
                 variant="outline"
                 className="font-normal bg-transparent text-blue-400 border border-blue-400 rounded-none px-40 cursor-pointer"
+                onClick={() => router.push('/product')}
               >
                 Xem Thêm
               </Button>

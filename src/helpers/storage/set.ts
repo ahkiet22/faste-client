@@ -21,3 +21,12 @@ export const setCheckoutItems = (items: any[]) => {
     );
   }
 };
+
+export const setStoreSearchHistory = (items: any[]) => {
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem(
+      KEY_STORAGE.SEARCH_HISTORY,
+      JSON.stringify(items),
+    );
+  }
+};

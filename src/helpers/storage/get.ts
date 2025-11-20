@@ -19,3 +19,9 @@ export const getCheckoutItems = (): any[] => {
   const data = localStorage.getItem(KEY_STORAGE.CHECKOUT_ITEMS);
   return data ? JSON.parse(data) : [];
 };
+
+export const getStoreSearchHistory = (): any[] => {
+  if (typeof window === 'undefined') return [];
+  const data = localStorage.getItem(KEY_STORAGE.SEARCH_HISTORY);
+  return data ? JSON.parse(data) : [];
+};

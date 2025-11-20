@@ -11,3 +11,8 @@ export const clearCheckoutItems = () => {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(KEY_STORAGE.CHECKOUT_ITEMS);
 };
+
+export const clearStoreSearchHistory = () => {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(KEY_STORAGE.SEARCH_HISTORY);
+};
