@@ -19,7 +19,7 @@ export const ROUTE_CONFIG = {
     },
     WALLET: {
       E_WALLER: '/e-wallet',
-      CRYPTO_WALLER: '/crypto-wallet',
+      CRYPTO_WALLER: '/user/crypto-wallet',
     },
     VOUCHER_WALLET: '/user/voucher-wallet',
     MARKETING: '/m/:id',
