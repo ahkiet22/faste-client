@@ -35,7 +35,7 @@ const CartProduct = (props: { data: any; className?: string }) => {
             <p className="line-clamp-2 text-sm">{data.name}</p>
             <div className="flex items-center gap-x-1">
               <div className="text-[#EE4D2D] text-base">
-                {formatCurrencyWithExchange(data.basePrice, {
+                {formatCurrencyWithExchange(data.skus[0].price, {
                   language: i18n.language as 'vi' | 'en',
                 })}
               </div>

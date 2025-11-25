@@ -19,23 +19,27 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useSearchStore } from '@/stores/useSearchStore';
+import { getSearchProduct } from '@/services/search';
+import { TParamsSearch } from '@/types/params';
+import CartProductSkeleton from '@/components/skeleton/CartProductSkeleton';
+import ProductNotFound from './ProductNotFound';
 
 export const ProductListPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { searchText } = useSearchStore();
 
-  const [products, setProducts] = useState([]);
+  const [searchProducts, setSearchProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 🔥 Lấy query params từ URL
   const filters = {
-    sort: searchParams.get('sort') || '',
+    order: searchParams.get('order') || '',
     orderBy: searchParams.get('orderBy') || '',
     rating: searchParams.get('rating') || '',
-    category: searchParams.get('category') || '',
+    categoryIds: searchParams.get('categoryIds') || '',
     brands: searchParams.get('brands') || '',
-    price_min: searchParams.get('price_min') || '',
-    price_max: searchParams.get('price_max') || '',
+    minPrice: searchParams.get('minPrice') || '',
+    maxPrice: searchParams.get('maxPrice') || '',
   };
 
   const updateFilter = (key: string, value: string) => {
@@ -47,25 +51,24 @@ export const ProductListPage = () => {
     router.replace(`?${params.toString()}`);
   };
 
-  const fetchDataProducts = async () => {
-    // sort: filters.sort,
-    //     rating: filters.rating,
-    //     category: filters.category,
-    //     price_min: filters.price_min,
-    //     price_max: filters.price_max,
+  const fetchProduct = async (params: TParamsSearch) => {
     try {
-      const response = await getAllProductsPublic({
-        page: 1,
-        limit: 10,
-      });
-
-      const products = response?.data ?? [];
-      setProducts(products.data);
-    } catch (error) {}
+      setLoading(true);
+      const res = await getSearchProduct(params);
+      console.log(res);
+      setSearchProducts(res.data.items);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchDataProducts();
+    fetchProduct({
+      keyword: searchText,
+      order: filters.order ? (filters.order as 'asc' | 'desc') : 'asc',
+      // rating: Number(filters.rating),
+      // categoryIds: filters.categoryIds,
+    });
     // chạy lại mỗi lần URL params thay đổi
   }, [searchParams]);
 
@@ -281,8 +284,8 @@ export const ProductListPage = () => {
             </button>
 
             <Select
-              value={filters.sort}
-              onValueChange={(v) => updateFilter('sort', v)}
+              value={filters.order}
+              onValueChange={(v) => updateFilter('or.order', v)}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Giá" />
@@ -297,10 +300,20 @@ export const ProductListPage = () => {
           </div>
 
           {/* PRODUCT GRID */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 items-stretch">
-            {products.map((product, index) => (
-              <CartProduct key={index} data={product} />
-            ))}
+          <div className="relative grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 items-stretch">
+            {loading ? (
+              Array.from({ length: 10 }).map((_, i) => (
+                <CartProductSkeleton key={i} />
+              ))
+            ) : searchProducts.length > 0 ? (
+              searchProducts.map((product, index) => (
+                <CartProduct key={index} data={product} />
+              ))
+            ) : (
+              <div className='absolute top-0 left-0 w-full'>
+                <ProductNotFound />
+              </div>
+            )}
           </div>
         </div>
       </div>
