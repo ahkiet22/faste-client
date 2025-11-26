@@ -53,9 +53,7 @@ export const ProductListPage = () => {
 
   const fetchProduct = async (params: TParamsSearch) => {
     try {
-      setLoading(true);
       const res = await getSearchProduct(params);
-      console.log(res);
       setSearchProducts(res.data.items);
     } finally {
       setLoading(false);

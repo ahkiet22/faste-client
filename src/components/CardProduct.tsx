@@ -6,10 +6,13 @@ import { Rating, RatingButton } from './ui/shadcn-io/rating';
 import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
+import { useState } from 'react';
+import { Skeleton } from './ui/skeleton';
 
 const CartProduct = (props: { data: any; className?: string }) => {
   const { data, className = '' } = props;
   const { i18n } = useTranslation();
+  const [imgLoading, setImgLoading] = useState(true);
 
   return (
     // h-[350px] w-[280px]
@@ -18,19 +21,22 @@ const CartProduct = (props: { data: any; className?: string }) => {
         className={`rounded-none bg-white dark:bg-black max-w-80 h-72 hover:shadow-accent-foreground text-xs gap-y-1 p-0 border-none transition-all duration-300 ease-in-out overflow-hidden ${className}`}
       >
         <CardContent className="p-0 h-full">
-          <div>
-            <Image
-              src={!!data.images[0] ? data.images[0] : '/nftt-1.png'}
-              width={190}
-              height={190}
-              alt={data.name}
-              className="w-full h-[190px]"
-              style={{
-                objectFit: 'cover',
-                objectPosition: 'center',
-              }}
-            />
-          </div>
+          {imgLoading && (
+            <Skeleton className="absolute top-0 left-0 w-full h-[190px]" />
+          )}
+
+          {/* Ảnh */}
+          <Image
+            src={data.images[0] ?? '/nftt-1.png'}
+            width={190}
+            height={190}
+            alt={data.name}
+            className={`w-full h-[190px] transition-opacity duration-300 ${
+              imgLoading ? 'opacity-0' : 'opacity-100'
+            }`}
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            onLoadingComplete={() => setImgLoading(false)}
+          />
           <div className="p-1">
             <p className="line-clamp-2 text-sm">{data.name}</p>
             <div className="flex items-center gap-x-1">
