@@ -177,7 +177,7 @@ export const CreateProductPage = () => {
       name: '',
       categories: [],
       brandId: undefined,
-      images: ["https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg"],
+      images: ['https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg'],
       variants: [],
       skus: [],
       description: '',
@@ -189,27 +189,19 @@ export const CreateProductPage = () => {
 
   // -- onSubmit --
   const onSubmit = async (data: any) => {
-    console.log("RUN SUBMIT")
     try {
       if (!Object.keys(errors).length) {
-        console.log(data);
         const res = await createProductBySeller(data);
         if (res.statusCode === 201) {
           toastify.success('product', 'Create product successfully');
           router.refresh();
         } else {
-          toastify.error(
-            'product',
-            'An error occurred, please try again',
-          );
+          toastify.error('product', 'An error occurred, please try again');
         }
       }
     } catch (error) {
       console.log(error);
-      toastify.error(
-        'product',
-        'An error occurred while submitting the form',
-      );
+      toastify.error('product', 'An error occurred while submitting the form');
     }
   };
 
@@ -773,7 +765,7 @@ export const CreateProductPage = () => {
                         <RichTextEditor
                           ref={editorRef}
                           onChange={(val) => {
-                            setValue('description', val);
+                            field.onChange(val);
                           }}
                         />
                       </div>
@@ -891,7 +883,6 @@ export const CreateProductPage = () => {
             <Button
               type="submit"
               onClick={() => {
-                console.log("submit", errors)
                 setValue('status', 'PUBLISHED');
               }}
               className="cursor-pointer"
