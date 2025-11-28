@@ -166,9 +166,9 @@ const Header = React.memo(
                   alt="FastE3 logo"
                   className="dark:invert"
                 />
-                <span className="font-bold text-xl text-foreground hidden sm:block">
+                {/* <span className="font-bold text-xl text-foreground hidden sm:block">
                   FastE3
-                </span>
+                </span> */}
               </div>
 
               {/* Location (Hidden on mobile) */}

@@ -136,9 +136,9 @@ export function RegisterPage({
           {/* Left side: Image */}
           <div className="bg-muted relative hidden md:block">
             <Image
-              width={0}
-              height={0}
-              src="/placeholder.svg"
+              width={500}
+              height={500}
+              src="/login.jpg"
               alt="Registration"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />

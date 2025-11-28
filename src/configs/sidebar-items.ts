@@ -123,6 +123,11 @@ export const SELLER_MENU_ITEMS: IMenuItem[] = [
     ],
   },
   {
+    title: 'Chat',
+    url: ROUTE_CONFIG.SELLER.CHAT,
+    icon: 'ri:chat-ai-line',
+  },
+  {
     title: 'Gian hàng',
     icon: 'mdi:store-outline',
     items: [

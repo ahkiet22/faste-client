@@ -28,6 +28,7 @@ export const ROUTE_CONFIG = {
   // Seller dashboard
   SELLER: {
     DASHBOARD: '/sellercenter/dashboard',
+    CHAT: '/sellercenter/chat',
     NOTIFICATION: '/sellercenter/notification',
 
     PRODUCT: {
@@ -61,7 +62,7 @@ export const ROUTE_CONFIG = {
     },
 
     VOUCHER: {
-      LIST: '/sellercenter/vouchers',
+      LIST: '/sellercenter/vouchers/list',
       CREATE: '/sellercenter/vouchers/create',
       STATS: '/sellercenter/vouchers/stats',
     },

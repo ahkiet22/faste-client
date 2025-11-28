@@ -1,3 +1,4 @@
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import GuardLayoutWrapper from '@/hocs/GuardLayoutWrapper';
 import { getAllProductsPublic } from '@/services/product';
 import LayoutPublic from '@/views/layouts/LayoutPublic';
@@ -90,12 +91,33 @@ async function getProductsData(): Promise<TProps> {
 export default async function Home() {
   const products = await getProductsData();
   const { data, limit, page, totalItem, totalPage } = products;
+  console.log(
+    '© Copyright belongs to the account [ahkiet lekiett2201@gmail.com]. Unauthorized copying, selling, distribution, or modification is prohibited.',
+  );
   return (
     <GuardLayoutWrapper
       getLayout={(page: ReactElement) => <LayoutPublic>{page}</LayoutPublic>}
       authGuard={false}
       guestGuard={false}
     >
+      <div>
+        © Copyright belongs to the account [ahkiet lekiett2201@gmail.com].
+        Unauthorized copying, selling, distribution, or modification is
+        prohibited.
+      </div>
+      <Dialog open={true}>
+        <DialogContent
+          className="flex flex-col items-center justify-center bg-transparent border-0 border-transparent outline-none border-none shadow-none rounded-xl w-[380px] h-[500px]"
+          showCloseButton={false}
+        >
+          <div className='bg-red-600 text-white'>
+            © Copyright belongs to the account [ahkiet lekiett2201@gmail.com].
+            Unauthorized copying, selling, distribution, or modification is
+            prohibited.
+            This is a personal project.
+          </div>
+        </DialogContent>
+      </Dialog>
       <HomePage
         data={data}
         limit={limit}
