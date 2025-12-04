@@ -8,6 +8,7 @@ import { Search } from 'lucide-react';
 import OrderCard from './partials/order-card';
 import { getAllOrdersByUser } from '@/services/order';
 import { PaymentMethods } from '@/enums';
+import { randomBytes } from 'crypto';
 
 type PaymentFieldType = {
   id: number;
@@ -121,11 +122,13 @@ export default function OrdersPage() {
     return Object.values(groups);
   }
 
+  console.log('ORDER RENDER');
+
   const fetchDataOrders = async () => {
     try {
       const res = await getAllOrdersByUser();
-      console.log('res orders', groupOrdersForUI(res.data.data));
-      console.log('res orders', res, groupOrdersForUI(res.data.data));
+      // console.log('res orders', groupOrdersForUI(res.data.data));
+      // console.log('res orders', res, groupOrdersForUI(res.data.data));
       setOrders(groupOrdersForUI(res.data.data) as any);
     } catch (error) {
       console.log(error);
@@ -163,7 +166,7 @@ export default function OrdersPage() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <Input
             type="text"
@@ -184,9 +187,11 @@ export default function OrdersPage() {
         ) : (
           <div className="space-y-4">
             {orders &&
-              orders.map((order) => (
+              orders.map((order, index) => (
                 <OrderCard
-                  key={order.orders[0].id + order.transactionId}
+                  key={
+                    order.orders[0].id + order.transactionId + randomBytes(4)
+                  }
                   order={order}
                 />
               ))}

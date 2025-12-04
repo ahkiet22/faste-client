@@ -61,7 +61,9 @@ const SearchHeader = () => {
     setSuggestKeyword(suggestList);
   };
   useEffect(() => {
-    fetchGetSearchSuggest(debounce);
+    if (!!debounce) {
+      fetchGetSearchSuggest(debounce);
+    }
   }, [debounce]);
 
   // Sự kiện click ngoài input để ẩn suggestions

@@ -190,7 +190,7 @@ export const CheckoutPage = () => {
   return (
     <main className="min-h-screen">
       {submitStatus === 'loading' && <LoadingDialog isLoading={true} />}
-      <div className="max-w-7xl mx-auto p-2">
+      <div className="max-w-6xl mx-auto p-2">
         {/* Header */}
         <div className="mb-4 flex">
           <h2 className="text-xl font-bold text-foreground mb-2">FastE | </h2>

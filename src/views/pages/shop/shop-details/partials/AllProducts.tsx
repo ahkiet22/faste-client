@@ -1,16 +1,26 @@
 'use client';
 
 import CartProduct from '@/components/CardProduct';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import CartProductSkeleton from '@/components/skeleton/CartProductSkeleton';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useGetAllProductPublicByShop } from '@/hooks/queries/useGetAllProductPublicByShop';
 import { getAllProductsPublicByShop } from '@/services/product';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { keepPreviousData } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 type TProps = {
   shopId: number;
 };
 export const AllProducts = (props: TProps) => {
   const { shopId } = props;
-  const [dataProducts, setDataProducts] = useState<any[]>([]);
   const categories = [
     'Ô Tô - Xe Máy - Xe Đạp',
     'Phụ kiện - Chăm sóc xe',
@@ -23,17 +33,16 @@ export const AllProducts = (props: TProps) => {
     'Túi thời trang nam',
   ];
 
-  const fetchProductByShop = async (shopId: number) => {
-    const res = await getAllProductsPublicByShop(shopId);
-    if (!res.error) {
-      setDataProducts(res.data.data);
-    }
-  };
-  useEffect(() => {
-    if (shopId) {
-      fetchProductByShop(shopId);
-    }
-  }, [shopId]);
+  const { data: dataProducts, isLoading } = useGetAllProductPublicByShop(
+    shopId,
+    {
+      select: (data) => data.data,
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      placeholderData: keepPreviousData,
+    },
+  );
   return (
     <div>
       <div className="grid grid-cols-12 gap-2">
@@ -81,9 +90,14 @@ export const AllProducts = (props: TProps) => {
               </SelectContent>
             </Select>
           </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            {isLoading &&
+              Array.from({ length: 10 }).map((_, i) => (
+                <CartProductSkeleton key={i} />
+              ))}
             {dataProducts ? (
-              dataProducts.map((product, index) => (
+              dataProducts.map((product: any, index: number) => (
                 <CartProduct key={index} data={product} />
               ))
             ) : (

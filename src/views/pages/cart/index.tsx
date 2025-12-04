@@ -168,7 +168,7 @@ export default function CartPage() {
 
   return (
     <main className="min-h-screen">
-      <div className="max-w-7xl mx-auto p-2">
+      <div className="max-w-6xl mx-auto p-2">
         {/* Header */}
         <div className="mb-4">
           <h1 className="text-2xl font-bold text-foreground mb-2">Giỏ hàng</h1>

@@ -3,5 +3,6 @@ export const QUERY_KEYS = {
   PROFILE: 'profile',
   UPDATE_PROFILE: 'update_profile',
   PRODUCTS: 'products',
+  PRODUCTSSHOP: 'products_shop',
   CART: 'cart',
 };

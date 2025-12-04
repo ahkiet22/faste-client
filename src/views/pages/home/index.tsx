@@ -24,11 +24,7 @@ interface TProps {
 const HomePage = (props: TProps) => {
   const { data: products, limit, page, totalItem, totalPage } = props;
   const router = useRouter();
-  const { setSearchText } = useSearchStore();
 
-  useEffect(() => {
-    setSearchText('');
-  }, []);
   return (
     <>
       <div className="container mx-auto max-w-6xl px-4">

@@ -68,6 +68,8 @@ export const ProductListPage = () => {
     // chạy lại mỗi lần URL params thay đổi
   }, [searchParams]);
 
+  console.log("==== PRODUCT RENDER")
+
   return (
     <div className="container mx-auto max-w-6xl px-4">
       <div className="w-full grid grid-cols-12 space-x-1">

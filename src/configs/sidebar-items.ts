@@ -34,10 +34,6 @@ export const USER_MENU_ITEMS: IMenuItem[] = [
         title: 'Cài đặt thông báo',
         url: ROUTE_CONFIG.USER.INFO.NOTIFICATION,
       },
-      {
-        title: 'Cài đặt cá nhân',
-        url: ROUTE_CONFIG.USER.INFO.SETTINGS,
-      },
     ],
   },
   {
