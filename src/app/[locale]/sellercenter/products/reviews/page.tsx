@@ -1,4 +1,6 @@
 'use client';
+import ReviewsPage from '@/views/pages/reviews';
+import ReviewsTablePage from '@/views/pages/reviews/test';
 import App from '@/views/pages/sellercenter/products/create/partials/drang';
 import SortableList from '@/views/pages/sellercenter/products/create/partials/drang';
 import Droppable from '@/views/pages/sellercenter/products/create/partials/drang';
@@ -44,6 +46,8 @@ export default function Page() {
           dangerouslySetInnerHTML={{ __html: editorContent }}
         />
       </div>
+      <ReviewsPage />
+      <ReviewsTablePage />
     </div>
   );
 }
