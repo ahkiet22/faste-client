@@ -9,7 +9,7 @@ import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 interface CartPopoverProps {
   totalCartItem: number;
@@ -21,9 +21,12 @@ function CartPopover({ totalCartItem, data }: CartPopoverProps) {
   const { user } = useAuth();
   const router = useRouter();
 
-  const handleNavigateUtils = (path: string) => {
-    router.replace(path);
-  };
+  const handleNavigateUtils = useCallback(
+    (path: string) => {
+      router.replace(path);
+    },
+    [router],
+  );
 
   return (
     <div className="relative group">

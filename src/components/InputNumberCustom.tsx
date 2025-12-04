@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 type TInputNumberCustomProps = {
   value: number;
   setValue: (val: number) => void;

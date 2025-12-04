@@ -36,7 +36,7 @@ const SearchHeader = () => {
   const searchRef = useRef(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const debounce = useDebounce(searchText, 200);
+  const debounce = useDebounce(searchText, 400);
   // Lấy lịch sử tìm kiếm từ localStorage
   useEffect(() => {
     const storedHistory = getStoreSearchHistory();

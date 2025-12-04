@@ -1,28 +1,30 @@
 'use client';
 
-import CartProduct from '@/components/CardProduct';
-import InputNumberCustom from '@/components/InputNumberCustom';
 import { toastify } from '@/components/ToastNotification';
-import { Button } from '@/components/ui/button';
-import { Rating, RatingButton } from '@/components/ui/shadcn-io/rating';
 import { addToCart } from '@/services/cart';
 import { getAllProductsPublic } from '@/services/product';
-import { formatCurrencyWithExchange } from '@/utils';
 import { Icon } from '@iconify/react';
-import Image from 'next/image';
-import { useState, useMemo, useCallback, useEffect, use } from 'react';
-import { set } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { ImageGallery } from './partials/image-gallery';
-import { useRouter } from 'next/navigation';
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+  use,
+  Suspense,
+} from 'react';
+import { ImageGallery } from './partials/ImageGallery';
+import { useCartStore } from '@/stores/cart-store';
+import { ProductRelated } from './partials/ProductRelated';
+import CartProductSkeleton from '@/components/skeleton/CartProductSkeleton';
+import { ShopInfo } from './partials/ShopInfo';
+import { ProductInfo } from './partials/ProductInfo';
+import { AddToCartSection } from './partials/AddToCartSection';
+import { VariantSelector } from './partials/VariantSelector';
+import { ProductSpecs } from './partials/ProductSpecs';
+import { ProductReviews } from './partials/ProductReviews';
 
 type TProps = {
   product: any;
-};
-
-type TVariant = {
-  value: string;
-  options: string[];
 };
 
 const ProductDetails = (props: TProps) => {
@@ -30,8 +32,7 @@ const ProductDetails = (props: TProps) => {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [products, setProducts] = useState<any[]>([]);
   const [quantityProduct, setQuantityProduct] = useState<number>(1);
-  const { i18n } = useTranslation();
-  const router = useRouter();
+  const { setTotalCartItem, totalCartItem } = useCartStore();
 
   // ** Calculate total sold
   const totalSold = useMemo(() => {
@@ -52,10 +53,6 @@ const ProductDetails = (props: TProps) => {
     }
   };
 
-  const handleNavigateUtils = (path: string) => {
-    router.push(path);
-  };
-
   useEffect(() => {
     fetchDataProducts();
   }, []);
@@ -71,18 +68,8 @@ const ProductDetails = (props: TProps) => {
     });
   }, [product?.skus, selected]);
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
-
-  // **  Calculate total sold
-  // function handleTotalSold(skus: any): number {
-  console.log('render product details');
-  //   return skus.reduce((acc: any, sku: { sold: number }) => acc + sku.sold, 0);
-  // }
-
   // ** Handle select variant option
-  const handleSelect = (variantName: string, option: string) => {
+  const handleSelect = useCallback((variantName: string, option: string) => {
     setSelected((prev) => {
       if (prev[variantName] === option) {
         const newState = { ...prev };
@@ -91,7 +78,7 @@ const ProductDetails = (props: TProps) => {
       }
       return { ...prev, [variantName]: option };
     });
-  };
+  }, []);
 
   const handleAddToCart = async () => {
     try {
@@ -100,17 +87,41 @@ const ProductDetails = (props: TProps) => {
         quantity: quantityProduct,
       });
 
-      // Axios trả về status mặc định trong res.status
       if (res.status === 201 || res.statusCode === 201) {
+        setTotalCartItem(totalCartItem + quantityProduct);
         toastify.success('Thành công', 'Thêm vào giỏ hàng thành công!');
       } else {
         toastify.info('Thông tin', `Đã có lỗi xảy ra vui lòng thử lại!`);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toastify.error('Lỗi', 'Không thể thêm sản phẩm vào giỏ hàng.');
     }
   };
+  // const handleAddToCart = useCallback(async () => {
+  //   try {
+  //     const res = await addToCart({
+  //       skuId: matchedSku.id,
+  //       quantity: quantityProduct,
+  //     });
+
+  //     if (res.status === 201 || res.statusCode === 201) {
+  //       setTotalCartItem(totalCartItem + quantityProduct);
+  //       toastify.success('Thành công', 'Thêm vào giỏ hàng thành công!');
+  //     } else {
+  //       toastify.info('Thông tin', `Đã có lỗi xảy ra vui lòng thử lại!`);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toastify.error('Lỗi', 'Không thể thêm sản phẩm vào giỏ hàng.');
+  //   }
+  // }, [matchedSku, quantityProduct]);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  console.log('render product details');
 
   function collectProductImages(product: any): string[] {
     const productImages = product.images.filter(Boolean);
@@ -121,232 +132,44 @@ const ProductDetails = (props: TProps) => {
   }
 
   const allImages = collectProductImages(product);
-  console.log('ProductDetails -> product', product);
-  // console.log('skus attributes', product.skus[0].attributes);
-  // console.log('matchedSku & selected', matchedSku, selected);
 
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex items-start justify-between gap-x-8 bg-white dark:bg-black w-full p-4">
         <div className="w-2/5">
           <ImageGallery images={allImages} productName={product.name} />
-          {/* <div className='cursor-pointer'>
-            <Image
-              src={
-                allImages[0] ||
-                'https://salt.tikicdn.com/cache/w750/ts/tikimsp/cb/3f/52/5ed5314cabc00d10d36c789df95b4348.png.webp'
-              }
-              width={1000}
-              height={1000}
-              alt={product.name}
-              className="w-full rounded-lg my-4"
-            />
-          </div>
-          <div className="flex gap-x-2 items-center justify-between max-w-[374px]">
-            {allImages.map((item, index) => (
-              <div
-                key={index}
-                className="w-20 h-20 overflow-hidden relative rounded-lg transition duration-300 hover:border hover:border-red-500"
-              >
-                <Image
-                  src={item}
-                  width={1000}
-                  height={1000}
-                  alt={product.name}
-                  className="w-full h-full rounded-lg transition duration-300 ease-in-out hover:scale-110 "
-                />
-              </div>
-            ))}
-          </div> */}
         </div>
-        <div className="w-3/5">
-          <h5 className="text-xl font-[450]">{product.name}</h5>
-          <div className="flex items-center gap-x-2 my-2">
-            <Rating defaultValue={3} readOnly className="gap-x-0">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <RatingButton
-                  className="text-yellow-500"
-                  key={index}
-                  size={12}
-                />
-              ))}
-            </Rating>
-            <div className="h-4 w-[1px] bg-gray-400"></div>
-            <div>510 Đánh giá</div>
-            <div className="h-4 w-[1px] bg-gray-400"></div>
-            <div>Đã bán {totalSold}</div>
-          </div>
+        <div className="w-3/5 space-y-2">
+          <ProductInfo
+            product={product}
+            matchedSku={matchedSku}
+            totalSold={totalSold}
+          />
 
-          <p className="text-xl font-semibold mt-4">
-            {matchedSku ? (
-              <span>
-                {formatCurrencyWithExchange(matchedSku.price, {
-                  language: i18n.language as 'vi' | 'en',
-                })}
-              </span>
-            ) : (
-              <span>
-                {formatCurrencyWithExchange(product.basePrice, {
-                  language: i18n.language as 'vi' | 'en',
-                })}
-              </span>
-            )}
-          </p>
           {product.skus &&
             product.skus.length &&
-            product.variants.length > 0 &&
-            product.variants.map((variant: TVariant, index: number) => (
-              <div key={index}>
-                <h3 className="font-semibold mb-2">{variant.value}:</h3>
-                <div className="flex gap-2 flex-wrap">
-                  {variant.options.map((opt: string) => {
-                    const isActive = selected[variant.value] === opt;
-                    return (
-                      <button
-                        key={opt}
-                        className={`px-3 py-1 border rounded-lg hover:bg-gray-200 ${isActive ? 'bg-red-500 text-white' : 'bg-white'}`}
-                        onClick={() => handleSelect(variant.value, opt)}
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          {/* <div className="mt-4">
-            <p className="font-semibold">Kết quả SKU:</p>
-            {matchedSku ? (
-              <pre className="bg-green-100 p-2 rounded">
-                {JSON.stringify(matchedSku, null, 2)}
-              </pre>
-            ) : (
-              <p className="text-gray-500">Chưa match SKU nào</p>
-            )}
-          </div> */}
-          <div className="flex items-center gap-4 mt-4">
-            <button
-              className="disabled:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
-              disabled={
-                Object.keys(selected).length < product.variants.length ||
-                matchedSku?.quantity === 0
-              }
-            >
-              <InputNumberCustom
-                setValue={setQuantityProduct}
-                value={quantityProduct}
-                max={matchedSku?.quantity}
+            product.variants.length > 0 && (
+              <VariantSelector
+                variants={product.variants}
+                selected={selected}
+                onSelect={handleSelect}
               />
-            </button>
-            <div>
-              {matchedSku ? `${matchedSku.quantity} sản phẩm có sẵn` : ''}
-            </div>
-          </div>
-          <div className="flex gap-4 mt-4">
-            <Button
-              variant="outline"
-              disabled={
-                Object.keys(selected).length < product.variants.length ||
-                matchedSku?.quantity === 0
-              }
-              onClick={handleAddToCart}
-              className="bg-red-100 text-red-500 border-red-500 hover:bg-red-50 hover:text-red-500"
-            >
-              <Icon icon="tdesign:cart-add" width="96" height="96" />
-              <span className="font-normal">Thêm vào giỏ hàng</span>
-            </Button>
-            <Button
-              variant={'default'}
-              disabled={
-                Object.keys(selected).length < product.variants.length ||
-                matchedSku?.quantity === 0
-              }
-              className="bg-red-500 hover:bg-red-400"
-            >
-              Mua ngay
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className="flex items-center gap-x-4 bg-white dark:bg-black w-full p-4">
-        <div>
-          <Image
-            src={product.shop.logo || '/nftt-1.png'}
-            alt={product.shop.name}
-            width={100}
-            height={100}
-            className="rounded-full w-20 h-20 object-cover object-center"
+            )}
+
+          <AddToCartSection
+            matchedSku={matchedSku}
+            quantity={quantityProduct}
+            setQuantity={setQuantityProduct}
+            onAddToCart={handleAddToCart}
+            variantsLength={product.variants.length}
+            selectedLength={Object.keys(selected).length}
           />
         </div>
-        <div>
-          <h3 className="font-medium text-xl">{product.shop.name}</h3>
-          <div className="flex items-center gap-x-2">
-            <Button variant={'outline'}>
-              <Icon icon="tdesign:chat-double-filled" width="24" height="24" />{' '}
-              <span>Chat Ngay</span>
-            </Button>
-            <Button
-              onClick={() => {
-                console.log('shop slug', product.shop);
-                handleNavigateUtils(`/shop/${product.shop.slug}`)
-              }}
-              className='cursor-pointer'
-            >
-              <Icon icon="iconoir:shop" width="24" height="24" />{' '}
-              <span>Xem Shop</span>
-            </Button>
-          </div>
-        </div>
-        <div className="h-20 w-[1px] bg-gray-200"></div>
-        <div className="flex flex-col gap-y-2">
-          <div className="flex items-center gap-x-2">
-            <span className="text-sm text-gray-400">Đánh Giá</span>
-            <span className="text-sm text-red-500">72K</span>
-          </div>
-          <div className="flex items-center gap-x-2">
-            <span className="text-sm text-gray-400">Sản Phẩm</span>
-            <span className="text-sm text-red-500">3,6K</span>
-          </div>
-        </div>
-        <div className="flex flex-col gap-y-2">
-          <div className="flex items-center gap-x-2">
-            <span className="text-sm text-gray-400">Tham Gia</span>
-            <span className="text-sm text-red-500">2 năm trước</span>
-          </div>
-          <div className="flex items-center gap-x-2">
-            <span className="text-sm text-gray-400">Người Theo dõi</span>
-            <span className="text-sm text-red-500">127,6k</span>
-          </div>
-        </div>
       </div>
-      <div className="bg-white dark:bg-black w-full p-4 space-y-2">
-        <div className="uppercase font-medium mb-2">Chi tiết sản phẩm</div>
+      <ShopInfo shop={product.shop} />
 
-        <div className="flex gap-x-4">
-          <div className="w-40 text-gray-400">Danh mục:</div>
-          <div>{product.categories[0].category.name}</div>
-        </div>
+      <ProductSpecs product={product} totalSold={totalSold} />
 
-        <div className="flex gap-x-4">
-          <div className="w-40 text-gray-400">Thương hiệu:</div>
-          <div>{product.brand.name}</div>
-        </div>
-
-        <div className="flex gap-x-4">
-          <div className="w-40 text-gray-400">Số sản phẩm còn lại:</div>
-          <div>{totalSold}</div>
-        </div>
-
-        <div className="flex gap-x-4">
-          <div className="w-40 text-gray-400">Gửi từ:</div>
-          <div>
-            {product.shop.addressShip.address},{' '}
-            {product.shop.addressShip.divisionPath.WARD},{' '}
-            {product.shop.addressShip.divisionPath.DISTRICT},{' '}
-            {product.shop.addressShip.divisionPath.CITY}
-          </div>
-        </div>
-      </div>
       <div className="bg-white dark:bg-black w-full p-4">
         <div className="flex items-center justify-between bg-gray-50">
           <h3 className="uppercase font-medium">Mô tả sản phẩm</h3>
@@ -385,21 +208,15 @@ const ProductDetails = (props: TProps) => {
           dangerouslySetInnerHTML={{ __html: product.description }}
         />
       </div>
-      <div className="flex items-start justify-between gap-x-8 bg-white dark:bg-black w-full p-4">
-        <div className="uppercase font-medium">Đánh giá sản phẩm</div>
-      </div>
-      <div className="flex flex-col gap-y-4 bg-white dark:bg-black w-full p-4">
-        <div className="uppercase font-medium">Sản phẩm tương tự</div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
-          {products ? (
-            products.map((product, index) => (
-              <CartProduct key={index} data={product} />
-            ))
-          ) : (
-            <div>Not found</div>
-          )}
-        </div>
-      </div>
+
+      <ProductReviews />
+      <Suspense
+        fallback={Array.from({ length: 10 }).map((_, i) => (
+          <CartProductSkeleton key={i} />
+        ))}
+      >
+        <ProductRelated products={products} />
+      </Suspense>
     </div>
   );
 };
