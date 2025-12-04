@@ -34,6 +34,8 @@ export default function ConfirmModal({
 }: ConfirmModalProps) {
   const { i18n } = useTranslation();
 
+  console.log("= Confirm model render")
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
       <DialogContent className="max-w-md border border-border/50 bg-gradient-to-br from-background to-background/95 backdrop-blur-xl shadow-2xl">

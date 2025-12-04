@@ -27,7 +27,7 @@ export function CartItem({
     attributeKeys = Object.keys(item.sku.attributes);
   }
 
-  console.log(item);
+  // console.log(item);
 
   return (
     <div className="w-full flex flex-col gap-4 border-b border-border py-4 bg-white">

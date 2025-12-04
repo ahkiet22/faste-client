@@ -11,10 +11,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Rating, RatingButton } from '@/components/ui/shadcn-io/rating';
-import { getAllProductsPublic } from '@/services/product';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import InputNumberCustom from '@/components/InputNumberCustom';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Icon } from '@iconify/react/dist/iconify.js';

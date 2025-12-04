@@ -6,11 +6,10 @@ import PaymentOption from './partials/payment-option';
 import { RadioGroup } from '@/components/ui/radio-group';
 import DeliveryOption from './partials/delivery-option';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCheckoutItems } from '@/helpers/storage/get';
 import { ChevronRight } from 'lucide-react';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import ConfirmModal from './partials/confirm-modal';
 import { useRouter } from 'next/navigation';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
@@ -18,7 +17,13 @@ import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { clearCheckoutItems } from '@/helpers/storage/clear';
 import { createOrder } from '@/services/order';
+import { CreateOrderType } from '@/types/order';
+import dynamic from 'next/dynamic';
 
+const ConfirmModal = dynamic(() => import('./partials/confirm-modal'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 interface CheckoutFormData {
   deliveryId: number;
   paymentMethod: 'COD' | 'SEPAY' | 'WEB3';
@@ -80,6 +85,7 @@ export const CheckoutPage = () => {
     control,
     handleSubmit,
     watch,
+    getValues,
     formState: { isValid },
   } = useForm<CheckoutFormData>({
     mode: 'onChange',
@@ -90,7 +96,6 @@ export const CheckoutPage = () => {
   });
 
   const selectedDeliveryId = watch('deliveryId');
-  const selectedPaymentMethodId = watch('paymentMethod');
 
   const getCheckoutItemsLocal = () => {
     try {
@@ -102,20 +107,30 @@ export const CheckoutPage = () => {
     getCheckoutItemsLocal();
   }, []);
 
-  const selectedItems =
-    checkoutItems?.flatMap((shop) =>
-      shop.cartItems.filter((item: any) => item.isSelected),
-    ) ?? [];
-  const subtotal = selectedItems.reduce(
-    (sum, item) => sum + item.sku.price * item.quantity,
-    0,
+  const selectedItems = useMemo(() => {
+    return (
+      checkoutItems?.flatMap((shop) =>
+        shop.cartItems.filter((item: any) => item.isSelected),
+      ) ?? []
+    );
+  }, [checkoutItems]);
+  const subtotal = useMemo(
+    () =>
+      selectedItems.reduce(
+        (sum, item) => sum + item.sku.price * item.quantity,
+        0,
+      ),
+    [selectedItems],
   );
   const shipping: any = deliveryMethods.find(
     (item) => item.id === selectedDeliveryId,
   )?.cost;
 
   const discount = 0;
-  const total = subtotal + shipping - discount;
+  const total = useMemo(
+    () => subtotal + shipping - discount,
+    [shipping, subtotal],
+  );
 
   const onSubmit = async (data: CheckoutFormData) => {
     setPendingFormData(data);
@@ -162,6 +177,15 @@ export const CheckoutPage = () => {
       setShowConfirmModal(false);
     }
   };
+
+  const handleOpenConfirmModal = useCallback(() => {
+    setShowConfirmModal(true);
+  }, []);
+
+  console.log('==== Checkout Page render', {
+    checkoutItems: checkoutItems ? 'has data' : 'undefined',
+    timestamp: Date.now(),
+  });
 
   return (
     <main className="min-h-screen">
@@ -351,16 +375,18 @@ export const CheckoutPage = () => {
           </div>
 
           {/* Right Panel - Summary */}
-          <div className="lg:col-span-1">
-            <SummaryCard
-              subtotal={subtotal}
-              shipping={shipping}
-              discount={discount}
-              total={total}
-              selectedItems={selectedItems}
-              onOrder={() => setShowConfirmModal(true)}
-            />
-          </div>
+          {checkoutItems && (
+            <div className="lg:col-span-1">
+              <SummaryCard
+                subtotal={subtotal}
+                shipping={shipping}
+                discount={discount}
+                total={total}
+                selectedItems={selectedItems}
+                onOrder={handleOpenConfirmModal}
+              />
+            </div>
+          )}
         </form>
       </div>
       <ConfirmModal
@@ -371,7 +397,7 @@ export const CheckoutPage = () => {
         selectedDelivery={deliveryMethods.find(
           (item) => item.id === selectedDeliveryId,
         )}
-        selectedPaymentMethod={selectedPaymentMethodId}
+        selectedPaymentMethod={getValues('paymentMethod')}
         totalAmount={subtotal}
       />
     </main>

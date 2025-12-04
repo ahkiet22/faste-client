@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -17,25 +18,39 @@ interface SummaryCardProps {
   onOrder?: () => void;
 }
 
-export function SummaryCard({
+function SummaryCardComponent({
   subtotal,
   shipping,
   discount,
   total,
+  selectedItems,
   onCheckout,
   onOrder,
-  selectedItems,
 }: SummaryCardProps) {
-  const formatPrice = (price: number) => {
-    return price.toLocaleString('vi-VN') + 'đ';
-  };
-
   const pathname = usePathname();
+
+  // Memoized format
+  const formatPrice = useCallback((price: number) => {
+    return price.toLocaleString('vi-VN') + 'đ';
+  }, []);
+
+  console.log('== SummaryCard render', {
+    subtotal,
+    shipping,
+    discount,
+    total,
+    selectedItems,
+    onCheckout,
+    onOrder
+  });
+
+  const isCartPage = pathname === ROUTE_CONFIG.CART;
+  const disableCheckout = selectedItems.length <= 0;
 
   return (
     <Card className="p-6 sticky top-4 h-fit">
       {/* Delivery Address */}
-      <div className="">
+      <div>
         <div className="flex justify-between items-center">
           <h3 className="text-sm font-semibold text-foreground mb-3">
             Giao tới
@@ -56,7 +71,7 @@ export function SummaryCard({
       <Separator className="my-2" />
 
       {/* Promo Code */}
-      <div className="">
+      <div>
         <h3 className="text-sm font-semibold text-foreground mb-3">
           Mã khuyến mãi
         </h3>
@@ -76,10 +91,12 @@ export function SummaryCard({
           <span className="text-muted-foreground">Tổng tiền hàng</span>
           <span className="text-foreground">{formatPrice(subtotal)}</span>
         </div>
+
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Phí vận chuyển</span>
           <span className="text-foreground">{formatPrice(shipping)}</span>
         </div>
+
         {discount > 0 && (
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Giảm giá</span>
@@ -91,7 +108,7 @@ export function SummaryCard({
       <Separator className="my-2" />
 
       {/* Total */}
-      <div className="">
+      <div>
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium text-foreground">
             Tổng tiền thanh toán
@@ -107,16 +124,16 @@ export function SummaryCard({
 
       {/* Checkout Button */}
       <Button
-        disabled={selectedItems.length <= 0}
+        disabled={disableCheckout}
         className={`w-full bg-destructive hover:bg-destructive/90 text-white font-semibold rounded-lg mb-4 ${
-          selectedItems.length > 0
-            ? 'bg-destructive hover:bg-destructive/90 cursor-pointer'
-            : 'cursor-not-allowed'
+          disableCheckout ? 'cursor-not-allowed' : 'cursor-pointer'
         }`}
-        onClick={pathname === ROUTE_CONFIG.CART ? onCheckout : onOrder}
+        onClick={isCartPage ? onCheckout : onOrder}
       >
-        {`${pathname === ROUTE_CONFIG.CART ? 'Mua hàng' : 'Đặt hàng'} (${selectedItems.length})`}
+        {`${isCartPage ? 'Mua hàng' : 'Đặt hàng'} (${selectedItems.length})`}
       </Button>
     </Card>
   );
 }
+
+export const SummaryCard = React.memo(SummaryCardComponent);
