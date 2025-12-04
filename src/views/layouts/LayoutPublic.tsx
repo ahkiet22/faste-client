@@ -1,7 +1,14 @@
+"use client"
+
 import { ReactNode } from 'react';
 import Header from './components/header';
-import Footer from './components/footer';
 import { ChatWidget } from '@/components/chat-widget';
+import dynamic from 'next/dynamic';
+
+const Footer = dynamic(() => import('./components/footer'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 
 export default function LayoutPublic({ children }: { children: ReactNode }) {
   return (

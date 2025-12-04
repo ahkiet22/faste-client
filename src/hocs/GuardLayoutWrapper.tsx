@@ -1,6 +1,9 @@
 import Guard from '@/guards';
-import LayoutPublic from '@/views/layouts/LayoutPublic';
+import dynamic from 'next/dynamic';
+// import LayoutPublic from '@/views/layouts/LayoutPublic';
 import { ReactElement, ReactNode } from 'react';
+
+const LayoutPublic = dynamic(() => import('@/views/layouts/LayoutPublic'));
 
 type TProps = {
   authGuard?: boolean;

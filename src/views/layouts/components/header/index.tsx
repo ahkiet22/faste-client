@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import { Button } from '@/components/ui/button';
@@ -12,8 +12,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import LocaleSwitcher from '@/components/locale-switcher';
 import { ModeToggle } from '@/components/ModeToggle';
-import { ROUTE_CONFIG } from '@/configs/router';
-import { createUrlQuery } from '@/utils/create-query-url';
 import { cn } from '@/lib/utils';
 import PromoBar from './PromoBar';
 import { useAuth } from '@/hooks/use-auth';
@@ -22,7 +20,7 @@ import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 import { TopNavigation } from './TopNavigation';
-import { rightNavItems, topNavItems } from '@/configs/header';
+import BottomNavigation from './BottomNavigation';
 
 const SearchHeader = dynamic(() => import('./SearchHeader'), {
   loading: () => <p>Loading...</p>,
@@ -34,28 +32,18 @@ const UserDropdownMenu = dynamic(() => import('./UserDropdownMenu'), {
   ssr: false,
 });
 
-const navigationItems = [
-  {
-    href: '/',
-    label: 'Home',
-    icon: 'material-symbols:home-outline',
-    hasDropdown: true,
-  },
-  { href: '/shop', label: 'Shop', icon: 'iconoir:shop', hasDropdown: true },
-  {
-    href: '/fruits-vegetables',
-    label: 'Fruits & Vegetables',
-    icon: 'lucide:apple',
-  },
-  { href: '/beverages', label: 'Beverages', icon: 'line-md:coffee-loop' },
-  { href: '/blog', label: 'Blog', icon: 'mdi:file-text-outline' },
-  {
-    href: '/contact',
-    label: 'Contact',
-    icon: 'material-symbols:mail-outline',
-  },
-];
+const MobileNavigation = dynamic(() => import('./mobile/MobileNavigation'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 
+const MobileTopNavigation = dynamic(
+  () => import('./mobile/MobileTopNavigation'),
+  {
+    loading: () => <p>Loading...</p>,
+    ssr: false,
+  },
+);
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,8 +51,6 @@ const Header = () => {
   const router = useRouter();
   const { i18n } = useTranslation();
   const { user } = useAuth();
-
-  
 
   const handleNavigateUtils = (path: string) => {
     router.replace(path);
@@ -292,41 +278,10 @@ const Header = () => {
                     </div>
 
                     {/* Mobile Navigation */}
-                    <nav className="flex flex-col space-y-4">
-                      {navigationItems.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className="flex items-center gap-3 text-foreground hover:text-purple-600 transition-colors py-2"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <Icon icon={item.icon} className="w-5 h-5" />
-                          <span>{item.label}</span>
-                          {item.hasDropdown && (
-                            <Icon
-                              icon="icon-park-outline:down"
-                              className="w-4 h-4 ml-auto"
-                            />
-                          )}
-                        </Link>
-                      ))}
-                    </nav>
+                    <MobileNavigation setIsOpen={setIsOpen} />
 
                     {/* Mobile Top Nav Items */}
-                    <div className="border-t border-border pt-4">
-                      <div className="flex flex-col space-y-3">
-                        {[...topNavItems, ...rightNavItems].map((item) => (
-                          <Link
-                            key={item.href}
-                            href={'/'}
-                            className="text-muted-foreground hover:text-foreground transition-colors py-1"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
+                    <MobileTopNavigation setIsOpen={setIsOpen} />
 
                     {/* Mobile Locale Switcher */}
                     <div className="border-t border-border pt-4">
@@ -341,50 +296,7 @@ const Header = () => {
       </div>
 
       {/* Bottom Navigation (Desktop) */}
-      <div className="hidden lg:block bg-background border-t border-border">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="flex items-center justify-between py-4">
-            <nav className="flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    'flex items-center gap-2 text-sm font-medium transition-colors',
-                    'text-muted-foreground hover:text-purple-600',
-                    item.label === 'Home' && 'text-foreground',
-                  )}
-                >
-                  <Icon icon={item.icon} className="w-5 h-5" />
-                  <span>{item.label}</span>
-                  {item.hasDropdown && (
-                    <Icon icon="icon-park-outline:down" className="w-4 h-4" />
-                  )}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span>Trending Products</span>
-                <Icon icon="icon-park-outline:down" className="w-4 h-4" />
-              </div>
-
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-red-600 font-medium">
-                  Almost Finished
-                </span>
-                <Badge
-                  variant="destructive"
-                  className="bg-red-500 text-xs px-2 py-1 rounded-md"
-                >
-                  SALE
-                </Badge>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <BottomNavigation />
     </header>
   );
 };
