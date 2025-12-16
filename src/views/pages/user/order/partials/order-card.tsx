@@ -1,15 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { OrderStatus } from '@/enums';
+import { memo } from 'react';
+import dayjs from 'dayjs';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface OrderCardProps {
   // order: {
@@ -29,9 +33,15 @@ interface OrderCardProps {
   //   isFavorite: boolean;
   // };
   order: any;
+  handleProductRating: (id: number) => void;
+  handleConfirnReceived: (id: number) => void;
 }
 
-export default function OrderCard({ order }: OrderCardProps) {
+const OrderCard = memo(function OrderCard({
+  order,
+  handleProductRating,
+  handleConfirnReceived,
+}: OrderCardProps) {
   const router = useRouter();
 
   const formatPrice = (price: number) => {
@@ -41,6 +51,8 @@ export default function OrderCard({ order }: OrderCardProps) {
       minimumFractionDigits: 0,
     }).format(price);
   };
+
+  console.log('REDNER');
 
   const getOrderStatusMeta = (status: OrderStatus) => {
     return (
@@ -76,6 +88,10 @@ export default function OrderCard({ order }: OrderCardProps) {
       color: 'text-indigo-600',
     },
     [OrderStatus.DELIVERED]: {
+      label: 'Đã giao thành công',
+      color: 'text-green-600',
+    },
+    [OrderStatus.RECEIVED]: {
       label: 'Đã giao thành công',
       color: 'text-green-600',
     },
@@ -183,7 +199,22 @@ export default function OrderCard({ order }: OrderCardProps) {
       {/* Footer with Total and Actions */}
       <div className="bg-card px-4 sm:px-6 py-4 border-t border-gray-100">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="text-xs text-gray-500">{order.statusNote}</div>
+          <div className="text-xs text-gray-500">
+            {order.orders[0].status === OrderStatus.RECEIVED && (
+              <>
+                <span>Đánh giá sản phẩm trước</span>{' '}
+                <Tooltip>
+                  <TooltipTrigger className="text-xs text-gray-500 underline cursor-pointer">
+                    {order.orders[0].status === OrderStatus.RECEIVED &&
+                      `${dayjs(order.orders[0].updatedAt).add(30, 'day').format('DD-MM-YYYY')}`}
+                  </TooltipTrigger>
+                 <TooltipContent side='bottom' className='bg-neutral-200 [&_svg]:bg-neutral-200 [&_svg]:fill-neutral-200 text-neutral-950'>
+                    <p className="max-w-[200px]">{`Bạn sẽ không thể đánh giá đơn hàng và nhận 200 Shopee Xu sau ngày ${dayjs(order.orders[0].updatedAt).add(30, 'day').format('DD-MM-YYYY')}. Hãy đánh giá sản phẩm và nhận 200 Shopee Xu ngay!`}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </>
+            )}
+          </div>
           <div className="space-y-4">
             <div className="text-right flex justify-end items-center gap-x-2">
               <p className="text-xs text-gray-600">Thành tiền:</p>
@@ -291,31 +322,66 @@ export default function OrderCard({ order }: OrderCardProps) {
                 )}
 
                 {/* ===== ĐÃ GIAO ===== */}
-                {order.paymentStatus === 'SUCCESS' &&
-                  order.orders[0].status === OrderStatus.DELIVERED && (
-                    <>
-                      <Button
-                        size="sm"
-                        className="text-xs sm:text-sm font-normal bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 h-auto"
-                      >
-                        Đánh Giá
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
-                      >
-                        Liên Hệ Người Bán
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
-                      >
-                        Mua Lại
-                      </Button>
-                    </>
-                  )}
+                {order.orders[0].status === OrderStatus.DELIVERED && (
+                  <>
+                    <Button
+                      size="sm"
+                      className="text-xs sm:text-sm font-normal bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 h-auto cursor-pointer"
+                      onClick={() =>
+                        handleConfirnReceived(
+                          order?.orders[0]?.items[0].orderId,
+                        )
+                      }
+                    >
+                      Đã Nhận Hàng
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
+                    >
+                      Liên Hệ Người Bán
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
+                    >
+                      Yêu Cầu Trả Hàng/Hoàn Tiền
+                    </Button>
+                  </>
+                )}
+
+                {/* ===== XÁC NHẬN ĐÃ NHẬN ===== */}
+                {order.orders[0].status === OrderStatus.RECEIVED && (
+                  <>
+                    <Button
+                      size="sm"
+                      className="text-xs sm:text-sm font-normal bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 h-auto cursor-pointer"
+                      onClick={() =>
+                        handleProductRating(order?.orders[0]?.items[0].orderId)
+                      }
+                    >
+                      Đánh giá
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
+                    >
+                      Liên Hệ Người Bán
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
+                    >
+                      Mua Lại
+                    </Button>
+                  </>
+                )}
+
+                {/* ===== HỦY ĐƠN ===== */}
                 {order.orders[0].status === OrderStatus.CANCELLED && (
                   <>
                     <Button
@@ -359,4 +425,6 @@ export default function OrderCard({ order }: OrderCardProps) {
       </div>
     </div>
   );
-}
+});
+
+export default OrderCard;

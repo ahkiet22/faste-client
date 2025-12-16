@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import { Icon } from '@iconify/react';
 import { format } from 'date-fns';
 import { useInView } from 'react-intersection-observer';
@@ -10,9 +10,6 @@ import {
   XAxis,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
-  Cell,
-  PieChart,
-  Pie,
 } from 'recharts';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -21,12 +18,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // --- SHADCN UI IMPORTS (Giả lập import từ @/components/ui) ---
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
@@ -47,7 +39,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -780,162 +771,164 @@ export default function ReviewsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/30 p-4 md:p-8 font-sans text-gray-900">
-      {/* 4.1 Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
-            Quản lý Đánh giá
-          </h1>
-          <p className="text-gray-500 mt-1 text-sm">
-            Xem và phản hồi ý kiến khách hàng để cải thiện chất lượng shop.
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2 bg-white">
-            <Icon icon="ph:export" /> Xuất CSV
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* 4.2 Left Content (Filters + List) */}
-        <div className="lg:col-span-3 space-y-6">
-          {/* Filters Bar */}
-          <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 flex-wrap items-center">
-            <div className="relative flex-1 w-full md:w-auto">
-              <Icon
-                icon="ph:magnifying-glass"
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <Input
-                placeholder="Tìm theo Mã đơn, Tên sản phẩm..."
-                className="pl-9 border-gray-200 bg-gray-50"
-                value={filters.search}
-                onChange={(e) =>
-                  setFilters({ ...filters, search: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-              <Select
-                value={filters.star}
-                onValueChange={(v) => setFilters({ ...filters, star: v })}
-              >
-                <SelectTrigger className="w-[140px] border-gray-200">
-                  <SelectValue placeholder="Số sao" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tất cả sao</SelectItem>
-                  <SelectItem value="5">⭐⭐⭐⭐⭐</SelectItem>
-                  <SelectItem value="4">⭐⭐⭐⭐</SelectItem>
-                  <SelectItem value="3">⭐⭐⭐</SelectItem>
-                  <SelectItem value="1">⭐ (1-2 sao)</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select
-                value={filters.status}
-                onValueChange={(v: any) =>
-                  setFilters({ ...filters, status: v })
-                }
-              >
-                <SelectTrigger className="w-[150px] border-gray-200">
-                  <SelectValue placeholder="Trạng thái" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALL">Tất cả</SelectItem>
-                  <SelectItem value="Pending Reply">Chưa trả lời</SelectItem>
-                  <SelectItem value="Replied">Đã trả lời</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Button variant="ghost" size="icon" className="text-gray-500">
-                <Icon icon="ph:sliders-horizontal" width={20} />
-              </Button>
-            </div>
+    <Suspense fallback={<Skeleton />}>
+      <div className="min-h-screen bg-gray-50/30 p-4 md:p-8 font-sans text-gray-900">
+        {/* 4.1 Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
+              Quản lý Đánh giá
+            </h1>
+            <p className="text-gray-500 mt-1 text-sm">
+              Xem và phản hồi ý kiến khách hàng để cải thiện chất lượng shop.
+            </p>
           </div>
+          <div className="flex gap-2">
+            <Button variant="outline" className="gap-2 bg-white">
+              <Icon icon="ph:export" /> Xuất CSV
+            </Button>
+          </div>
+        </div>
 
-          {/* Review List */}
-          <div className="space-y-4 min-h-[500px]">
-            {isLoading ? (
-              // Skeleton Loader
-              Array.from({ length: 3 }).map((_, i) => (
-                <Card key={i} className="rounded-2xl p-6 space-y-4">
-                  <div className="flex gap-4">
-                    <Skeleton className="h-10 w-10 rounded-full" />
-                    <div className="space-y-2">
-                      <Skeleton className="h-4 w-40" />
-                      <Skeleton className="h-3 w-20" />
-                    </div>
-                  </div>
-                  <Skeleton className="h-20 w-full" />
-                </Card>
-              ))
-            ) : reviews.length === 0 ? (
-              // Empty State
-              <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
-                <div className="bg-gray-50 p-4 rounded-full mb-4">
-                  <Icon
-                    icon="ph:star-half-fill"
-                    className="text-gray-300 w-12 h-12"
-                  />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">
-                  Chưa có đánh giá nào
-                </h3>
-                <p className="text-gray-500 text-sm mt-1">
-                  Thay đổi bộ lọc hoặc kiểm tra lại sau.
-                </p>
-              </div>
-            ) : (
-              <>
-                {reviews.map((review) => (
-                  <ReviewCard
-                    key={review.id}
-                    review={review}
-                    onReply={() => handleOpenReply(review)}
-                    onViewDetail={() => handleOpenDetail(review)}
-                  />
-                ))}
-              </>
-            )}
-
-            {/* Infinite Scroll Trigger */}
-            {!isLoading && reviews.length > 0 && (
-              <div ref={ref} className="py-4 flex justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* 4.2 Left Content (Filters + List) */}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Filters Bar */}
+            <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 flex-wrap items-center">
+              <div className="relative flex-1 w-full md:w-auto">
                 <Icon
-                  icon="ph:spinner"
-                  className="animate-spin text-gray-400"
-                  width={24}
+                  icon="ph:magnifying-glass"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <Input
+                  placeholder="Tìm theo Mã đơn, Tên sản phẩm..."
+                  className="pl-9 border-gray-200 bg-gray-50"
+                  value={filters.search}
+                  onChange={(e) =>
+                    setFilters({ ...filters, search: e.target.value })
+                  }
                 />
               </div>
-            )}
+
+              <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+                <Select
+                  value={filters.star}
+                  onValueChange={(v) => setFilters({ ...filters, star: v })}
+                >
+                  <SelectTrigger className="w-[140px] border-gray-200">
+                    <SelectValue placeholder="Số sao" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Tất cả sao</SelectItem>
+                    <SelectItem value="5">⭐⭐⭐⭐⭐</SelectItem>
+                    <SelectItem value="4">⭐⭐⭐⭐</SelectItem>
+                    <SelectItem value="3">⭐⭐⭐</SelectItem>
+                    <SelectItem value="1">⭐ (1-2 sao)</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  value={filters.status}
+                  onValueChange={(v: any) =>
+                    setFilters({ ...filters, status: v })
+                  }
+                >
+                  <SelectTrigger className="w-[150px] border-gray-200">
+                    <SelectValue placeholder="Trạng thái" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ALL">Tất cả</SelectItem>
+                    <SelectItem value="Pending Reply">Chưa trả lời</SelectItem>
+                    <SelectItem value="Replied">Đã trả lời</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button variant="ghost" size="icon" className="text-gray-500">
+                  <Icon icon="ph:sliders-horizontal" width={20} />
+                </Button>
+              </div>
+            </div>
+
+            {/* Review List */}
+            <div className="space-y-4 min-h-[500px]">
+              {isLoading ? (
+                // Skeleton Loader
+                Array.from({ length: 3 }).map((_, i) => (
+                  <Card key={i} className="rounded-2xl p-6 space-y-4">
+                    <div className="flex gap-4">
+                      <Skeleton className="h-10 w-10 rounded-full" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-40" />
+                        <Skeleton className="h-3 w-20" />
+                      </div>
+                    </div>
+                    <Skeleton className="h-20 w-full" />
+                  </Card>
+                ))
+              ) : reviews.length === 0 ? (
+                // Empty State
+                <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
+                  <div className="bg-gray-50 p-4 rounded-full mb-4">
+                    <Icon
+                      icon="ph:star-half-fill"
+                      className="text-gray-300 w-12 h-12"
+                    />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Chưa có đánh giá nào
+                  </h3>
+                  <p className="text-gray-500 text-sm mt-1">
+                    Thay đổi bộ lọc hoặc kiểm tra lại sau.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {reviews.map((review) => (
+                    <ReviewCard
+                      key={review.id}
+                      review={review}
+                      onReply={() => handleOpenReply(review)}
+                      onViewDetail={() => handleOpenDetail(review)}
+                    />
+                  ))}
+                </>
+              )}
+
+              {/* Infinite Scroll Trigger */}
+              {!isLoading && reviews.length > 0 && (
+                <div ref={ref} className="py-4 flex justify-center">
+                  <Icon
+                    icon="ph:spinner"
+                    className="animate-spin text-gray-400"
+                    width={24}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 4.3 Right Sidebar (Statistics) */}
+          <div className="hidden lg:block lg:col-span-1">
+            <div className="sticky top-6">
+              <StatsSidebar />
+            </div>
           </div>
         </div>
 
-        {/* 4.3 Right Sidebar (Statistics) */}
-        <div className="hidden lg:block lg:col-span-1">
-          <div className="sticky top-6">
-            <StatsSidebar />
-          </div>
-        </div>
+        {/* --- Modals --- */}
+        <ReplyModal
+          open={replyModalOpen}
+          onOpenChange={setReplyModalOpen}
+          review={selectedReview}
+          onSubmitSuccess={handleReplySuccess}
+        />
+
+        <ReviewDetailModal
+          open={detailModalOpen}
+          onOpenChange={setDetailModalOpen}
+          review={selectedReview}
+        />
       </div>
-
-      {/* --- Modals --- */}
-      <ReplyModal
-        open={replyModalOpen}
-        onOpenChange={setReplyModalOpen}
-        review={selectedReview}
-        onSubmitSuccess={handleReplySuccess}
-      />
-
-      <ReviewDetailModal
-        open={detailModalOpen}
-        onOpenChange={setDetailModalOpen}
-        review={selectedReview}
-      />
-    </div>
+    </Suspense>
   );
 }

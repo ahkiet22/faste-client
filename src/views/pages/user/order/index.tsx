@@ -1,14 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Search } from 'lucide-react';
 import OrderCard from './partials/order-card';
-import { getAllOrdersByUser } from '@/services/order';
+import { getAllOrdersByUser, updateOrderStatus } from '@/services/order';
 import { PaymentMethods } from '@/enums';
-import { randomBytes } from 'crypto';
+
+import ProductRatingForm from './partials/ProductRatingForm';
+import OrderList from './partials/OrderList';
+import AlertConfirm from '@/components/AlertConfirm';
+import { LoadingDialog } from '@/components/loading/LoadingDialog';
+import { toastify } from '@/components/ToastNotification';
 
 type PaymentFieldType = {
   id: number;
@@ -54,6 +59,10 @@ export default function OrdersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [orders, setOrders] = useState<OrderDataType[] | null>(null);
+  const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
+  const [isOpenAlertConfirm, setIsOpenAlertConfirm] = useState<boolean>(false);
+  const [selectOrder, setSelectOrder] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // const filteredOrders = orders.filter((order) => {
   //   const matchesSearch =
@@ -122,9 +131,49 @@ export default function OrdersPage() {
     return Object.values(groups);
   }
 
+  // ** Handle function
+  const handleProductRating = useCallback((id: number) => {
+    console.log('OPEN FORM');
+    setSelectOrder(id);
+    setIsOpenForm(true);
+  }, []);
+  const handleConfirnReceived = useCallback((id: number) => {
+    console.log('OPEN ALERT');
+    setSelectOrder(id);
+    setIsOpenAlertConfirm(true);
+  }, []);
+  const handleSubmitReceived = useCallback(async () => {
+    setIsLoading(true);
+    const res = await updateOrderStatus(Number(selectOrder), {
+      status: 'RECEIVED',
+    });
+    if (res.status === 'success') {
+      // setOrderData({ ...orderData, status: pendingStatus });
+      toastify.success('Cập nhật trạng thái thành công!');
+      // setOpenStatusDialog(false);
+      fetchDataOrders();
+    } else {
+      toastify.error('Cập nhật trạng thái thất bại!');
+    }
+    setIsLoading(false);
+  }, [selectOrder]);
+  const handleColseForm = useCallback(() => {
+    setSelectOrder(null);
+    setIsOpenForm(false);
+  }, []);
+  const handleColseAlertConfirm = useCallback(() => {
+    setSelectOrder(null);
+    setIsOpenAlertConfirm(false);
+  }, []);
+
+  const handleSelectOrder = useCallback((id: number) => {
+    setSelectOrder(id);
+  }, []);
+
   console.log('ORDER RENDER');
 
   const fetchDataOrders = async () => {
+    setIsLoading(true);
     try {
       const res = await getAllOrdersByUser();
       // console.log('res orders', groupOrdersForUI(res.data.data));
@@ -132,10 +181,13 @@ export default function OrdersPage() {
       setOrders(groupOrdersForUI(res.data.data) as any);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    console.log('fetch');
     fetchDataOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -143,6 +195,24 @@ export default function OrdersPage() {
   return (
     <main className="bg-gray-50 space-y-2">
       {/* Header */}
+      {isLoading && <LoadingDialog isLoading={true} />}
+      <Suspense fallback={<LoadingDialog isLoading={true} />}>
+        <ProductRatingForm
+          id={selectOrder}
+          open={isOpenForm}
+          onClose={handleColseForm}
+        />
+      </Suspense>
+      <Suspense fallback={<LoadingDialog isLoading={true} />}>
+        <AlertConfirm
+          open={isOpenAlertConfirm}
+          onClose={handleColseAlertConfirm}
+          onConfirm={handleSubmitReceived}
+          description={
+            "Shopee sẽ thanh toán số tiền trên cho Người bán. Bạn vui lòng chỉ nhấn 'Xác nhận' khi đã nhận được sản phẩm và sản phẩm không có vấn đề nào."
+          }
+        />
+      </Suspense>
       <div className="sticky top-0 bg-white border-b border-gray-200">
         {/* Tabs */}
         <div className="max-w-7xl mx-auto">
@@ -179,25 +249,11 @@ export default function OrdersPage() {
       </div>
 
       {/* Orders List */}
-      <div className="min-h-[600px] mx-auto">
-        {orders && orders.length === 0 ? (
-          <Card className="p-12 text-center">
-            <p className="text-gray-500 text-lg">No orders found</p>
-          </Card>
-        ) : (
-          <div className="space-y-4">
-            {orders &&
-              orders.map((order, index) => (
-                <OrderCard
-                  key={
-                    order.orders[0].id + order.transactionId + randomBytes(4)
-                  }
-                  order={order}
-                />
-              ))}
-          </div>
-        )}
-      </div>
+      <OrderList
+        orders={orders}
+        handleProductRating={handleProductRating}
+        handleConfirnReceived={handleConfirnReceived}
+      />
     </main>
   );
 }

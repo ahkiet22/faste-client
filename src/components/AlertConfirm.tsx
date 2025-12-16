@@ -56,10 +56,10 @@ export default function AlertConfirm({
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={onCancel} className='cursor-pointer'>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className="btn btn-destructive"
+            className="btn btn-destructive cursor-pointer"
           >
             OK
           </AlertDialogAction>

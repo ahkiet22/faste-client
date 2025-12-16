@@ -56,9 +56,9 @@ function CartPopover({ totalCartItem, data }: CartPopoverProps) {
                 {ci.cartItems.map((item: any, indexItem: number) => (
                   <div
                     key={indexCi + indexItem + item.id + item.sku.id}
-                    className="flex items-start max-w-[400px] max-h-14 hover:bg-gray-100 p-2"
+                    className="flex items-start max-w-[400px] max-h-14 hover:bg-gray-100 p-2 cursor-pointer"
                     onClick={() =>
-                      handleNavigateUtils(`product/${item.sku.product.slugId}`)
+                      handleNavigateUtils(`/product/${item.sku.product.slugId}`)
                     }
                   >
                     <div className="w-10 h-10 border border-gray-200">
@@ -66,7 +66,7 @@ function CartPopover({ totalCartItem, data }: CartPopoverProps) {
                         <Image
                           width={100}
                           height={100}
-                          src={'/nftt-2.png'}
+                          src={item.sku.product.images[0] ?? '/nftt-2.png'}
                           alt={item.sku.product.name}
                           className="object-cover w-full h-full"
                         />
@@ -90,7 +90,14 @@ function CartPopover({ totalCartItem, data }: CartPopoverProps) {
             ))}
           </div>
         ) : (
-          <div>Not found</div>
+          <div>
+            <Icon
+              icon="mdi:package-variant-remove"
+              className="text-gray-400"
+              width={80}
+              height={80}
+            />
+          </div>
         )}
         <div className="flex items-center justify-between px-2">
           <div className="text-xs text-gray-300">{`${totalCartItem ? totalCartItem : 0} Sản phẩm trong giỏ`}</div>

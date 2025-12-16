@@ -465,7 +465,7 @@ export const OrderDetailPage = ({ orderId }: Props) => {
                       Xác nhận thay đổi trạng thái
                     </AlertDialogTitle>
                     <AlertDialogDescription className="space-y-2 pt-2">
-                      <p>Bạn có chắc muốn thay đổi trạng thái đơn hàng?</p>
+                      <span>Bạn có chắc muốn thay đổi trạng thái đơn hàng?</span>
                       <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                         <span className="text-gray-600">
                           {getStatusConfig(status).label}

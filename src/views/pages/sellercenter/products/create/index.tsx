@@ -2,30 +2,21 @@
 
 // -- React --
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 // -- Component --
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/input-group';
+import { toastify } from '@/components/ToastNotification';
+import { LoadingDialog } from '@/components/loading/LoadingDialog';
 
 // -- partials --
 import { ProductFormSidebar } from './partials/product-form-sidebar';
-import { CategorySelector } from './partials/category-ui';
-import RichTextEditor from './partials/editor-desc';
 import { ProductVariantTable } from './partials/ProductVariantTable';
 
 // -- React hook form --
@@ -34,16 +25,20 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useGetCategories } from '@/hooks/queries/useGetCategories';
 
-import { keepPreviousData } from '@tanstack/react-query';
-import { ImagePlus } from 'lucide-react';
-import { getAllBrands } from '@/services/brand';
+// -- Icon --
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { TSKUs, VariantsType } from '@/types/product';
+
 import { generateSKUsV2 } from '@/helpers/generate-skus';
-import { toastify } from '@/components/ToastNotification';
-import { createProductBySeller } from '@/services/product';
-import { useRouter } from 'next/navigation';
 import { generateSlug } from '@/helpers/generate-slug';
+import { keepPreviousData } from '@tanstack/react-query';
+import { TSKUs, VariantsType } from '@/types/product';
+import { createProductBySeller } from '@/services/product';
+
+// -- Partial --
+import ProductCharacteristics from './partials/ProductCharacteristics';
+import ShippingSection from './partials/ShippingSection';
+import ProductDescription from './partials/ProductDescription';
+import InfoBasic from './partials/InfoBasic';
 
 interface ICategory {
   id: string;
@@ -132,7 +127,6 @@ export const CreateProductPage = () => {
   const editorRef = useRef<RichTextEditorHandle>(null);
   // -- State --
   const [editorContent, setEditorContent] = useState<string>('');
-  const [brandData, setBrandData] = useState<[]>([]);
   const [variants, setVariants] = useState<VariantsType>([]);
   const [skus, setSkus] = useState<TSKUs[]>([]);
   const [applyValue, setApplyValue] = useState({
@@ -141,17 +135,21 @@ export const CreateProductPage = () => {
   });
   const router = useRouter();
 
-  // -- fetch data --
-  const fetchBrandData = async () => {
-    try {
-      const res = await getAllBrands();
-      if (res.statusCode === 200) {
-        setBrandData(res.data.data);
-      }
-    } catch (error) {}
-  };
-
   const { data: categorys, isLoading } = useGetCategories(
+    {
+      page: 1,
+      limit: 10,
+    },
+    {
+      select: (data) => data.data,
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      placeholderData: keepPreviousData,
+    },
+  );
+
+  const { data: brandData, isLoading: isLoadingBrand } = useGetCategories(
     {
       page: 1,
       limit: 10,
@@ -170,6 +168,7 @@ export const CreateProductPage = () => {
     handleSubmit,
     watch,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(productSchema),
@@ -224,7 +223,6 @@ export const CreateProductPage = () => {
       parentCategory.children = categories
         .filter((category) => category.parentCategoryId === parentCategory.id)
         .map((category) => {
-          // Đưa danh mục con có con tiếp theo vào children
           const children = categories.filter(
             (subCategory) => subCategory.parentCategoryId === category.id,
           );
@@ -301,33 +299,34 @@ export const CreateProductPage = () => {
     });
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
+  const handleImageChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
 
-    const fileArray = Array.from(files).map((file) =>
-      URL.createObjectURL(file),
-    );
+      const fileArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file),
+      );
 
-    const currentImages = watch('images') || [];
+      const currentImages = getValues('images') || [];
 
-    setValue('images', [...currentImages, ...fileArray]);
-  };
+      setValue('images', [...currentImages, ...fileArray]);
+    },
+    [getValues('images')],
+  );
 
-  const handleDeleteImage = (index: number) => {
-    const currentImages = watch('images') || [];
-    const filterImages = currentImages.filter(
-      (_, indexImage) => indexImage !== index,
-    );
+  const handleDeleteImage = useCallback(
+    (index: number) => {
+      const currentImages = getValues('images') || [];
+      const filterImages = currentImages.filter(
+        (_, indexImage) => indexImage !== index,
+      );
 
-    setValue('images', filterImages);
-  };
+      setValue('images', filterImages);
+    },
+    [getValues('images')],
+  );
   // --- End Handle ---
-
-  // useEffect
-  useEffect(() => {
-    fetchBrandData();
-  }, []);
 
   useEffect(() => {
     const name = watch('name');
@@ -335,15 +334,15 @@ export const CreateProductPage = () => {
       setValue('slugId', generateSlug(name));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('name')]);
+  }, [getValues('name')]);
 
   useEffect(() => {
-    const images = watch('images');
+    const images = getValues('images');
     return () => {
       images?.forEach((url) => URL.revokeObjectURL(url));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('images')]);
+  }, [getValues('images')]);
 
   useEffect(() => {
     if (variants.length > 0) {
@@ -371,14 +370,17 @@ export const CreateProductPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variants]);
 
+  console.log('==== RENDER CREATE PRODUCT');
+
   return (
     <div className="w-full">
+      {isLoading || (isLoadingBrand && <LoadingDialog isLoading />)}
       <div className="flex justify-between gap-x-4">
         <form
           className="w-3/4 flex flex-col gap-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div
+          {/* <div
             ref={blockRefs.basic}
             className="bg-white p-2 h-auto rounded-lg space-y-6"
           >
@@ -536,21 +538,23 @@ export const CreateProductPage = () => {
                 <p className="text-red-500 text-sm">{errors.images.message}</p>
               )}
             </div>
-          </div>
-          <div
-            ref={blockRefs.characteristics}
-            className="bg-white p-2 h-auto rounded-lg"
-          >
-            <div className="text-lg font-semibold">Đặc tính sản phẩm</div>
-            <div className="w-full grid grid-cols-2 gap-2">
-              {Array.from({ length: 8 }).map((_, index) => (
-                <div key={index} className="p-2 flex flex-col gap-y-2">
-                  <Label>{`Đặc tính ${index}`}</Label>
-                  <Input value={index} placeholder="Nhập vào" />
-                </div>
-              ))}
-            </div>
-          </div>
+          </div> */}
+
+          <InfoBasic
+            blockRefBasic={blockRefs.basic}
+            brandData={brandData}
+            categorys={categorys}
+            control={control}
+            errors={errors}
+            getValues={getValues}
+            handleDeleteImage={handleDeleteImage}
+            handleImageChange={handleImageChange}
+          />
+
+          <ProductCharacteristics
+            blockRefCharacteristics={blockRefs.characteristics}
+          />
+
           <div
             ref={blockRefs.pricing}
             className="bg-white p-4 h-auto rounded-lg flex flex-col gap-y-4"
@@ -745,132 +749,16 @@ export const CreateProductPage = () => {
               <p className="text-red-500 text-sm">{errors.skus.message}</p>
             )}
           </div>
-          <div
-            ref={blockRefs.description}
-            className="bg-white p-2 h-auto rounded-lg"
-          >
-            <div className="text-lg font-semibold">Mô tả sản phẩm</div>
-            <div className="grid gap-3">
-              <label className="text-sm font-medium">
-                <span className="text-destructive">*</span> Mô tả chi tiết sản
-                phẩm (Không chèn link/địa chỉ/SĐT/website/logo nhà bán)
-              </label>
-              <Controller
-                name="description"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <div>
-                      <div>
-                        <RichTextEditor
-                          ref={editorRef}
-                          onChange={(val) => {
-                            field.onChange(val);
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                }}
-              />
-              {errors.description && (
-                <p className="text-red-500 text-sm">
-                  {errors.description.message}
-                </p>
-              )}
-            </div>
-          </div>
-          <div
-            ref={blockRefs.shipping}
-            className="bg-white p-2 h-auto rounded-lg"
-          >
-            <div className="text-lg font-semibold">Vận chuyển và bảo hành</div>
-            <div className="grid gap-3">
-              <label className="text-sm font-medium">
-                <span className="text-destructive">*</span> Căn nặng (Sau khi
-                đóng gói)
-              </label>
-              <InputGroup className="max-w-40">
-                <InputGroupInput
-                  placeholder="Nhập vào"
-                  type="number"
-                  className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-                />
-                <InputGroupAddon align={'inline-end'} className="border-l px-2">
-                  gr
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
-
-            <div className="grid gap-3">
-              <label className="text-sm font-medium">
-                Kích thước đóng gói (Phí vận chuyển thực tế sẽ thay đổi nếu bạn
-                nhập sai kích thước)
-              </label>
-              <div className="flex gap-x-6">
-                <InputGroup className="max-w-40">
-                  <InputGroupInput
-                    placeholder="R"
-                    type="number"
-                    className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-                  />
-                  <InputGroupAddon
-                    align={'inline-end'}
-                    className="border-l px-2"
-                  >
-                    cm
-                  </InputGroupAddon>
-                </InputGroup>
-                <InputGroup className="max-w-40">
-                  <InputGroupInput
-                    placeholder="D"
-                    type="number"
-                    className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-                  />
-                  <InputGroupAddon
-                    align={'inline-end'}
-                    className="border-l px-2"
-                  >
-                    cm
-                  </InputGroupAddon>
-                </InputGroup>
-                <InputGroup className="max-w-40">
-                  <InputGroupInput
-                    placeholder="C"
-                    type="number"
-                    className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-                  />
-                  <InputGroupAddon
-                    align={'inline-end'}
-                    className="border-l px-2"
-                  >
-                    cm
-                  </InputGroupAddon>
-                </InputGroup>
-              </div>
-            </div>
-            <div className="grid gap-3">
-              <label className="text-sm font-medium">
-                Kích thước đóng gói (Phí vận chuyển thực tế sẽ thay đổi nếu bạn
-                nhập sai kích thước)
-              </label>
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Chọn đơn vị vận chuyển" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value={'GHTK'}>GHTK</SelectItem>
-                    <SelectItem value={'GHN'}>GHN</SelectItem>
-                    <SelectItem value={'NINJAVAN'}>NINJAVAN</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-            {errors.status && (
-              <p className="text-red-500 text-sm">{errors.status.message}</p>
-            )}
-          </div>
+          <ProductDescription
+            blockRefDescription={blockRefs.description}
+            control={control}
+            errors={errors}
+            editorRef={editorRef}
+          />
+          <ShippingSection
+            blockRefShipping={blockRefs.shipping}
+            errors={errors}
+          />
           <div className="sticky bottom-0 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white flex justify-end gap-4 p-4">
             <Button
               variant={'outline'}

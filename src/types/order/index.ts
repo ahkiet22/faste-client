@@ -13,5 +13,6 @@ export type OrderStatus =
   | 'PENDING_PICKUP'
   | 'PENDING_DELIVERY'
   | 'DELIVERED'
+  | 'RECEIVED'
   | 'RETURNED'
   | 'CANCELLED';
