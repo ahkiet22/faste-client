@@ -103,7 +103,7 @@ export default function PaymentPage() {
                       Choose how you&apos;d like to pay
                     </CardDescription>
                   </div>
-                  <CountdownTimer onTimeExpired={handleTimeExpired} />
+                  {/* <CountdownTimer onTimeExpired={handleTimeExpired} /> */}
                 </div>
               </CardHeader>
               <CardContent className="pt-6">

@@ -24,7 +24,8 @@ export const API_ENDPOINT = {
     CHANGE_PASSWORD: `${BASE_URL}/profile/change-password`,
   },
   ROLE: {
-    INDEX: `${BASE_URL}/roles`,
+    INDEX: `${BASE_URL}/role`,
+    PERMISSION: `${BASE_URL}/permission`,
   },
   ADDRESS_SHIP: {
     INDEX: `${BASE_URL}/address-ship`,
