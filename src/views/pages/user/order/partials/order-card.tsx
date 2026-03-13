@@ -145,9 +145,9 @@ const OrderCard = memo(function OrderCard({
         }
         return (
           <div key={order.transactionId + od.id}>
-            <div className="px-4 sm:px-6 py-3 border-b border-gray-100 flex items-center justify-between">
+            <div className="px-4 sm:px-6 py-3 border-b border-border flex items-center justify-between">
               <div className="flex items-center gap-3 flex-1 min-w-0">
-                <span className="font-semibold text-gray-900 text-sm sm:text-base">
+                <span className="font-semibold text-foreground text-sm sm:text-base">
                   {od.Shop.name}
                 </span>
                 <ChevronRight className="h-4 w-4 text-muted-foreground" />
@@ -158,7 +158,7 @@ const OrderCard = memo(function OrderCard({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 px-2 text-xs border border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer"
+                  className="h-6 px-2 text-xs border border-border text-foreground hover:bg-muted cursor-pointer"
                   onClick={() =>
                     handleNavigate(`${ROUTE_CONFIG.SHOP}/${od.Shop.slug}`)
                   }
@@ -184,30 +184,30 @@ const OrderCard = memo(function OrderCard({
                     height={80}
                     src={od.items[0].image || '/placeholder.svg'}
                     alt={od.items[0].productName}
-                    className="w-20 h-20 object-cover rounded-lg bg-gray-100"
+                    className="w-20 h-20 object-cover rounded-lg bg-muted"
                   />
                 </div>
 
                 {/* Product Details */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-900 line-clamp-2 text-sm">
+                  <h3 className="font-medium text-foreground line-clamp-2 text-sm">
                     {od.items[0].productName}
                   </h3>
                   {attributeKeys.map((key, idx) => (
                     <p
                       key={key + idx + od.id}
-                      className="text-xs text-gray-600 mt-1"
+                      className="text-xs text-muted-foreground mt-1"
                     >
                       {key}: {od.items[0].skuAttributes[key]}
                     </p>
                   ))}
-                  <p className="text-xs text-gray-600">
+                  <p className="text-xs text-muted-foreground">
                     X{od.items[0].quantity}
                   </p>
 
                   {/* Pricing */}
                   <div className="flex items-center gap-2 mt-2">
-                    <span className="text-xs text-gray-500 line-through">
+                    <span className="text-xs text-muted-foreground line-through">
                       {formatPrice(od.items[0].skuPrice * od.items[0].quantity)}
                     </span>
                     <span className="text-sm sm:text-base font-bold text-orange-600">
@@ -217,13 +217,13 @@ const OrderCard = memo(function OrderCard({
                 </div>
               </div>
             </div>
-            <div className="h-[1px] bg-gray-200 w-full"></div>
+            <div className="h-[1px] bg-border w-full"></div>
           </div>
         );
       })}
 
       {/* Footer with Total and Actions */}
-      <div className="bg-card px-4 sm:px-6 py-4 border-t border-gray-100">
+      <div className="bg-card px-4 sm:px-6 py-4 border-t border-border">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="text-xs text-gray-500">
             {order.orders[0].status === OrderStatus.RECEIVED &&
@@ -247,7 +247,7 @@ const OrderCard = memo(function OrderCard({
           </div>
           <div className="space-y-4">
             <div className="text-right flex justify-end items-center gap-x-2">
-              <p className="text-xs text-gray-600">Thành tiền:</p>
+              <p className="text-xs text-muted-foreground">Thành tiền:</p>
               <p className="text-lg sm:text-xl font-bold text-orange-600">
                 {formatPrice(order.totalAmount)}
               </p>
@@ -297,14 +297,14 @@ const OrderCard = memo(function OrderCard({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto cursor-pointer"
+                        className="text-xs sm:text-sm font-normal bg-background text-foreground border-border hover:bg-muted px-3 py-2 h-auto cursor-pointer"
                       >
                         Liên Hệ Người Bán
                       </Button>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto cursor-pointer"
+                        className="text-xs sm:text-sm font-normal bg-background text-foreground border-border hover:bg-muted px-3 py-2 h-auto cursor-pointer"
                         onClick={() => openCancelConfirm(order.orders[0].id)}
                       >
                         Hủy Đơn Hàng
@@ -477,7 +477,7 @@ const OrderCard = memo(function OrderCard({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-xs sm:text-sm font-normal bg-white text-gray-700 border-gray-300 hover:bg-gray-50 px-3 py-2 h-auto"
+                        className="text-xs sm:text-sm font-normal bg-background text-foreground border-border hover:bg-muted px-3 py-2 h-auto"
                       >
                         Xem Lại Đánh Giá
                       </Button>

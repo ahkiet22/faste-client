@@ -8,7 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 // ** Helper
 import { useAuth } from '@/hooks/use-auth';
-import { getLocalUserData } from '@/helpers/storage/get';
+import { getLocalUserData } from '@/helpers/storage';
 
 // ** Hook
 

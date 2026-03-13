@@ -11,16 +11,11 @@ import React, {
 import { TLoginAuth, TRegisterAuth, UserDataType } from '@/types/auth';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { loginAuth, logoutAuth, registerAuth } from '@/services/auth';
-import { setLocalAccessToken, setLocalUserData } from '@/helpers/storage/set';
+import { setLocalAccessToken, setLocalUserData, getLocalUserData, clearCheckoutItems, clearLocalUserData } from '@/helpers/storage';
 import { toastify } from '@/components/ToastNotification';
-import { getLocalUserData } from '@/helpers/storage/get';
 import { injectAuthDependencies } from '@/utils/axios';
 import { useGetProfile } from '@/hooks/queries/useGetProfile';
 import { keepPreviousData } from '@tanstack/react-query';
-import {
-  clearCheckoutItems,
-  clearLocalUserData,
-} from '@/helpers/storage/clear';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
 import { LoadingSpinner } from '@/components/loading/LoadingSpinner';

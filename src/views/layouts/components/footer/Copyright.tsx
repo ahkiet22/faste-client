@@ -1,19 +1,19 @@
 const Copyright = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center gap-4 text-xs text-muted-foreground">
-      <p>
-        Copyright 2024 © Blowwe WooCommerce WordPress Theme. All right
-        reserved. Powered by Ecomify Themes.
+    <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-xs text-muted-foreground/80">
+      <p className="text-center lg:text-left leading-loose">
+        Bản quyền 2024 © <strong>FastE Ecommerce</strong>. Tất cả các quyền đã được bảo lưu. 
+        Được cung cấp bởi FastE Team.
       </p>
-      <div className="flex gap-4">
-        <a href="#" className="hover:text-foreground">
-          Terms and Conditions
+      <div className="flex flex-wrap justify-center lg:justify-end gap-x-6 gap-y-2 font-medium">
+        <a href="#" className="hover:text-foreground transition-colors">
+          Điều khoản & Điều kiện
         </a>
-        <a href="#" className="hover:text-foreground">
-          Privacy Policy
+        <a href="#" className="hover:text-foreground transition-colors">
+          Chính sách Bảo mật
         </a>
-        <a href="#" className="hover:text-foreground">
-          Order Tracking
+        <a href="#" className="hover:text-foreground transition-colors">
+          Theo dõi Đơn hàng
         </a>
       </div>
     </div>

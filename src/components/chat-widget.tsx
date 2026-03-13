@@ -172,7 +172,7 @@ export function ChatWidget() {
                     </div>
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                    Chào mừng bạn đến với Shopee Chat
+                    Chào mừng bạn đến với FastE Chat!
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Start chatting with our sellers now!

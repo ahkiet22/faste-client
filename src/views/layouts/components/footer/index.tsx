@@ -16,39 +16,44 @@ import DownloadApp from './DownloadApp';
 
 const Footer = () => {
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="container mx-auto max-w-6xl px-4 py-12">
-        {/* Main footer content */}
-        {/* Newsletter Section */}
-        <Newsletter />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
-          {/* Do You Need Help Section */}
-          <Help />
+    <footer className="bg-card/30 border-t border-border mt-auto">
+      <div className="container mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:px-8">
+        <div className="mb-16">
+          <Newsletter />
+        </div>
 
-          {/* Make Money with Us */}
-          <MakeMoney />
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+          <div className="col-span-2 sm:col-span-1">
+            <Help />
+          </div>
 
-          {/* Let Us Help You */}
-          <HelpYou />
+          <div className="col-span-1">
+            <MakeMoney />
+          </div>
 
-          {/* Get to Know Us & Download App */}
-          <KnowUs />
-          <div>
+          <div className="col-span-1">
+            <HelpYou />
+          </div>
+
+          <div className="col-span-1">
+            <KnowUs />
+          </div>
+
+          <div className="col-span-2 lg:col-span-1 space-y-8">
             <DownloadApp />
-
-            {/* Social Media */}
             <SocialMedia />
           </div>
         </div>
 
-        {/* Bottom section with payment methods and copyright */}
-        <div className="border-t border-border pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* Payment methods */}
-            <PaymentMethods />
+        <div className="border-t border-border pt-10">
+          <div className="flex flex-col xl:flex-row justify-between items-center gap-10">
+            <div className="order-2 xl:order-1">
+              <PaymentMethods />
+            </div>
 
-            {/* Copyright and links */}
-            <Copyright />
+            <div className="order-1 xl:order-2 w-full xl:w-auto">
+              <Copyright />
+            </div>
           </div>
         </div>
       </div>

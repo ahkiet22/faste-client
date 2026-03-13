@@ -10,7 +10,7 @@ interface LoadingDialogProps {
 
 export function LoadingDialog({
   isLoading,
-  message = 'Loading...',
+  message = '',
 }: LoadingDialogProps) {
   return (
     <Dialog open={isLoading} onOpenChange={() => {}}>

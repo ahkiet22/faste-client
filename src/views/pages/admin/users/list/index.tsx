@@ -28,6 +28,8 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Ban, CheckCircle, Eye } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const TAB_OPTIONS = [
   { value: 'ALL', label: 'Tất cả' },
@@ -43,6 +45,7 @@ export default function UserListPage() {
   const [usersData, setUsersData] = useState<TAdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
+  const pathname = usePathname();
 
   const pageSize = 10;
 
@@ -117,8 +120,8 @@ export default function UserListPage() {
   return (
     <div className="container mx-auto p-4 md:p-6 space-y-6">
       <div className="flex items-center gap-3">
-        <Icon icon="ph:users" className="text-3xl text-gray-700" />
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+        <Icon icon="ph:users" className="text-3xl text-muted-foreground" />
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground">
           Danh sách người dùng
         </h1>
       </div>
@@ -127,7 +130,7 @@ export default function UserListPage() {
         <div className="relative flex-1">
           <Icon
             icon="ph:magnifying-glass"
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xl"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xl"
           />
           <Input
             placeholder="Tìm theo mã ID, tên, email, số điện thoại..."
@@ -142,7 +145,7 @@ export default function UserListPage() {
       </div>
 
       <Tabs value={selectedTab} onValueChange={handleTabChange} className="w-full">
-        <TabsList className="w-full flex-wrap h-auto justify-start gap-2 bg-white py-2">
+        <TabsList className="w-full flex-wrap h-auto justify-start gap-2 bg-background/50 py-2">
           {TAB_OPTIONS.map((tab) => (
             <TabsTrigger
               key={tab.value}
@@ -155,7 +158,7 @@ export default function UserListPage() {
         </TabsList>
 
         <TabsContent value={selectedTab} className="mt-6">
-          <div className="hidden md:block rounded-lg border bg-white shadow-sm">
+          <div className="hidden md:block rounded-lg border bg-card shadow-sm">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -192,14 +195,14 @@ export default function UserListPage() {
                           </Avatar>
                           <div className="flex flex-col">
                             <span className="font-semibold text-sm">{user.name}</span>
-                            <span className="text-xs text-gray-500">{user.gender === 'MALE' ? 'Nam' : user.gender === 'FEMALE' ? 'Nữ' : 'Khác'}</span>
+                            <span className="text-xs text-muted-foreground">{user.gender === 'MALE' ? 'Nam' : user.gender === 'FEMALE' ? 'Nữ' : 'Khác'}</span>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-col">
                           <span className="text-sm">{user.email}</span>
-                          <span className="text-xs text-gray-500">{user.phoneNumber || 'Chưa cập nhật'}</span>
+                          <span className="text-xs text-muted-foreground">{user.phoneNumber || 'Chưa cập nhật'}</span>
                         </div>
                       </TableCell>
                       <TableCell className="text-sm">
@@ -215,8 +218,10 @@ export default function UserListPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem className="cursor-pointer">
-                              <Eye className="mr-2 h-4 w-4" /> Xem chi tiết
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                              <Link href={`/admin/users/detail/${user.id}`}>
+                                <Eye className="mr-2 h-4 w-4" /> Xem chi tiết
+                              </Link>
                             </DropdownMenuItem>
                             {user.status !== 'BANNED' ? (
                               <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
@@ -263,25 +268,27 @@ export default function UserListPage() {
                         </Avatar>
                         <div>
                           <CardTitle className="text-base font-semibold">{user.name}</CardTitle>
-                          <p className="text-xs text-gray-500 mt-1">ID: #{user.id}</p>
+                          <p className="text-xs text-muted-foreground mt-1">ID: #{user.id}</p>
                         </div>
                       </div>
                       {getStatusBadge(user.status || 'ACTIVE')}
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <div className="text-sm text-gray-600">
-                      <strong>Email:</strong> {user.email}
+                    <div className="text-sm text-muted-foreground/80">
+                      <strong className="text-foreground">Email:</strong> {user.email}
                     </div>
-                    <div className="text-sm text-gray-600">
-                      <strong>SĐT:</strong> {user.phoneNumber || 'Chưa cập nhật'}
+                    <div className="text-sm text-muted-foreground/80">
+                      <strong className="text-foreground">SĐT:</strong> {user.phoneNumber || 'Chưa cập nhật'}
                     </div>
-                    <div className="text-sm text-gray-600">
-                      <strong>Đăng ký:</strong> {user.createdAt ? dayjs(user.createdAt).format('DD/MM/YYYY') : 'N/A'}
+                    <div className="text-sm text-muted-foreground/80">
+                      <strong className="text-foreground">Đăng ký:</strong> {user.createdAt ? dayjs(user.createdAt).format('DD/MM/YYYY') : 'N/A'}
                     </div>
                     <div className="flex gap-2">
-                       <Button variant="outline" className="flex-1">
-                          <Eye className="mr-2 h-4 w-4" /> Chi tiết
+                       <Button variant="outline" className="flex-1" asChild>
+                          <Link href={`/admin/users/detail/${user.id}`}>
+                            <Eye className="mr-2 h-4 w-4" /> Chi tiết
+                          </Link>
                        </Button>
                        {user.status !== 'BANNED' ? (
                           <Button variant="destructive" className="flex-1">

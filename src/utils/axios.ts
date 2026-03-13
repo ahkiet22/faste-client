@@ -1,9 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { BASE_URL } from '@/configs/api';
-import { getLocalUserData } from '@/helpers/storage/get';
+import {
+  getLocalUserData,
+  setLocalAccessToken,
+  clearLocalUserData,
+} from '@/helpers/storage';
 import { refreshToken } from '@/services/auth';
-import { setLocalAccessToken } from '@/helpers/storage/set';
-import { clearLocalUserData } from '@/helpers/storage/clear';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { createUrlQuery } from './create-query-url';
 

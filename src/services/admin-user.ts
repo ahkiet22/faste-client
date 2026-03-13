@@ -17,6 +17,16 @@ export const getAdminUsers = async (params?: TAdminUserListParams) => {
   }
 };
 
+export const getAdminUserById = async (userId: string | number) => {
+  try {
+    const res = await axiosInstance.get(`${API_ENDPOINT.USER.INDEX}/${userId}`);
+    return res.data;
+  } catch (error) {
+    console.error('Error getting user detail:', error);
+    throw new Error('Unable to fetch user detail. Please try again later.');
+  }
+};
+
 export const getAdminSellers = async (params?: TAdminUserListParams) => {
   try {
     const res = await axiosInstance.get(`${API_ENDPOINT.USER.INDEX}`, {

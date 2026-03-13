@@ -10,7 +10,7 @@ import {
   getCartByMe,
   updateCartQuantity,
 } from '@/services/cart';
-import { setCheckoutItems } from '@/helpers/storage/set';
+import { setCheckoutItems } from '@/helpers/storage';
 import { useRouter } from 'next/navigation';
 import useDebounce from '@/hooks/use-debounce';
 import { UpdateCartQuantityRequest } from '@/types/cart';

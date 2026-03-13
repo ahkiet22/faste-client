@@ -8,11 +8,10 @@ import { usePathname, useRouter } from 'next/navigation';
 
 // ** Helper
 import { useAuth } from '@/hooks/use-auth';
-import { getLocalUserData } from '@/helpers/storage/get';
+import { getLocalUserData, clearLocalUserData } from '@/helpers/storage';
 import { createUrlQuery } from '@/utils/create-query-url';
 import { useTranslation } from 'react-i18next';
 import { i18nConfig } from '@/i18n-config';
-import { clearLocalUserData } from '@/helpers/storage/clear';
 
 // ** Hook
 

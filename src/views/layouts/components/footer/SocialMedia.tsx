@@ -2,33 +2,23 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 
 export default function SocialMedia() {
   return (
-    <div className="mt-6">
-      <p className="text-sm font-medium mb-3">Follow us on social media:</p>
-      <div className="flex gap-3">
-        <a
-          href="#"
-          className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700"
-        >
-          <Icon icon="line-md:facebook" width="24" height="24" />
-        </a>
-        <a
-          href="#"
-          className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white hover:bg-gray-800"
-        >
-          <Icon icon="prime:twitter" width="14" height="14" />
-        </a>
-        <a
-          href="#"
-          className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white"
-        >
-          <Icon icon="lets-icons:insta" width="24" height="24" />
-        </a>
-        <a
-          href="#"
-          className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center text-white hover:bg-blue-800"
-        >
-          <Icon icon="ri:linkedin-fill" width="24" height="24" />
-        </a>
+    <div className="pt-4 border-t border-border/50">
+      <p className="text-sm font-semibold mb-4 tracking-wide">THEO DÕI CHÚNG TÔI</p>
+      <div className="flex gap-4">
+        {[
+          { icon: 'line-md:facebook', color: 'hover:text-blue-500' },
+          { icon: 'prime:twitter', color: 'hover:text-sky-400' },
+          { icon: 'lets-icons:insta', color: 'hover:text-pink-500' },
+          { icon: 'ri:linkedin-fill', color: 'hover:text-blue-600' }
+        ].map((item, index) => (
+          <a
+            key={index}
+            href="#"
+            className={`w-10 h-10 bg-muted/40 rounded-full flex items-center justify-center text-muted-foreground transition-all duration-300 hover:bg-muted ${item.color} hover:scale-110 active:scale-95`}
+          >
+            <Icon icon={item.icon} width="22" height="22" />
+          </a>
+        ))}
       </div>
     </div>
   );

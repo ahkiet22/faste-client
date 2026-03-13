@@ -2,26 +2,26 @@ import { Icon } from '@iconify/react';
 
 export default function DownloadApp() {
   return (
-    <div>
-      <h4 className="font-semibold mb-4">Download our app</h4>
+    <div className="mb-8">
+      <h4 className="font-bold text-sm mb-5 tracking-wider uppercase">TẢI ỨNG DỤNG</h4>
 
-      <div className="space-y-2">
-        <a href="#" className="block">
-          <div className="bg-black text-white rounded-lg px-4 py-2 text-xs flex items-center gap-2">
-            <Icon icon="logos:google-play-icon" width="24" />
+      <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
+        <a href="#" className="flex-1 transition-transform hover:-translate-y-1">
+          <div className="bg-foreground text-background rounded-xl px-4 py-2.5 flex items-center gap-3">
+            <Icon icon="logos:google-play-icon" width="22" />
             <div>
-              <div className="text-xs opacity-75">GET IT ON</div>
-              <div className="font-semibold">Google Play</div>
+              <div className="text-[10px] font-medium opacity-80 leading-none mb-1">GET IT ON</div>
+              <div className="font-bold text-sm leading-none">Google Play</div>
             </div>
           </div>
         </a>
 
-        <a href="#" className="block">
-          <div className="bg-black text-white rounded-lg px-4 py-2 text-xs flex items-center gap-2">
+        <a href="#" className="flex-1 transition-transform hover:-translate-y-1">
+          <div className="bg-foreground text-background rounded-xl px-4 py-2.5 flex items-center gap-3">
             <Icon icon="ic:baseline-apple" width="24" />
             <div>
-              <div className="text-xs opacity-75">Download on the</div>
-              <div className="font-semibold">App Store</div>
+              <div className="text-[10px] font-medium opacity-80 leading-none mb-1">Download on</div>
+              <div className="font-bold text-sm leading-none">App Store</div>
             </div>
           </div>
         </a>

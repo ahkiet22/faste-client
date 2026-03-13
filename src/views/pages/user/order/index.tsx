@@ -192,9 +192,9 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <main className="bg-gray-50 space-y-2">
+    <main className="bg-background space-y-2">
       {/* Header */}
-      {isLoading && <LoadingSpinner />}
+      {isLoading && <LoadingDialog isLoading={isLoading}  />}
       <Suspense fallback={<LoadingSpinner />}>
         <ProductRatingForm
           id={selectOrder}
@@ -212,7 +212,7 @@ export default function OrdersPage() {
           }
         />
       </Suspense>
-      <div className="sticky top-0 bg-white border-b border-gray-200">
+      <div className="sticky top-0 bg-background border-b border-border">
         {/* Tabs */}
         <div className="max-w-7xl mx-auto">
           <Tabs
@@ -220,12 +220,12 @@ export default function OrdersPage() {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="w-full justify-start bg-transparent border-b border-gray-200 rounded-none h-auto p-0 gap-0">
+            <TabsList className="w-full justify-start bg-transparent border-b border-border rounded-none h-auto p-0 gap-0">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="rounded-none border-0 border-b-2 border-transparent data-[state=active]:border-orange-600 data-[state=active]:shadow-none data-[state=active]:text-orange-600 text-gray-600 hover:text-orange-600 px-4 py-3 font-medium text-sm "
+                  className="rounded-none border-0 border-b-2 border-transparent data-[state=active]:border-orange-600 data-[state=active]:shadow-none data-[state=active]:text-orange-600 text-muted-foreground hover:text-orange-600 px-4 py-3 font-medium text-sm "
                 >
                   {tab.label}
                 </TabsTrigger>
@@ -236,13 +236,13 @@ export default function OrdersPage() {
       </div>
       <div className="max-w-7xl mx-auto">
         <div className="mb-4 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
           <Input
             type="text"
             placeholder="Bạn có thể tìm kiếm theo tên Shop, ID đơn hàng hoặc Tên Sản phẩm"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-gray-100 border-gray-300 rounded-lg text-sm"
+            className="pl-10 bg-muted/50 border-border rounded-lg text-sm"
           />
         </div>
       </div>
