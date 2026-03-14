@@ -91,7 +91,7 @@ export default async function RootLayout({
   const { locale } = await params;
   const { resources } = await initTranslations(locale, i18nNamespaces);
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

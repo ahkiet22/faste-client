@@ -25,7 +25,7 @@ interface suggestKeywordType {
   keyword: string;
 }
 
-const SearchHeader = () => {
+const SearchHeaderContent = () => {
   const [isVisible, setIsVisible] = useState(false);
   // const [searchText, setSearchText] = useState('');
   const { searchText, setSearchText } = useSearchStore();
@@ -117,126 +117,138 @@ const SearchHeader = () => {
   };
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <div
-        className="relative not-first:not-last:flex-1 max-w-2xl hidden md:flex items-center gap-2"
-        ref={searchRef}
-      >
-        <div className="w-full rounded-2xl border border-gray-200">
-          <Input
-            type="text"
-            placeholder="Search for products, categories or brands..."
-            className="pr-10 bg-muted/50 border-0 rounded-2xl"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onFocus={() => setIsVisible(true)}
-          />
-          <Button
-            size="sm"
-            className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl cursor-pointer"
-            onClick={() => handleSearch(searchText)}
-          >
-            <Icon icon="material-symbols-light:search" className="w-4 h-4" />
-          </Button>
-          {isVisible && (
-            <>
-              {searchText ? (
-                <div className="absolute left-0 top-11 bg-card w-full z-50 rounded-xs shadow-lg outline outline-gray-200 py-2 px-4">
-                  <div className="text-gray-400">GỢI Ý TÌM KIẾM</div>
+    <div
+      className="relative not-first:not-last:flex-1 max-w-2xl hidden md:flex items-center gap-2"
+      ref={searchRef}
+    >
+      <div className="w-full rounded-2xl border border-gray-200">
+        <Input
+          type="text"
+          placeholder="Search for products, categories or brands..."
+          className="pr-10 bg-muted/50 border-0 rounded-2xl"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onFocus={() => setIsVisible(true)}
+        />
+        <Button
+          size="sm"
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl cursor-pointer"
+          onClick={() => handleSearch(searchText)}
+        >
+          <Icon icon="material-symbols-light:search" className="w-4 h-4" />
+        </Button>
+        {isVisible && (
+          <>
+            {searchText ? (
+              <div className="absolute left-0 top-11 bg-card w-full z-50 rounded-xs shadow-lg outline outline-gray-200 py-2 px-4">
+                <div className="text-gray-400">GỢI Ý TÌM KIẾM</div>
+                <div>
                   <div>
-                    <div>
-                      {suggestKeyword.slice(0, 8).map((item, index) => (
-                        <div
-                          key={index}
-                          className="text-gray-500 cursor-pointer py-1 flex items-center justify-between hover:bg-gray-50"
-                          onClick={() => {
-                            setSearchText(item.keyword);
-                            handleSearch(item.keyword);
-                          }}
-                        >
-                          <span>{String(item.keyword)}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {suggestKeyword.slice(0, 8).map((item, index) => (
+                      <div
+                        key={index}
+                        className="text-gray-500 cursor-pointer py-1 flex items-center justify-between hover:bg-gray-50"
+                        onClick={() => {
+                          setSearchText(item.keyword);
+                          handleSearch(item.keyword);
+                        }}
+                      >
+                        <span>{String(item.keyword)}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ) : (
-                <div className="absolute left-0 top-11 bg-card w-full z-50 rounded-xs shadow-lg outline outline-gray-200 py-2 px-4">
-                  <div className="flex justify-between items-center py-1">
-                    <div className="text-gray-400">LỊCH SỬ TÌM KIẾM</div>
-                    <div
-                      className="text-blue-400 cursor-pointer"
-                      onClick={handleClearHistory}
-                    >
-                      Xóa tất cả
-                    </div>
+              </div>
+            ) : (
+              <div className="absolute left-0 top-11 bg-card w-full z-50 rounded-xs shadow-lg outline outline-gray-200 py-2 px-4">
+                <div className="flex justify-between items-center py-1">
+                  <div className="text-gray-400">LỊCH SỬ TÌM KIẾM</div>
+                  <div
+                    className="text-blue-400 cursor-pointer"
+                    onClick={handleClearHistory}
+                  >
+                    Xóa tất cả
                   </div>
-                  <div className="pb-2">
-                    {searchHistory.length > 0 ? (
-                      <div>
-                        {searchHistory.slice(0, 5).map((keyword, index) => (
-                          <div
-                            key={index}
-                            className="text-gray-500 cursor-pointer py-1 flex items-center justify-between hover:bg-gray-50 relative"
-                            onClick={() => {
-                              setSearchText(keyword);
-                              handleSearch(keyword);
-                            }}
-                          >
-                            <div className="flex items-center gap-x-2">
-                              <Icon
-                                icon="mingcute:time-line"
-                                width="18"
-                                height="18"
-                              />
-                              <span>{keyword}</span>
-                            </div>
-                            <button
-                              className="hover:bg-gray-300 rounded-sm p-0.5 cursor-pointer absolute right-0"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeleteSearchHistory(index);
-                              }}
-                            >
-                              <Icon icon={'material-symbols:close'} />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-gray-400">
-                        Chưa có lịch sử tìm kiếm
-                      </div>
-                    )}
-                  </div>
-                  <div className="w-full h-[1px] bg-gray-300" />
-                  <div className="pt-2">
-                    <div className="text-gray-400">TỪ KHÓA PHỔ BIẾN</div>
+                </div>
+                <div className="pb-2">
+                  {searchHistory.length > 0 ? (
                     <div>
-                      {POPULAR_KEYWORDS.map((keyword, index) => (
+                      {searchHistory.slice(0, 5).map((keyword, index) => (
                         <div
                           key={index}
-                          className="text-gray-500 cursor-pointer py-1 flex items-center gap-x-2 hover:bg-gray-50"
+                          className="text-gray-500 cursor-pointer py-1 flex items-center justify-between hover:bg-gray-50 relative"
                           onClick={() => {
                             setSearchText(keyword);
                             handleSearch(keyword);
                           }}
                         >
-                          <Icon
-                            icon={'mdi:chart-line'}
-                            className="text-yellow-500"
-                          />
-                          <span>{keyword}</span>
+                          <div className="flex items-center gap-x-2">
+                            <Icon
+                              icon="mingcute:time-line"
+                              width="18"
+                              height="18"
+                            />
+                            <span>{keyword}</span>
+                          </div>
+                          <button
+                            className="hover:bg-gray-300 rounded-sm p-0.5 cursor-pointer absolute right-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteSearchHistory(index);
+                            }}
+                          >
+                            <Icon icon={'material-symbols:close'} />
+                          </button>
                         </div>
                       ))}
                     </div>
+                  ) : (
+                    <div className="text-gray-400">
+                      Chưa có lịch sử tìm kiếm
+                    </div>
+                  )}
+                </div>
+                <div className="w-full h-[1px] bg-gray-300" />
+                <div className="pt-2">
+                  <div className="text-gray-400">TỪ KHÓA PHỔ BIẾN</div>
+                  <div>
+                    {POPULAR_KEYWORDS.map((keyword, index) => (
+                      <div
+                        key={index}
+                        className="text-gray-500 cursor-pointer py-1 flex items-center gap-x-2 hover:bg-gray-50"
+                        onClick={() => {
+                          setSearchText(keyword);
+                          handleSearch(keyword);
+                        }}
+                      >
+                        <Icon
+                          icon={'mdi:chart-line'}
+                          className="text-yellow-500"
+                        />
+                        <span>{keyword}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
-            </>
-          )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const SearchHeader = () => {
+  return (
+    <Suspense fallback={
+      <div className="relative not-first:not-last:flex-1 max-w-2xl hidden md:flex items-center gap-2">
+        <div className="w-full rounded-2xl border border-gray-200">
+          <Input type="text" placeholder="Search for products, categories or brands..." className="pr-10 bg-muted/50 border-0 rounded-2xl" disabled />
         </div>
       </div>
+    }>
+      <SearchHeaderContent />
     </Suspense>
   );
 };

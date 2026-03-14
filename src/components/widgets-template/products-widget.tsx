@@ -2,7 +2,6 @@
 
 import { getAllProductsPublicByShop } from '@/services/product';
 import { Widget } from '@/types/widget';
-import { Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import CartProduct from '../CardProduct';
 

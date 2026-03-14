@@ -170,7 +170,7 @@ export function AppSidebarSeller({
             width={100}
             height={100}
             alt="FastE3 logo"
-            className="dark:invert"
+            className="dark:invert w-auto h-16"
           />
           <span className="font-bold text-xl text-foreground hidden sm:block">
             FastE Seller

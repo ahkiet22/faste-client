@@ -26,18 +26,18 @@ const CartProduct = (props: { data: any; className?: string }) => {
           )}
 
           {/* Ảnh */}
-          <Image
-            src={data.images[0] ?? '/nftt-1.png'}
-            loading='lazy'
-            width={190}
-            height={190}
-            alt={data.name}
-            className={`w-full h-[190px] transition-opacity duration-300 ${
-              imgLoading ? 'opacity-0' : 'opacity-100'
-            }`}
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-            onLoadingComplete={() => setImgLoading(false)}
-          />
+         <Image
+  src={data.images[0] ?? '/nftt-1.png'}
+  loading="lazy"
+  width={190}
+  height={190}
+  alt={data.name}
+  className={`w-full h-auto transition-opacity duration-300 ${
+    imgLoading ? 'opacity-0' : 'opacity-100'
+  }`}
+  style={{ objectFit: 'cover', objectPosition: 'center' }}
+  onLoad={() => setImgLoading(false)}
+/>
           <div className="p-1">
             <p className="line-clamp-2 text-sm">{data.name}</p>
             <div className="flex items-center gap-x-1">

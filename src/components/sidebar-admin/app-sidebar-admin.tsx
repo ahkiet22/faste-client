@@ -163,18 +163,18 @@ export function AppSidebarAdmin({
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-       <Link href={'/'} className="flex items-center gap-1.5 shrink-0">
-          <Image
-            src="/logo.svg"
-            width={100}
-            height={100}
-            alt="FastE3 logo"
-            className="dark:invert"
-          />
-          <span className="font-bold text-xl text-foreground hidden sm:block">
-            FastE Admin
-          </span>
-        </Link>
+      <Link href={'/'} className="flex items-center gap-1.5 shrink-0">
+        <Image
+          src="/logo.svg"
+          width={120}
+          height={24}
+          alt="FastE3 logo"
+          className="dark:invert w-auto h-16"
+        />
+        <span className="font-bold text-xl text-foreground hidden sm:block">
+          FastE Admin
+        </span>
+      </Link>
       <SidebarContent>
         <NavMainAdmin items={ADMIN_MENU_ITEMS} />
         <NavProjects projects={data.projects} />

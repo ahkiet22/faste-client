@@ -40,9 +40,9 @@ export default function BannerWidget({ widget }: BannerWidgetProps) {
                         : 'https://salt.tikicdn.com/cache/w750/ts/tikimsp/cb/3f/52/5ed5314cabc00d10d36c789df95b4348.png.webp'
                     }
                     alt="Slide 1"
-                    layout="fill"
-                    objectFit="cover"
-                    className="overflow-hidden rounded-xl"
+                    fill
+                    sizes="100vw"
+                    className="overflow-hidden rounded-xl object-cover"
                   />
                 </div>
               </SwiperSlide>
@@ -55,9 +55,9 @@ export default function BannerWidget({ widget }: BannerWidgetProps) {
                       'https://salt.tikicdn.com/cache/w750/ts/tikimsp/cb/3f/52/5ed5314cabc00d10d36c789df95b4348.png.webp'
                     }
                     alt="Slide 1"
-                    layout="fill"
-                    objectFit="cover"
-                    className="overflow-hidden rounded-xl"
+                    fill
+                    sizes="100vw"
+                    className="overflow-hidden rounded-xl object-cover"
                   />
                 </div>
               </SwiperSlide>

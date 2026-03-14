@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
@@ -9,39 +9,18 @@ import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import LocaleSwitcher from '@/components/locale-switcher';
-import { ModeToggle } from '@/components/ModeToggle';
 import PromoBar from './PromoBar';
-import dynamic from 'next/dynamic';
 import { TopNavigation } from './TopNavigation';
 import BottomNavigation from './BottomNavigation';
 import { useGetCart } from '@/hooks/queries/useGetCart';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useCartStore } from '@/stores/cart-store';
 import CartPopover from './CartPopover';
-import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
-
-const SearchHeader = dynamic(() => import('./SearchHeader'), {
-  loading: () => <LoadingSpinner />,
-  ssr: false,
-});
-
-const UserDropdownMenu = dynamic(() => import('./UserDropdownMenu'), {
-  loading: () => <LoadingSpinner />,
-  ssr: false,
-});
-
-const MobileNavigation = dynamic(() => import('./mobile/MobileNavigation'), {
-  loading: () => <LoadingSpinner />,
-  ssr: false,
-});
-
-const MobileTopNavigation = dynamic(
-  () => import('./mobile/MobileTopNavigation'),
-  {
-    loading: () => <LoadingSpinner />,
-    ssr: false,
-  },
-);
+import SearchHeader from './SearchHeader';
+import UserDropdownMenu from './UserDropdownMenu';
+import MobileNavigation from './mobile/MobileNavigation';
+import MobileTopNavigation from './mobile/MobileTopNavigation';
+import { ModeToggle } from '@/components/ModeToggle';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,10 +61,10 @@ const Header = () => {
             <div className="flex items-center gap-2 shrink-0">
               <Image
                 src="/logo.svg"
-                width={100}
-                height={100}
+                width={120}
+                height={24}
                 alt="FastE3 logo"
-                className="dark:invert"
+                className="dark:invert w-auto h-16"
               />
               {/* <span className="font-bold text-xl text-foreground hidden sm:block">
                   FastE3
