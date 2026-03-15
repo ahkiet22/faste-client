@@ -17,16 +17,21 @@ export default function DashboardPage() {
           <CongratulationsCard />
 
           <MetricCard
-            label="Monthly recurring revenue"
+            label="sellercenter.dashboard.metrics.mrr"
             value="$34.1K"
             change="+61%"
             trend="up"
           />
 
-          <MetricCard label="Users" value="500.1K" change="+19.2%" trend="up" />
+          <MetricCard
+            label="sellercenter.dashboard.metrics.users"
+            value="500.1K"
+            change="+19.2%"
+            trend="up"
+          />
 
           <MetricCard
-            label="User growth"
+            label="sellercenter.dashboard.metrics.userGrowth"
             value="11.3%"
             change="-1.2%"
             trend="down"

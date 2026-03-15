@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input';
+import { useTranslation } from 'react-i18next';
 import {
   Control,
   Controller,
@@ -28,47 +29,9 @@ interface ICategory {
 
 interface InfoBasicProps {
   blockRefBasic: RefObject<HTMLDivElement | null>;
-  control: Control<any, any, any>;
-  errors: FieldErrors<{
-    name: string;
-    categories: (number | undefined)[];
-    brandId: number | undefined;
-    images: any[];
-    variants: {
-      value: string;
-      options: string[];
-    }[];
-    skus: {
-      skuCode: string;
-      price: number;
-      attributes: any;
-      quantity: number;
-    }[];
-    description: string;
-    basePrice: number;
-    status: NonNullable<'PUBLISHED' | 'DRAFT' | undefined>;
-    slugId: string | undefined;
-  }>;
-  getValues: UseFormGetValues<{
-    name: string;
-    categories: (number | undefined)[];
-    brandId: number | undefined;
-    images: any[];
-    variants: {
-      value: string;
-      options: string[];
-    }[];
-    skus: {
-      price: number;
-      quantity: number;
-      skuCode: string;
-      attributes: any;
-    }[];
-    description: string;
-    basePrice: number;
-    status: NonNullable<'DRAFT' | 'PUBLISHED' | undefined>;
-    slugId: string | undefined;
-  }>;
+  control: any;
+  errors: any;
+  getValues: any;
   brandData: any[];
   categorys: any[];
   handleDeleteImage: (index: number) => void;
@@ -85,6 +48,8 @@ const InfoBasic = memo(function InfoBasic({
   handleDeleteImage,
   handleImageChange,
 }: InfoBasicProps) {
+  const { t } = useTranslation();
+
   const filterCategories = (
     categories: {
       id: string;
@@ -126,10 +91,13 @@ const InfoBasic = memo(function InfoBasic({
       ref={blockRefBasic}
       className="bg-white p-2 h-auto rounded-lg space-y-6"
     >
-      <div className="text-lg font-semibold">Thông tin cơ bản</div>
+      <div className="text-lg font-semibold">
+        {t('sellercenter.products.create.basicInfo')}
+      </div>
       <div className="grid gap-3">
         <label className="text-sm font-medium">
-          <span className="text-destructive">*</span> Name
+          <span className="text-destructive">*</span>{' '}
+          {t('sellercenter.products.create.productName')}
         </label>
         <Controller
           name="name"
@@ -139,7 +107,7 @@ const InfoBasic = memo(function InfoBasic({
               {...field}
               id="name"
               type="name"
-              placeholder="m@example.com"
+              placeholder={t('sellercenter.products.create.productName')}
             />
           )}
         />
@@ -171,7 +139,7 @@ const InfoBasic = memo(function InfoBasic({
         </div>
       )}
       <div className="grid gap-3">
-        <Label htmlFor="brandId">Thương hiệu</Label>
+        <Label htmlFor="brandId">{t('sellercenter.products.create.brand')}</Label>
         <Controller
           name="brandId"
           control={control}
@@ -184,7 +152,9 @@ const InfoBasic = memo(function InfoBasic({
                 }}
               >
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Chọn thương hiệu" />
+                  <SelectValue
+                    placeholder={t('sellercenter.products.create.brandPlaceholder')}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -206,12 +176,19 @@ const InfoBasic = memo(function InfoBasic({
       </div>
 
       <div className="grid gap-3 w-[180px]">
-        <label className="text-sm font-medium">Slug</label>
+        <label className="text-sm font-medium">
+          {t('sellercenter.products.create.slug')}
+        </label>
         <Controller
           name="slugId"
           control={control}
           render={({ field }) => (
-            <Input {...field} id="slugId" type="text" placeholder="Nhập vào" />
+            <Input
+              {...field}
+              id="slugId"
+              type="text"
+              placeholder={t('sellercenter.products.create.slug')}
+            />
           )}
         />
         {errors.slugId && (
@@ -220,10 +197,10 @@ const InfoBasic = memo(function InfoBasic({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="brandId">{`Ảnh (${getValues('images')?.length > 0 ? getValues('images').length : 0}/8)`}</Label>
+        <Label htmlFor="brandId">{`${t('sellercenter.products.create.images')} (${getValues('images')?.length > 0 ? getValues('images').length : 0}/8)`}</Label>
         <div className="flex gap-x-2">
           {getValues('images') &&
-            getValues('images').map((image, index) => (
+            getValues('images').map((image: string, index: number) => (
               <div
                 className="group w-16 h-16 border-2 border-dashed border-border rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors relative"
                 key={index}

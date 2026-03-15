@@ -1,7 +1,7 @@
 'use client';
 
 // -- React --
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // -- Component --
@@ -39,6 +39,7 @@ import ProductCharacteristics from './partials/ProductCharacteristics';
 import ShippingSection from './partials/ShippingSection';
 import ProductDescription from './partials/ProductDescription';
 import InfoBasic from './partials/InfoBasic';
+import { useTranslation } from 'react-i18next';
 
 interface ICategory {
   id: string;
@@ -50,62 +51,61 @@ type RichTextEditorHandle = {
   setContent: (value: string) => void;
 };
 
-const productSchema = yup.object().shape({
-  name: yup
-    .string()
-    .min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự')
-    .max(255, 'Tên sản phẩm không được vượt quá 255 ký tự')
-    .required('Tên sản phẩm là bắt buộc'),
-  categories: yup
-    .array()
-    .of(yup.number().integer('ID danh mục phải là số nguyên'))
-    .required('Danh mục sản phẩm là bắt buộc'),
-  brandId: yup.number().integer('ID thương hiệu phải là số nguyên'),
-  images: yup.array().required('Danh sách hình ảnh là bắt buộc'),
-  variants: yup
-    .array()
-    .of(
-      yup.object().shape({
-        value: yup.string().required('Giá trị thuộc tính là bắt buộc'),
-        options: yup
-          .array()
-          .of(yup.string().required('Tùy chọn không được rỗng'))
-          .required('Danh sách tùy chọn là bắt buộc'),
-      }),
-    )
-    .required('Danh sách thuộc tính sản phẩm là bắt buộc'),
-
-  skus: yup
-    .array()
-    .of(
-      yup.object().shape({
-        skuCode: yup.string().required('Mã SKU là bắt buộc'),
-        price: yup
-          .number()
-          // .positive('Giá SKU phải lớn hơn 0')
-          .required('Giá SKU là bắt buộc'),
-        attributes: yup.object().required('Thuộc tính SKU là bắt buộc'),
-        quantity: yup
-          .number()
-          .integer('Số lượng phải là số nguyên')
-          .min(0, 'Số lượng không thể âm')
-          .required('Số lượng SKU là bắt buộc'),
-      }),
-    )
-    .required('Danh sách SKU sản phẩm là bắt buộc'),
-  description: yup.string().required('Mô tả sản phẩm là bắt buộc'),
-  basePrice: yup
-    .number()
-    // .positive('Giá cơ bản phải lớn hơn 0')
-    .required('Giá cơ bản là bắt buộc'),
-  status: yup
-    .mixed<'PUBLISHED' | 'DRAFT'>()
-    .oneOf(['PUBLISHED', 'DRAFT'], 'Trạng thái không hợp lệ')
-    .required('Trạng thái là bắt buộc'),
-  slugId: yup.string(),
-});
-
 export const CreateProductPage = () => {
+  const { t } = useTranslation();
+
+  const productSchema = useMemo(() => yup.object().shape({
+    name: yup
+      .string()
+      .min(3, t('sellercenter.products.create.nameMinLen'))
+      .max(255, t('sellercenter.products.create.nameMaxLen'))
+      .required(t('sellercenter.products.create.nameRequired')),
+    categories: yup
+      .array()
+      .of(yup.number().integer('ID danh mục phải là số nguyên'))
+      .required(t('sellercenter.products.create.categoryRequired')),
+    brandId: yup.number().integer('ID thương hiệu phải là số nguyên'),
+    images: yup.array().required(t('sellercenter.products.create.imagesRequired')),
+    variants: yup
+      .array()
+      .of(
+        yup.object().shape({
+          value: yup.string().required('Giá trị thuộc tính là bắt buộc'),
+          options: yup
+            .array()
+            .of(yup.string().required('Tùy chọn không được rỗng'))
+            .required('Danh sách tùy chọn là bắt buộc'),
+        }),
+      )
+      .required('Danh sách thuộc tính sản phẩm là bắt buộc'),
+
+    skus: yup
+      .array()
+      .of(
+        yup.object().shape({
+          skuCode: yup.string().required('Mã SKU là bắt buộc'),
+          price: yup
+            .number()
+            .required('Giá SKU là bắt buộc'),
+          attributes: yup.object().required('Thuộc tính SKU là bắt buộc'),
+          quantity: yup
+            .number()
+            .integer('Số lượng phải là số nguyên')
+            .min(0, 'Số lượng không thể âm')
+            .required('Số lượng SKU là bắt buộc'),
+        }),
+      )
+      .required('Danh sách SKU sản phẩm là bắt buộc'),
+    description: yup.string().required('Mô tả sản phẩm là bắt buộc'),
+    basePrice: yup
+      .number()
+      .required(t('sellercenter.products.create.basePriceRequired')),
+    status: yup
+      .mixed<'PUBLISHED' | 'DRAFT'>()
+      .oneOf(['PUBLISHED', 'DRAFT'], 'Trạng thái không hợp lệ')
+      .required('Trạng thái là bắt buộc'),
+    slugId: yup.string(),
+  }), [t]);
   const blockRefs = {
     basic: useRef<HTMLDivElement>(null),
     characteristics: useRef<HTMLDivElement>(null),
@@ -174,11 +174,11 @@ export const CreateProductPage = () => {
     resolver: yupResolver(productSchema),
     defaultValues: {
       name: '',
-      categories: [],
+      categories: [] as number[],
       brandId: undefined,
       images: ['https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg'],
-      variants: [],
-      skus: [],
+      variants: [] as VariantsType,
+      skus: [] as TSKUs[],
       description: '',
       basePrice: 0,
       status: 'DRAFT',
@@ -562,12 +562,12 @@ export const CreateProductPage = () => {
             className="bg-white p-4 h-auto rounded-lg flex flex-col gap-y-4"
           >
             <div className="text-lg font-semibold">
-              Giá bán, Kho hàng và Biến thể
+              {t('sellercenter.products.create.pricingAndStock')}
             </div>
 
             <div className="grid gap-3">
               <label className="text-sm font-medium">
-                <span className="text-destructive">*</span> Giá cơ bản
+                <span className="text-destructive">*</span> {t('sellercenter.products.create.basePrice')}
               </label>
               <Controller
                 name="basePrice"
@@ -603,7 +603,7 @@ export const CreateProductPage = () => {
             </div>
 
             <div className="grid gap-3">
-              <label className="text-sm font-medium">Kho hàng</label>
+              <label className="text-sm font-medium">{t('sellercenter.products.create.stock')}</label>
               <Input
                 max={9999}
                 defaultValue={0}
@@ -622,7 +622,7 @@ export const CreateProductPage = () => {
                 >
                   <div className="flex items-center gap-x-2">
                     <label className="text-sm font-medium max-w-14">
-                      Phân loại {indexVariant + 1}
+                      {t('sellercenter.products.create.variantType')} {indexVariant + 1}
                     </label>
                     <Input
                       value={variant.value}
@@ -652,7 +652,7 @@ export const CreateProductPage = () => {
                       key={`${indexVariant}-${indexOption}`}
                     >
                       <label className="text-sm font-medium max-w-14">
-                        Tùy chọn
+                        {t('sellercenter.products.create.variantOption')}
                       </label>
                       <Input
                         value={option}
@@ -699,10 +699,11 @@ export const CreateProductPage = () => {
             </div>
             {variants.length < 2 && (
               <button
-                className="rounded-sm border border-dashed border-gray-300 bg-white px-1.5 py-1 text-sm text-gray-500 hover:border-blue-400 hover:text-blue-500"
+                type="button"
+                className="rounded-sm border border-dashed border-gray-300 bg-white px-1.5 py-1 text-sm text-gray-500 hover:border-blue-400 hover:text-blue-500 w-fit"
                 onClick={handleAddVariants}
               >
-                + Thêm biến thể
+                + {t('sellercenter.products.create.addVariant')}
               </button>
             )}
             {errors.variants && (
@@ -711,12 +712,12 @@ export const CreateProductPage = () => {
 
             {skus.length > 0 && (
               <>
-                <div className="font-semibold">Danh sách phân loại hàng</div>
+                <div className="font-semibold">{t('sellercenter.products.create.variantList')}</div>
                 <div className="flex justify-between">
                   <div className="flex">
                     <InputGroup>
                       <InputGroupInput
-                        placeholder="Giá"
+                        placeholder={t('sellercenter.products.create.price')}
                         onChange={(e) =>
                           setApplyValue((prev) => ({
                             ...prev,
@@ -727,7 +728,7 @@ export const CreateProductPage = () => {
                       <InputGroupAddon>đ</InputGroupAddon>
                     </InputGroup>
                     <Input
-                      placeholder="Kho hàng"
+                      placeholder={t('sellercenter.products.create.stock')}
                       onChange={(e) =>
                         setApplyValue((prev) => ({
                           ...prev,
@@ -741,7 +742,7 @@ export const CreateProductPage = () => {
                     className="cursor-pointer"
                     onClick={handleApplyAllSkus}
                   >
-                    Áp dụng cho tất cả
+                    {t('sellercenter.products.create.applyToAll')}
                   </Button>
                 </div>
                 <ProductVariantTable setSkus={setSkus} skusData={skus} />
@@ -761,14 +762,14 @@ export const CreateProductPage = () => {
             blockRefShipping={blockRefs.shipping}
             errors={errors}
           />
-          <div className="sticky bottom-0 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white flex justify-end gap-4 p-4">
+          <div className="sticky bottom-0 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white flex justify-end gap-4 p-4 z-50">
             <Button
               variant={'outline'}
               type="submit"
               onClick={() => setValue('status', 'DRAFT')}
               className="cursor-pointer"
             >
-              Lưu nháp
+              {t('sellercenter.products.create.saveDraft')}
             </Button>
             <Button
               type="submit"
@@ -777,7 +778,7 @@ export const CreateProductPage = () => {
               }}
               className="cursor-pointer"
             >
-              Gửi duyệt và bán
+              {t('sellercenter.products.create.publish')}
             </Button>
           </div>
         </form>

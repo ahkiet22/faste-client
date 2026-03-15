@@ -6,7 +6,6 @@ import { ReactElement, useEffect, useState } from 'react';
 import { getDetailShopMe } from '@/services/shop';
 import { useRouter } from 'next/navigation';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
-import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
 
 // export const metadata: Metadata = {
 //   title: 'Seller Center - FastE',
@@ -41,7 +40,7 @@ export default function RootLayout({
   }, []);
 
   if(isLoading) {
-    return <LoadingSpinner />
+    return <LoadingDialog isLoading />
   }
   return (
     <GuardLayoutWrapper

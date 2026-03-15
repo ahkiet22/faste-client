@@ -70,26 +70,30 @@ type Order = {
   voucherId?: number | null;
 };
 
-const TAB_OPTIONS = [
-  { value: 'ALL', label: 'Tất cả' },
-  { value: 'PENDING_CONFIRMATION', label: 'Chờ xác nhận' },
-  { value: 'PROCESSING', label: 'Đang xử lý' },
-  { value: 'PENDING_PAYMENT', label: 'Chờ thanh toán' },
-  { value: 'PENDING_PICKUP', label: 'Chờ lấy hàng' },
-  { value: 'PENDING_DELIVERY', label: 'Đang giao hàng' },
-  { value: 'DELIVERED', label: 'Đã giao' },
-  { value: 'RETURNED', label: 'Đã trả hàng' },
-  { value: 'CANCELLED', label: 'Đã hủy' },
-];
-
-const PAYMENT_METHODS = [
-  { value: 'ALL', label: 'Tất cả phương thức' },
-  { value: 'COD', label: 'COD' },
-  { value: 'BANK_TRANSFER', label: 'Chuyển khoản' },
-  { value: 'CREDIT_CARD', label: 'Thẻ tín dụng' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function OrderListPage() {
+  const { t } = useTranslation();
+  
+  const TAB_OPTIONS = useMemo(() => [
+    { value: 'ALL', label: t('order.tabs.all') },
+    { value: 'PENDING_CONFIRMATION', label: t('order.tabs.pending') },
+    { value: 'PROCESSING', label: t('order.tabs.shipping') }, // Note: check matching keys
+    { value: 'PENDING_PAYMENT', label: t('order.tabs.pending') }, // Assuming some overlap
+    { value: 'PENDING_PICKUP', label: t('order.tabs.receive') },
+    { value: 'PENDING_DELIVERY', label: t('order.tabs.receive') },
+    { value: 'DELIVERED', label: t('order.tabs.completed') },
+    { value: 'RETURNED', label: t('order.tabs.returns') },
+    { value: 'CANCELLED', label: t('order.tabs.cancelled') },
+  ], [t]);
+
+  const PAYMENT_METHODS = useMemo(() => [
+    { value: 'ALL', label: t('sellercenter.orders.paymentMethods.all') },
+    { value: 'COD', label: t('sellercenter.orders.paymentMethods.cod') },
+    { value: 'BANK_TRANSFER', label: t('sellercenter.orders.paymentMethods.bankTransfer') },
+    { value: 'CREDIT_CARD', label: t('sellercenter.orders.paymentMethods.creditCard') },
+  ], [t]);
+
   const [selectedTab, setSelectedTab] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [paymentMethodFilter, setPaymentMethodFilter] = useState<string>('ALL');
@@ -194,7 +198,7 @@ export default function OrderListPage() {
           className="text-3xl text-gray-700"
         />
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-          Quản lý đơn hàng
+          {t('sellercenter.orders.title')}
         </h1>
       </div>
 
@@ -205,7 +209,7 @@ export default function OrderListPage() {
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xl"
           />
           <Input
-            placeholder="Tìm theo mã đơn hàng, tên sản phẩm, shop..."
+            placeholder={t('sellercenter.orders.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -222,7 +226,7 @@ export default function OrderListPage() {
           }}
         >
           <SelectTrigger className="w-full md:w-[220px]">
-            <SelectValue placeholder="Lọc theo thanh toán" />
+            <SelectValue placeholder={t('sellercenter.orders.filterPayment')} />
           </SelectTrigger>
           <SelectContent>
             {PAYMENT_METHODS.map((method) => (
@@ -256,14 +260,14 @@ export default function OrderListPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px]">Mã đơn</TableHead>
-                  <TableHead>Ngày tạo</TableHead>
-                  <TableHead>Shop</TableHead>
-                  <TableHead>Sản phẩm</TableHead>
-                  <TableHead>Tổng tiền</TableHead>
-                  <TableHead>Thanh toán</TableHead>
-                  <TableHead>Trạng thái</TableHead>
-                  <TableHead className="text-right">Hành động</TableHead>
+                  <TableHead className="w-[100px]">{t('sellercenter.orders.table.orderId')}</TableHead>
+                  <TableHead>{t('sellercenter.orders.table.createdAt')}</TableHead>
+                  <TableHead>{t('sellercenter.orders.table.shop')}</TableHead>
+                  <TableHead>{t('sellercenter.orders.table.product')}</TableHead>
+                  <TableHead>{t('sellercenter.orders.table.total')}</TableHead>
+                  <TableHead>{t('sellercenter.orders.table.payment')}</TableHead>
+                  <TableHead>{t('sellercenter.orders.table.status')}</TableHead>
+                  <TableHead className="text-right">{t('sellercenter.orders.table.action')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -273,7 +277,7 @@ export default function OrderListPage() {
                       colSpan={8}
                       className="text-center py-8 text-gray-500"
                     >
-                      Không tìm thấy đơn hàng nào
+                      {t('sellercenter.orders.empty')}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -294,7 +298,9 @@ export default function OrderListPage() {
                               className="outline-none border-none bg-transparent hover:bg-transparent shadow-none cursor-pointer pl-0"
                               variant={'outline'}
                             >
-                              {order.items.length} sản phẩm
+                              {t('sellercenter.orders.table.itemsCount', {
+                                count: order.items.length,
+                              })}
                             </Button>
                           </TooltipTrigger>
 
@@ -333,7 +339,7 @@ export default function OrderListPage() {
                           size="sm"
                         >
                           <Icon icon={iconsStatusOrder.eye} className="mr-1" />
-                          Xem
+                          {t('sellercenter.orders.view')}
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -351,7 +357,7 @@ export default function OrderListPage() {
                     icon={iconsStatusOrder.package}
                     className="text-5xl text-gray-300 mb-3"
                   />
-                  <p className="text-gray-500">Không tìm thấy đơn hàng nào</p>
+                  <p className="text-gray-500">{t('sellercenter.orders.empty')}</p>
                 </CardContent>
               </Card>
             ) : (
@@ -361,7 +367,7 @@ export default function OrderListPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-base font-semibold">
-                          Đơn hàng #{order.id}
+                          {t('sellercenter.orders.table.orderLabel')} #{order.id}
                         </CardTitle>
                         <p className="text-xs text-gray-500 mt-1">
                           {dayjs(order.createdAt).format('DD/MM/YYYY HH:mm')}
@@ -384,7 +390,9 @@ export default function OrderListPage() {
                       <span className="text-gray-600">{order.Shop.name}</span>
                     </div>
                     <div className="text-sm text-gray-600">
-                      {order.items.length} sản phẩm
+                      {t('sellercenter.orders.table.itemsCount', {
+                        count: order.items.length,
+                      })}
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <Icon
@@ -397,7 +405,9 @@ export default function OrderListPage() {
                     </div>
                     <Separator />
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">Tổng tiền:</span>
+                      <span className="text-sm font-medium">
+                        {t('sellercenter.orders.table.total')}:
+                      </span>
                       <span className="text-lg font-bold text-primary">
                         {formatCurrency(order.Payment.amount)}
                       </span>
@@ -408,7 +418,7 @@ export default function OrderListPage() {
                       variant="outline"
                     >
                       <Icon icon={iconsStatusOrder.eye} className="mr-2" />
-                      Xem chi tiết
+                      {t('sellercenter.orders.viewDetails')}
                     </Button>
                   </CardContent>
                 </Card>
@@ -421,10 +431,11 @@ export default function OrderListPage() {
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-gray-600">
-            Hiển thị{' '}
-            {Math.min((currentPage - 1) * pageSize + 1, filteredOrders.length)}{' '}
-            - {Math.min(currentPage * pageSize, filteredOrders.length)} trong
-            tổng số {filteredOrders.length} đơn hàng
+            {t('sellercenter.orders.pagination.showing', {
+              start: Math.min((currentPage - 1) * pageSize + 1, filteredOrders.length),
+              end: Math.min(currentPage * pageSize, filteredOrders.length),
+              total: filteredOrders.length
+            })}
           </p>
           <div className="flex items-center gap-2">
             <Button
@@ -434,10 +445,13 @@ export default function OrderListPage() {
               disabled={currentPage === 1}
             >
               <Icon icon={iconsStatusOrder.chevronLeft} className="mr-1" />
-              Trước
+              {t('sellercenter.orders.pagination.prev')}
             </Button>
             <span className="text-sm font-medium">
-              Trang {currentPage} / {totalPages}
+              {t('sellercenter.orders.pagination.page', {
+                current: currentPage,
+                total: totalPages
+              })}
             </span>
             <Button
               variant="outline"
@@ -447,7 +461,7 @@ export default function OrderListPage() {
               }
               disabled={currentPage === totalPages}
             >
-              Sau
+              {t('sellercenter.orders.pagination.next')}
               <Icon icon={iconsStatusOrder.chevronRight} className="ml-1" />
             </Button>
           </div>

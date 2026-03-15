@@ -38,6 +38,133 @@
     "privacy": "Privacy Policy",
     "trackOrder": "Track Order"
   },
+  "sellerMenu": {
+    "home": "Home",
+    "products": {
+      "title": "Products",
+      "list": "Product List",
+      "add": "Add Product"
+    },
+    "orders": {
+      "title": "Orders",
+      "all": "All Orders"
+    },
+    "store": {
+      "title": "Store",
+      "design": "Store Design",
+      "info": "Shop Info"
+    }
+  },
+  "sellercenter": {
+    "common": {
+      "congratulations": "Congratulations {{name}}!",
+      "bestSeller": "Best seller of the month",
+      "viewSales": "View Sales",
+      "ecommerceDashboard": "E-Commerce Dashboard",
+      "download": "Download"
+    },
+    "orders": {
+      "title": "Order Management",
+      "searchPlaceholder": "Search by order ID, product name, shop...",
+      "filterPayment": "Filter by payment",
+      "paymentMethods": {
+        "all": "All Methods",
+        "cod": "COD",
+        "bankTransfer": "Bank Transfer",
+        "creditCard": "Credit Card"
+      },
+      "table": {
+        "orderId": "Order ID",
+        "createdAt": "Created At",
+        "shop": "Shop",
+        "product": "Product",
+        "total": "Total Amount",
+        "payment": "Payment",
+        "status": "Status",
+        "action": "Action",
+        "orderLabel": "Order",
+        "itemsCount": "{{count}} products"
+      },
+      "empty": "No orders found",
+      "view": "View",
+      "viewDetails": "View Details",
+      "pagination": {
+        "showing": "Showing {{start}} - {{end}} of total {{total}} orders",
+        "prev": "Prev",
+        "next": "Next",
+        "page": "Page {{current}} / {{total}}"
+      }
+    },
+    "dashboard": {
+      "metrics": {
+        "mrr": "Monthly recurring revenue",
+        "users": "Users",
+        "userGrowth": "User growth"
+      }
+    },
+    "products": {
+      "create": {
+        "title": "Add New Product",
+        "basicInfo": "Basic Information",
+        "productName": "Product Name",
+        "nameMinLen": "Product name must be at least 3 characters",
+        "nameMaxLen": "Product name cannot exceed 255 characters",
+        "nameRequired": "Product name is required",
+        "categoryRequired": "Product category is required",
+        "brand": "Brand",
+        "brandPlaceholder": "Select Brand",
+        "slug": "Slug",
+        "images": "Images",
+        "imagesRequired": "Images are required",
+        "pricingAndStock": "Pricing, Stock and Variants",
+        "basePrice": "Base Price",
+        "basePriceRequired": "Base Price is required",
+        "stock": "Stock",
+        "variants": "Variants",
+        "variantType": "Variant Type",
+        "variantOption": "Option",
+        "variantList": "Variant List",
+        "price": "Price",
+        "addVariant": "Add Variant",
+        "applyToAll": "Apply to All",
+        "saveDraft": "Save Draft",
+        "publish": "Publish Product",
+        "descriptionTitle": "Product Description",
+        "descriptionLabel": "Detailed Product Description",
+        "descriptionHint": "(Do not insert links/addresses/phone numbers/website/seller logo)",
+        "characteristicsTitle": "Product Characteristics",
+        "characteristicLabel": "Characteristic {{index}}",
+        "shippingTitle": "Shipping Information",
+        "weight": "Weight (g)",
+        "packageSize": "Package Size",
+        "packageSizeHint": "(Actual shipping fee will change if you enter incorrect dimensions)",
+        "shippingUnit": "Shipping Carrier",
+        "shippingUnitPlaceholder": "Select Shipping Carrier",
+        "length": "Length (cm)",
+        "width": "Width (cm)",
+        "height": "Height (cm)",
+        "shippingFee": "Estimated Shipping Fee",
+        "enterValue": "Enter value",
+        "variantSku": "Variant SKU",
+        "gtin": "GTIN",
+        "productInfoTab": "Product Information",
+        "productPreviewTab": "Product Preview",
+        "contentScore": "Content Score",
+        "poor": "Poor",
+        "addMinImages": "Add at least 3 main images",
+        "fillRequiredAttributes": "Fill in required attributes",
+        "fillMainSpecs": "Fill in main product specifications",
+        "addMinDescImages": "Add at least 1 image in the description",
+        "addMinDescWords": "Add a description of at least 30 words",
+        "detailInfo": "Detailed Information",
+        "productDetailTitle": "Product Details",
+        "productDetailHint": "This is the content displayed in the custom modal, fitting within the phone frame.",
+        "viewMore": "View More",
+        "description": "Description",
+        "zeroVariants": "0 variants"
+      }
+    }
+  },
 
   "auth": {
     "login": {
@@ -447,51 +574,64 @@
     }
   },
   "about": {
-    "badge": "About Our Company",
-    "heroTitle": "Building the Future Together",
-    "heroDesc": "We're on a mission to revolutionize how people connect, shop, and share their stories online.",
-    "getInTouch": "Get in Touch",
-    "readBlog": "Read Our Blog",
-    "missionTitle": "Our Mission",
-    "missionDesc1": "To create a seamless digital marketplace that empowers sellers and delights buyers, fostering a community where quality products and exceptional service thrive.",
-    "missionDesc2": "We believe in democratizing e-commerce, making it accessible to businesses of all sizes while maintaining the highest standards of quality and customer satisfaction.",
-    "visionTitle": "Our Vision",
-    "visionDesc1": "To become the world's most trusted online marketplace, where innovation meets integrity and every transaction creates value for all stakeholders.",
-    "visionDesc2": "We envision a future where technology enables meaningful connections between people, transcending geographical boundaries and creating opportunities for growth.",
-    "coreValuesTitle": "Our Core Values",
-    "coreValuesDesc": "These principles guide every decision we make and shape our company culture.",
+    "badge": "About the Project",
+    "heroTitle": "Building E-Commerce Made Simple",
+    "heroDesc": "FastE is an e-commerce platform built purely for learning, research, and technology exploration.",
+    "getInTouch": "Contact",
+    "readBlog": "Blog",
+    "missionTitle": "Mission",
+    "missionDesc1": "FastE is built with the mission of providing a fully-featured e-commerce platform — including product, order, user, and payment management — for the purpose of research and learning.",
+    "missionDesc2": "The project is developed by an individual driven by a passion for technology, aiming to explore modern technologies in the e-commerce domain.",
+    "visionTitle": "Vision",
+    "visionDesc1": "Create a comprehensive demo system that reflects the core features of real-world marketplaces like Shopee, Lazada, and Tiki.",
+    "visionDesc2": "Help oneself and the community gain deep understanding of system architecture, UI/UX, APIs, and state management in real applications.",
+    "coreValuesTitle": "Core Values",
+    "coreValuesDesc": "The principles that guide every decision made throughout the project.",
+    "teamTitle": "Team",
+    "teamDesc": "This project is driven by passion and self-learning.",
+    "ctaTitle": "Explore Users and Products",
+    "ctaDesc": "Experience the full features of the platform — from the customer interface to the seller dashboard.",
+    "exploreShops": "Explore Now",
     "values": {
-      "customerFirst": "Customer First",
-      "customerFirstDesc": "We prioritize customer needs and satisfaction in every decision we make.",
-      "innovation": "Innovation",
-      "innovationDesc": "We constantly push boundaries and embrace new technologies and ideas.",
-      "integrity": "Integrity",
-      "integrityDesc": "We operate with transparency and honesty in all our business dealings.",
-      "community": "Community",
-      "communityDesc": "We believe in building strong relationships with our team and customers."
+      "customerFirst": "Real-World Experience",
+      "customerFirstDesc": "Every feature is built based on real-world scenarios, not theoretical concepts.",
+      "innovation": "Continuous Innovation",
+      "innovationDesc": "Continuously updating technologies, design patterns, and software architecture to stay current.",
+      "integrity": "Honesty",
+      "integrityDesc": "Clean, readable, and extensible code.",
+      "community": "Sharing",
+      "communityDesc": "Aimed at sharing knowledge and inspiration with the developer community."
     },
-    "teamTitle": "Meet Our Team",
-    "teamDesc": "Talented individuals united by a shared vision to transform the digital marketplace.",
-    "stats": {
-      "activeSellers": "Active Sellers",
-      "productsListed": "Products Listed",
-      "happyCustomers": "Happy Customers",
-      "countriesServed": "Countries Served"
-    },
-    "ctaTitle": "Join Our Community",
-    "ctaDesc": "Whether you're a seller looking to grow your business or a buyer seeking quality products, we'd love to have you join us.",
-    "exploreShops": "Explore Shops",
     "teamRoles": {
-      "ceo": "Founder & CEO",
-      "cto": "CTO",
-      "design": "Head of Design",
-      "ops": "Head of Operations"
+      "ceo": "Author & Developer",
+      "cto": "Backend Engineer",
+      "design": "UI/UX Designer",
+      "ops": "DevOps & Infrastructure"
     },
     "teamBios": {
-      "ceo": "Visionary leader with 15+ years in tech entrepreneurship",
-      "cto": "Full-stack engineer passionate about scalable architecture",
-      "design": "Creative designer focused on user-centered experiences",
-      "ops": "Operations expert ensuring smooth business growth"
+      "ceo": "Founder of the FastE project, responsible for designing and implementing the entire frontend system.",
+      "cto": "Designs RESTful APIs, manages databases, and handles business logic.",
+      "design": "Builds a consistent, user-friendly, and visually appealing design system.",
+      "ops": "Manages deployment, CI/CD, and environment setup."
+    },
+    "stats": {
+      "activeSellers": "Simulated Sellers",
+      "productsListed": "Demo Products",
+      "happyCustomers": "Features Built",
+      "countriesServed": "Supported Languages"
+    },
+    "disclaimer": {
+      "badgeText": "This is a Learning Project",
+      "title": "About This Project",
+      "desc1": "FastE is built entirely for the purpose of learning, exploration, and technology discovery. It is a personal project with no backing from any business or organization.",
+      "desc2": "This project has no commercial purpose, generates no profit, and is not intended for personal gain in any form.",
+      "commitmentTitle": "Commitment",
+      "commitments": {
+        "1": "No real user data is used for selling or advertising",
+        "2": "All data displayed on the platform is demo / hypothetical data",
+        "3": "Not deployed for commercial purposes without appropriate licensing",
+        "4": "Source code is publicly shared for reference and educational purposes"
+      }
     }
   },
   "contact": {

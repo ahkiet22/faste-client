@@ -1,7 +1,6 @@
 'use client';
 
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
-import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
 import { AddWidgets } from '@/components/storefront-config/add-widgets';
 import DesktopPreview from '@/components/storefront-config/desktop-preview';
 import MobilePreview from '@/components/storefront-config/mobile-preview';
@@ -22,7 +21,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 const AlertConfirm = dynamic(() => import('@/components/AlertConfirm'), {
-  loading: () => <LoadingSpinner />,
+  loading: () => <LoadingDialog isLoading />,
   ssr: false,
 });
 

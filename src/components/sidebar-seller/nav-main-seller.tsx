@@ -21,10 +21,12 @@ import { IMenuItem } from '@/configs/sidebar-items';
 import Link from 'next/link';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export function NavMainSeller({ items }: { items: IMenuItem[] }) {
   const pathname = usePathname();
   const { state } = useSidebar();
+  const { t } = useTranslation();
 
   return (
     <SidebarGroup>
@@ -44,7 +46,7 @@ export function NavMainSeller({ items }: { items: IMenuItem[] }) {
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton
-                    tooltip={item.title}
+                    tooltip={t(item.title)}
                     className={`${
                       isParentActive ? 'text-blue-500 hover:!text-blue-500 hover:!bg-transparent' : ''
                     }`}
@@ -59,7 +61,7 @@ export function NavMainSeller({ items }: { items: IMenuItem[] }) {
                       <span
                         className={`${state === 'collapsed' && 'hidden'}`}
                       >
-                        {item.title}
+                        {t(item.title)}
                       </span>
                     </Link>
                     {item.items && (
@@ -81,7 +83,7 @@ export function NavMainSeller({ items }: { items: IMenuItem[] }) {
                               }`}
                             >
                               <Link href={subItem.url!}>
-                                <span>{subItem.title}</span>
+                                <span>{t(subItem.title)}</span>
                               </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>

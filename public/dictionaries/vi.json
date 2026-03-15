@@ -38,6 +38,133 @@
     "privacy": "Chính sách Bảo mật",
     "trackOrder": "Theo dõi đơn hàng"
   },
+  "sellerMenu": {
+    "home": "Trang chủ",
+    "products": {
+      "title": "Sản phẩm",
+      "list": "Danh sách sản phẩm",
+      "add": "Thêm sản phẩm"
+    },
+    "orders": {
+      "title": "Đơn hàng",
+      "all": "Tất cả đơn hàng"
+    },
+    "store": {
+      "title": "Gian hàng",
+      "design": "Thiết kế gian hàng",
+      "info": "Thông tin shop"
+    }
+  },
+  "sellercenter": {
+    "common": {
+      "congratulations": "Chúc mừng {{name}}!",
+      "bestSeller": "Người bán tốt nhất tháng",
+      "viewSales": "Xem doanh số",
+      "ecommerceDashboard": "Bảng điều khiển TMĐT",
+      "download": "Tải xuống"
+    },
+    "orders": {
+      "title": "Quản lý đơn hàng",
+      "searchPlaceholder": "Tìm theo mã đơn hàng, tên sản phẩm, shop...",
+      "filterPayment": "Lọc theo thanh toán",
+      "paymentMethods": {
+        "all": "Tất cả phương thức",
+        "cod": "COD",
+        "bankTransfer": "Chuyển khoản",
+        "creditCard": "Thẻ tín dụng"
+      },
+      "table": {
+        "orderId": "Mã đơn",
+        "createdAt": "Ngày tạo",
+        "shop": "Shop",
+        "product": "Sản phẩm",
+        "total": "Tổng tiền",
+        "payment": "Thanh toán",
+        "status": "Trạng thái",
+        "action": "Hành động",
+        "orderLabel": "Đơn hàng",
+        "itemsCount": "{{count}} sản phẩm"
+      },
+      "empty": "Không tìm thấy đơn hàng nào",
+      "view": "Xem",
+      "viewDetails": "Xem chi tiết",
+      "pagination": {
+        "showing": "Hiển thị {{start}} - {{end}} trong tổng số {{total}} đơn hàng",
+        "prev": "Trước",
+        "next": "Sau",
+        "page": "Trang {{current}} / {{total}}"
+      }
+    },
+    "dashboard": {
+      "metrics": {
+        "mrr": "Doanh thu định kỳ hàng tháng",
+        "users": "Người dùng",
+        "userGrowth": "Tỷ lệ tăng trưởng"
+      }
+    },
+    "products": {
+      "create": {
+        "title": "Thêm sản phẩm mới",
+        "basicInfo": "Thông tin cơ bản",
+        "productName": "Tên sản phẩm",
+        "nameMinLen": "Tên sản phẩm phải có ít nhất 3 ký tự",
+        "nameMaxLen": "Tên sản phẩm không được vượt quá 255 ký tự",
+        "nameRequired": "Tên sản phẩm là bắt buộc",
+        "categoryRequired": "Danh mục sản phẩm là bắt buộc",
+        "brand": "Thương hiệu",
+        "brandPlaceholder": "Chọn thương hiệu",
+        "slug": "Slug",
+        "images": "Ảnh",
+        "imagesRequired": "Danh sách hình ảnh là bắt buộc",
+        "pricingAndStock": "Giá bán, Kho hàng và Biến thể",
+        "basePrice": "Giá cơ bản",
+        "basePriceRequired": "Giá cơ bản là bắt buộc",
+        "stock": "Kho hàng",
+        "variants": "Biến thể",
+        "variantType": "Phân loại",
+        "variantOption": "Tùy chọn",
+        "variantList": "Danh sách phân loại hàng",
+        "price": "Giá",
+        "addVariant": "Thêm biến thể",
+        "applyToAll": "Áp dụng cho tất cả",
+        "saveDraft": "Lưu nháp",
+        "publish": "Gửi duyệt và bán",
+        "descriptionTitle": "Mô tả sản phẩm",
+        "descriptionLabel": "Mô tả chi tiết sản phẩm",
+        "descriptionHint": "(Không chèn link/địa chỉ/SĐT/website/logo nhà bán)",
+        "characteristicsTitle": "Đặc tính sản phẩm",
+        "characteristicLabel": "Đặc tính {{index}}",
+        "shippingTitle": "Thông tin vận chuyển",
+        "weight": "Cân nặng (kg)",
+        "packageSize": "Kích thước đóng gói",
+        "packageSizeHint": "(Phí vận chuyển thực tế sẽ thay đổi nếu bạn nhập sai kích thước)",
+        "shippingUnit": "Đơn vị vận chuyển",
+        "shippingUnitPlaceholder": "Chọn đơn vị vận chuyển",
+        "length": "Dài (cm)",
+        "width": "Rộng (cm)",
+        "height": "Cao (cm)",
+        "shippingFee": "Phí vận chuyển dự kiến",
+        "enterValue": "Nhập vào",
+        "variantSku": "SKU phân loại",
+        "gtin": "GTIN",
+        "productInfoTab": "Thông tin sản phẩm",
+        "productPreviewTab": "Xem trước sản phẩm",
+        "contentScore": "Điểm nội dung",
+        "poor": "Kém",
+        "addMinImages": "Thêm ít nhất 3 ảnh chính",
+        "fillRequiredAttributes": "Điền thuộc tính bắt buộc",
+        "fillMainSpecs": "Điền đủ thông số chính của sản phẩm",
+        "addMinDescImages": "Thêm ít nhất 1 ảnh trong mô tả",
+        "addMinDescWords": "Thêm mô tả dài ít nhất 30 từ",
+        "detailInfo": "Thông tin chi tiết",
+        "productDetailTitle": "Chi tiết sản phẩm",
+        "productDetailHint": "Đây là nội dung hiển thị trong modal tùy chỉnh, nằm gọn trong khung điện thoại.",
+        "viewMore": "Xem Thêm",
+        "description": "Mô tả",
+        "zeroVariants": "0 phân loại"
+      }
+    }
+  },
 
   "auth": {
     "login": {
@@ -447,51 +574,64 @@
     }
   },
   "about": {
-    "badge": "Về Công ty Chúng tôi",
-    "heroTitle": "Cùng nhau Kiến tạo Tương lai",
-    "heroDesc": "Chúng tôi thực hiện sứ mệnh cách mạng hóa cách mọi người kết nối, mua sắm và chia sẻ câu chuyện của họ trực tuyến.",
-    "getInTouch": "Liên hệ ngay",
-    "readBlog": "Đọc Blog",
-    "missionTitle": "Sứ mệnh của Chúng tôi",
-    "missionDesc1": "Tạo ra một thị trường kỹ thuật số liền mạch giúp trao quyền cho người bán và làm hài lòng người mua, thúc đẩy một cộng đồng nơi các sản phẩm chất lượng và dịch vụ đặc biệt phát triển.",
-    "missionDesc2": "Chúng tôi tin tưởng vào việc dân chủ hóa thương mại điện tử, giúp các doanh nghiệp thuộc mọi quy mô có thể tiếp cận được trong khi vẫn duy trì các tiêu chuẩn cao nhất về chất lượng và sự hài lòng của khách hàng.",
-    "visionTitle": "Tầm nhìn của Chúng tôi",
-    "visionDesc1": "Trở thành thị trường trực tuyến đáng tin cậy nhất thế giới, nơi sự đổi mới gặp gỡ sự chính trực và mỗi giao dịch đều tạo ra giá trị cho tất cả các bên liên quan.",
-    "visionDesc2": "Chúng tôi hình dung về một tương lai nơi công nghệ cho phép các kết nối có ý nghĩa giữa mọi người, vượt qua các ranh giới địa lý và tạo cơ hội phát triển.",
-    "coreValuesTitle": "Giá trị Cốt lõi",
-    "coreValuesDesc": "Những nguyên tắc này định hướng cho mọi quyết định chúng tôi đưa ra và hình thành nên văn hóa công ty.",
+    "badge": "Về dự án",
+    "heroTitle": "Xây dựng thương mại điện tử đơn giản hơn",
+    "heroDesc": "FastE là nền tảng thương mại điện tử được xây dựng nhằm mục đích học tập, nghiên cứu và khám phá công nghệ.",
+    "getInTouch": "Liên hệ",
+    "readBlog": "Blog",
+    "missionTitle": "Sứ mệnh",
+    "missionDesc1": "FastE được xây dựng với sứ mệnh cung cấp một nền tảng thương mại điện tử đa chức năng — bao gồm quản lý sản phẩm, đơn hàng, người dùng và thanh toán — phục vụ cho việc nghiên cứu và học tập.",
+    "missionDesc2": "Dự án được thực hiện bởi một cá nhân với lòng đam mê kỹ thuật, mục tiêu đặt ra là khám phá các công nghệ hiện đại trong thương mại điện tử.",
+    "visionTitle": "Tầm nhìn",
+    "visionDesc1": "Tạo ra một hệ thống demo đầy đủ, phản ánh các tính năng cốt lõi của một sàn thương mại thực tế như Shopee, Lazada, Tiki.",
+    "visionDesc2": "Giúp bản thân và cộng đồng hiểu sâu về kiến trúc hệ thống, UI/UX, API và quản lý trạng thái trong ứng dụng thực tế.",
+    "coreValuesTitle": "Giá trị cốt lõi",
+    "coreValuesDesc": "Những nguyên tắc định hướng mọi quyết định xây dựng dự án.",
+    "teamTitle": "Đội ngũ",
+    "teamDesc": "Dự án được thực hiện với sự đam mê và nỗ lực tự học.",
+    "ctaTitle": "Khám phá người dùng và sản phẩm",
+    "ctaDesc": "Trải nghiệm toàn bộ tính năng của nền tảng — từ giao diện khách hàng đến bảng điều khiển người bán.",
+    "exploreShops": "Khám phá ngay",
     "values": {
-      "customerFirst": "Khách hàng là trên hết",
-      "customerFirstDesc": "Chúng tôi ưu tiên nhu cầu và sự hài lòng của khách hàng trong mọi quyết định.",
-      "innovation": "Sáng tạo",
-      "innovationDesc": "Chúng tôi không ngừng vượt qua các giới hạn và nắm bắt các công nghệ và ý tưởng mới.",
-      "integrity": "Chính trực",
-      "integrityDesc": "Chúng tôi hoạt động với sự minh bạch và trung thực trong tất cả các giao dịch kinh doanh.",
-      "community": "Cộng đồng",
-      "communityDesc": "Chúng tôi tin tưởng vào việc xây dựng mối quan hệ bền chặt với đội ngũ và khách hàng của mình."
+      "customerFirst": "Trải nghiệm thực tế",
+      "customerFirstDesc": "Mọi tính năng đều được xây dựng dựa trên những gì có trong thực tế, không nằm trên giấy.",
+      "innovation": "Đổi mới liên tục",
+      "innovationDesc": "Liên tục cập nhật công nghệ, mẫu thiết kế và kiến trúc phần mềm theo xu hướng mới.",
+      "integrity": "Trung thực",
+      "integrityDesc": "Code rõ ràng, dễ đọc và dễ mở rộng.",
+      "community": "Chia sẻ",
+      "communityDesc": "Hướng đến việc chia sẻ kiến thức và cảm hứng có ích cho cộng đồng lập trình viên."
     },
-    "teamTitle": "Đội ngũ của Chúng tôi",
-    "teamDesc": "Những cá nhân tài năng đoàn kết bởi tầm nhìn chung nhằm chuyển đổi thị trường kỹ thuật số.",
-    "stats": {
-      "activeSellers": "Người bán hoạt động",
-      "productsListed": "Sản phẩm được niêm yết",
-      "happyCustomers": "Khách hàng hài lòng",
-      "countriesServed": "Quốc gia phục vụ"
-    },
-    "ctaTitle": "Tham gia Cộng đồng của Chúng tôi",
-    "ctaDesc": "Dù bạn là người bán muốn phát triển doanh nghiệp hay người mua đang tìm kiếm sản phẩm chất lượng, chúng tôi rất sẵn lòng chào đón bạn.",
-    "exploreShops": "Khám phá các Shop",
     "teamRoles": {
-      "ceo": "Người sáng lập & Giám đốc điều hành",
-      "cto": "Giám đốc công nghệ",
-      "design": "Trưởng bộ phận Thiết kế",
-      "ops": "Trưởng bộ phận Vận hành"
+      "ceo": "Tác giả & Phát triển viên",
+      "cto": "Kỹ sư Backend",
+      "design": "Thiết kế UI/UX",
+      "ops": "DevOps & Hạ tầng"
     },
     "teamBios": {
-      "ceo": "Nhà lãnh đạo có tầm nhìn với hơn 15 năm kinh nghiệm khởi nghiệp công nghệ",
-      "cto": "Kỹ sư full-stack đam mê kiến trúc hệ thống có khả năng mở rộng",
-      "design": "Nhà thiết kế sáng tạo tập trung vào trải nghiệm lấy người dùng làm trung tâm",
-      "ops": "Chuyên gia vận hành đảm bảo doanh nghiệp tăng trưởng mượt mà"
+      "ceo": "Người khởi xướng dự án FastE, đảm nhận thiết kế và triển khai toàn bộ hệ thống frontend.",
+      "cto": "Thiết kế các API RESTful, quản lý cơ sở dữ liệu và xử lý logic nghiệp vụ.",
+      "design": "Xây dựng hệ thống thiết kế nhất quán, dễ sử dụng và đẹp mắt.",
+      "ops": "Quản lý triển khai, CI/CD và môi trường cài đặt."
+    },
+    "stats": {
+      "activeSellers": "Người bán được mô phỏng",
+      "productsListed": "Sản phẩm demo",
+      "happyCustomers": "Tính năng đã xây dựng",
+      "countriesServed": "Ngôn ngữ hỗ trợ"
+    },
+    "disclaimer": {
+      "badgeText": "Đây là dự án học tập",
+      "title": "Về dự án này",
+      "desc1": "FastE được xây dựng hoàn toàn với mục đích học tập, tìm tòi và khám phá công nghệ. Đây là một dự án cá nhân, không có sự hậu thuẫn của bất kỳ tổ chức doanh nghiệp nào.",
+      "desc2": "Dự án không có mục đích kinh doanh, không thu lợi nhuận và không nhằm trục lợi cá nhân dưới bất kỳ hình thức nào.",
+      "commitmentTitle": "Cam kết",
+      "commitments": {
+        "1": "Không sử dụng dữ liệu người dùng thật để bán hoặc quảng cáo",
+        "2": "Toàn bộ dữ liệu hiển thị trên nền tảng là dữ liệu demo / giả định",
+        "3": "Không triển khai cho mục đích thương mại mà không có giấy phép phù hợp",
+        "4": "Mã nguồn được chia sẻ công khai nhằm mục đích tham khảo và học hỏi"
+      }
     }
   },
   "contact": {

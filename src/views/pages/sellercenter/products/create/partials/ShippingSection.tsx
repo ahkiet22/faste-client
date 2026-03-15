@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/select';
 import React, { RefObject } from 'react';
 import { FieldErrors } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface ShippingSectionProps {
   blockRefShipping: RefObject<HTMLDivElement | null>;
@@ -44,19 +45,20 @@ const ShippingSection: React.FC<ShippingSectionProps> = ({
   blockRefShipping,
   errors,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div ref={blockRefShipping} className="bg-white p-2 h-auto rounded-lg">
-      <div className="text-lg font-semibold">Vận chuyển và bảo hành</div>
+      <div className="text-lg font-semibold">{t('sellercenter.products.create.shippingTitle')}</div>
 
       {/* Cân nặng */}
       <div className="grid gap-3">
         <label className="text-sm font-medium">
-          <span className="text-destructive">*</span> Cân nặng (Sau khi đóng
-          gói)
+          <span className="text-destructive">*</span> {t('sellercenter.products.create.weight')}
         </label>
         <InputGroup className="max-w-40">
           <InputGroupInput
-            placeholder="Nhập vào"
+            placeholder={t('sellercenter.products.create.enterValue')}
             type="number"
             className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
           />
@@ -69,14 +71,13 @@ const ShippingSection: React.FC<ShippingSectionProps> = ({
       {/* Kích thước đóng gói */}
       <div className="grid gap-3">
         <label className="text-sm font-medium">
-          Kích thước đóng gói (Phí vận chuyển thực tế sẽ thay đổi nếu bạn nhập
-          sai kích thước)
+          {t('sellercenter.products.create.packageSize')} {t('sellercenter.products.create.packageSizeHint')}
         </label>
         <div className="flex gap-x-6">
-          {['R', 'D', 'C'].map((placeholder) => (
-            <InputGroup className="max-w-40" key={placeholder}>
+          {['width', 'length', 'height'].map((dimension) => (
+            <InputGroup className="max-w-40" key={dimension}>
               <InputGroupInput
-                placeholder={placeholder}
+                placeholder={t(`sellercenter.products.create.${dimension}`)}
                 type="number"
                 className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
               />
@@ -90,10 +91,10 @@ const ShippingSection: React.FC<ShippingSectionProps> = ({
 
       {/* Chọn đơn vị vận chuyển */}
       <div className="grid gap-3">
-        <label className="text-sm font-medium">Đơn vị vận chuyển</label>
+        <label className="text-sm font-medium">{t('sellercenter.products.create.shippingUnit')}</label>
         <Select>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Chọn đơn vị vận chuyển" />
+            <SelectValue placeholder={t('sellercenter.products.create.shippingUnitPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

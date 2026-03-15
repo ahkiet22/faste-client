@@ -1,5 +1,5 @@
-import { LoadingSpinner } from "@/components/loading/LoadingSpinner";
+import { LoadingDialog } from "@/components/loading/LoadingDialog";
 
 export default function Loading() {
-  return <LoadingSpinner />;
+  return <LoadingDialog isLoading />;
 }

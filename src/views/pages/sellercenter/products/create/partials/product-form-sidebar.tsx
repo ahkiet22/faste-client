@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { useTranslation } from 'react-i18next';
 
 type BlockKey =
   | 'basic'
@@ -29,6 +30,7 @@ const CustomPreviewSheet = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
@@ -38,7 +40,7 @@ const CustomPreviewSheet = ({
       <div className="relative bg-white h-2/4 w-full">
         {/* Header */}
         <div className="flex items-center justify-between p-2 border-b">
-          <h4 className="text-sm font-semibold">Thông tin chi tiết</h4>
+          <h4 className="text-sm font-semibold">{t('sellercenter.products.create.detailInfo')}</h4>
           <Button
             variant="ghost"
             size="icon"
@@ -50,10 +52,9 @@ const CustomPreviewSheet = ({
         </div>
 
         <div className="p-2 overflow-y-auto flex-1">
-          <h5 className="text-sm font-medium">Chi tiết sản phẩm</h5>
+          <h5 className="text-sm font-medium">{t('sellercenter.products.create.productDetailTitle')}</h5>
           <p className="text-xs text-muted-foreground mt-1">
-            Đây là nội dung hiển thị trong modal tùy chỉnh, nằm gọn trong khung
-            điện thoại.
+            {t('sellercenter.products.create.productDetailHint')}
           </p>
         </div>
       </div>
@@ -71,19 +72,20 @@ export function ProductFormSidebar(props: TProps) {
     scrollToBlock(section);
     setExpandedSection(expandedSection === section ? '' : section);
   };
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-y-2">
       <Tabs defaultValue="info-product">
         <TabsList className="bg-gray-200 max-w-[400px] w-full">
-          <TabsTrigger value="info-product">Thông tin sản phẩm</TabsTrigger>
-          <TabsTrigger value="preview-product">xem trước sản phẩm</TabsTrigger>
+          <TabsTrigger value="info-product">{t('sellercenter.products.create.productInfoTab')}</TabsTrigger>
+          <TabsTrigger value="preview-product">{t('sellercenter.products.create.productPreviewTab')}</TabsTrigger>
         </TabsList>
         <TabsContent value="info-product">
           <Card className="p-4 space-y-2 flex-1">
             {/* Header */}
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-medium">Điểm nổi dung</h2>
+              <h2 className="text-base font-medium">{t('sellercenter.products.create.contentScore')}</h2>
               <div className="flex items-center gap-2">
                 <button className="text-muted-foreground hover:text-foreground">
                   <RefreshCw className="h-4 w-4" />
@@ -101,7 +103,7 @@ export function ProductFormSidebar(props: TProps) {
                 step={1}
                 className="w-full"
               />
-              <span className="text-sm text-destructive">Poor</span>
+              <span className="text-sm text-destructive">{t('sellercenter.products.create.poor')}</span>
             </div>
 
             {/* Divider */}
@@ -125,7 +127,7 @@ export function ProductFormSidebar(props: TProps) {
                       htmlFor="basic"
                       className="cursor-pointer font-medium"
                     >
-                      Thông tin cơ bản
+                      {t('sellercenter.products.create.basicInfo')}
                     </Label>
                   </div>
                   {expandedSection === 'basic' ? (
@@ -138,7 +140,7 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="ml-6 pl-4 border-l-2 border-muted">
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="text-orange-500">⚠</span>
-                      Thêm ít nhất 3 ảnh chính
+                      {t('sellercenter.products.create.addMinImages')}
                     </p>
                   </div>
                 )}
@@ -156,7 +158,7 @@ export function ProductFormSidebar(props: TProps) {
                       id="characteristics"
                     />
                     <Label htmlFor="characteristics" className="cursor-pointer">
-                      Đặc tính sản phẩm
+                      {t('sellercenter.products.create.characteristicsTitle')}
                     </Label>
                   </div>
                   {expandedSection === 'characteristics' ? (
@@ -169,11 +171,11 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="ml-6 pl-4 border-l-2 border-muted">
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="text-orange-500">⚠</span>
-                      Điền thuộc tính bắt buộc
+                      {t('sellercenter.products.create.fillRequiredAttributes')}
                     </p>
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="text-orange-500">⚠</span>
-                      Điền đủ thông số chính của sản phẩm
+                      {t('sellercenter.products.create.fillMainSpecs')}
                     </p>
                   </div>
                 )}
@@ -188,7 +190,7 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="flex items-center gap-2">
                     <RadioGroupItem value="pricing" id="pricing" />
                     <Label htmlFor="pricing" className="cursor-pointer">
-                      Giá bán, Kho hàng và Biến thể
+                      {t('sellercenter.products.create.pricingAndStock')}
                     </Label>
                   </div>
                 </div>
@@ -203,7 +205,7 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="flex items-center gap-2">
                     <RadioGroupItem value="description" id="description" />
                     <Label htmlFor="description" className="cursor-pointer">
-                      Mô tả sản phẩm
+                      {t('sellercenter.products.create.descriptionTitle')}
                     </Label>
                   </div>
                   {expandedSection === 'description' ? (
@@ -216,11 +218,11 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="ml-6 pl-4 border-l-2 border-muted">
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="text-orange-500">⚠</span>
-                      Thêm ít nhất 1 ảnh trong mô tả
+                      {t('sellercenter.products.create.addMinDescImages')}
                     </p>
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="text-orange-500">⚠</span>
-                      Thêm mô tả dài ít nhất 30 từ
+                      {t('sellercenter.products.create.addMinDescWords')}
                     </p>
                   </div>
                 )}
@@ -235,7 +237,7 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="flex items-center gap-2">
                     <RadioGroupItem value="shipping" id="shipping" />
                     <Label htmlFor="shipping" className="cursor-pointer">
-                      Vận chuyển và Bảo hành
+                      {t('sellercenter.products.create.shippingTitle')}
                     </Label>
                   </div>
                 </div>
@@ -260,7 +262,7 @@ export function ProductFormSidebar(props: TProps) {
                   <div className="h-46 bg-gray-100"></div>
                   <div className="p-2 space-y-2">
                     <div className="text-xs text-red-500 font-bold">----</div>
-                    <div className="text-xs text-gray-500">0 phân loại</div>
+                    <div className="text-xs text-gray-500">{t('sellercenter.products.create.zeroVariants')}</div>
                     <div className="bg-gray-100 w-6 h-6"></div>
                     <div className="space-y-2">
                       <Skeleton className="h-4 w-full" />
@@ -286,13 +288,13 @@ export function ProductFormSidebar(props: TProps) {
                     variant={'outline'}
                     className="bg-red-100 outline-red-300 text-red-500 hover:text-red-500 font-normal text-xs px-2 py-1 h-auto"
                   >
-                    Xem Thêm
+                    {t('sellercenter.products.create.viewMore')}
                   </Button>
                 </div>
                 <div className="bg-white mb-10">
                   <div className="flex justify-between items-center  p-2">
                     <div className="text-xs font-semibold">
-                      Thông tin chi tiết
+                      {t('sellercenter.products.create.detailInfo')}
                     </div>
                     <Button
                       variant="link"
@@ -312,7 +314,7 @@ export function ProductFormSidebar(props: TProps) {
                   </div>
                   <div className="h-[1px] bg-gray-100 w-full"></div>
                   <div className="p-2">
-                    <div className="text-xs font-semibold">Mô tả</div>
+                    <div className="text-xs font-semibold">{t('sellercenter.products.create.description')}</div>
                     <div className="space-y-2">
                       <Skeleton className="h-4 w-full" />
                       <Skeleton className="h-4 w-full" />

@@ -488,7 +488,7 @@ export default function ReviewsTablePage() {
       </div>
 
       {/* Modals */}
-      <Suspense fallback={<LoadingSpinner />}>
+      <Suspense fallback={<LoadingDialog isLoading />}>
         <ReplyModal
           open={replyModalOpen}
           onOpenChange={setReplyModalOpen}
@@ -496,7 +496,7 @@ export default function ReviewsTablePage() {
           onSubmitSuccess={handleReplySuccess}
         />
       </Suspense>
-      <Suspense fallback={<LoadingSpinner />}>
+      <Suspense fallback={<LoadingDialog isLoading />}>
         <DetailModal
           open={detailModalOpen}
           onOpenChange={setDetailModalOpen}

@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/card';
 import { ImagePlus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { TSKUs } from '@/types/product';
+import { useTranslation } from 'react-i18next';
 import {
   InputGroup,
   InputGroupAddon,
@@ -21,6 +22,7 @@ type TProps = {
 
 export function ProductVariantTable(props: TProps) {
   const { setSkus, skusData } = props;
+  const { t } = useTranslation();
 
   // const handleVariantChange = (
   //   id: string,
@@ -89,10 +91,10 @@ export function ProductVariantTable(props: TProps) {
                 </th>
               )}
               <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
-                <span className="text-destructive">*</span> Giá
+                <span className="text-destructive">*</span> {t('sellercenter.products.create.price')}
               </th>
               <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
-                <span className="text-destructive">*</span> Kho hàng
+                <span className="text-destructive">*</span> {t('sellercenter.products.create.stock')}
                 <span
                   className="ml-1 text-xs text-muted-foreground cursor-help"
                   title="Warehouse quantity"
@@ -101,10 +103,10 @@ export function ProductVariantTable(props: TProps) {
                 </span>
               </th>
               <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
-                SKU phân loại
+                {t('sellercenter.products.create.variantSku')}
               </th>
               <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
-                GTIN
+                {t('sellercenter.products.create.gtin')}
                 <span
                   className="ml-1 text-xs text-muted-foreground cursor-help"
                   title="Global Trade Item Number"
@@ -189,7 +191,7 @@ export function ProductVariantTable(props: TProps) {
                     <InputGroup>
                       <InputGroupInput
                         type="number"
-                        placeholder="Nhập vào"
+                        placeholder={t('sellercenter.products.create.enterValue')}
                         min={0}
                         max={120000000}
                         value={sku.price}
@@ -229,7 +231,7 @@ export function ProductVariantTable(props: TProps) {
                   <td className="px-4 py-4 text-sm border-r">
                     <Input
                       type="text"
-                      placeholder="Nhập vào"
+                      placeholder={t('sellercenter.products.create.enterValue')}
                       value={sku.skuCode}
                       onChange={(e) =>
                         handleVariantChange(
@@ -245,7 +247,7 @@ export function ProductVariantTable(props: TProps) {
                   <td className="px-4 py-4 text-sm border-r">
                     <Input
                       type="text"
-                      placeholder="Nhập vào"
+                      placeholder={t('sellercenter.products.create.enterValue')}
                       value={''}
                       // onChange={(e) =>
                       //   handleVariantChange(variant.id, 'gtin', e.target.value)

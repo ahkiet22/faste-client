@@ -3,6 +3,7 @@
 import React, { RefObject } from 'react';
 import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
 import RichTextEditor from './editor-desc';
+import { useTranslation } from 'react-i18next';
 
 interface ProductDescriptionProps {
   blockRefDescription: RefObject<HTMLDivElement | null>;
@@ -36,14 +37,17 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({
   errors,
   editorRef,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div ref={blockRefDescription} className="bg-white p-2 h-auto rounded-lg">
-      <div className="text-lg font-semibold">Mô tả sản phẩm</div>
+      <div className="text-lg font-semibold">{t('sellercenter.products.create.descriptionTitle')}</div>
 
       <div className="grid gap-3">
         <label className="text-sm font-medium">
-          <span className="text-destructive">*</span> Mô tả chi tiết sản phẩm
-          (Không chèn link/địa chỉ/SĐT/website/logo nhà bán)
+          <span className="text-destructive">*</span> {t('sellercenter.products.create.descriptionLabel')}
+          {' '}
+          {t('sellercenter.products.create.descriptionHint')}
         </label>
 
         <Controller

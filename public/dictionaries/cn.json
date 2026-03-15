@@ -38,6 +38,133 @@
     "privacy": "隐私政策",
     "trackOrder": "追踪订单"
   },
+  "sellerMenu": {
+    "home": "首页",
+    "products": {
+      "title": "产品管理",
+      "list": "产品列表",
+      "add": "添加产品"
+    },
+    "orders": {
+      "title": "订单管理",
+      "all": "所有订单"
+    },
+    "store": {
+      "title": "店铺管理",
+      "design": "店铺设计",
+      "info": "店铺信息"
+    }
+  },
+  "sellercenter": {
+    "common": {
+      "congratulations": "恭喜 {{name}}!",
+      "bestSeller": "本月最佳卖家",
+      "viewSales": "查看销售额",
+      "ecommerceDashboard": "电子商务仪表板",
+      "download": "下载"
+    },
+    "orders": {
+      "title": "订单管理",
+      "searchPlaceholder": "按订单 ID、产品名称、店铺搜索...",
+      "filterPayment": "按付款方式过滤",
+      "paymentMethods": {
+        "all": "所有方式",
+        "cod": "货到付款",
+        "bankTransfer": "银行转账",
+        "creditCard": "信用卡"
+      },
+      "table": {
+        "orderId": "订单 ID",
+        "createdAt": "创建时间",
+        "shop": "店铺",
+        "product": "产品",
+        "total": "总金额",
+        "payment": "支付方式",
+        "status": "状态",
+        "action": "操作",
+        "orderLabel": "订单",
+        "itemsCount": "{{count}} 件产品"
+      },
+      "empty": "未找到订单",
+      "view": "查看",
+      "viewDetails": "查看详情",
+      "pagination": {
+        "showing": "显示第 {{start}} - {{end}} 条，共 {{total}} 条订单",
+        "prev": "上一页",
+        "next": "下一页",
+        "page": "第 {{current}} / {{total}} 页"
+      }
+    },
+    "dashboard": {
+      "metrics": {
+        "mrr": "每月经常性收入",
+        "users": "用户数",
+        "userGrowth": "用户增长"
+      }
+    },
+    "products": {
+      "create": {
+        "title": "添加新产品",
+        "basicInfo": "基本信息",
+        "productName": "产品名称",
+        "nameMinLen": "产品名称至少需要 3 个字符",
+        "nameMaxLen": "产品名称不能超过 255 个字符",
+        "nameRequired": "产品名称是必填项",
+        "categoryRequired": "产品分类是必填项",
+        "brand": "品牌",
+        "brandPlaceholder": "选择品牌",
+        "slug": "别名 (Slug)",
+        "images": "产品图片",
+        "imagesRequired": "需要上传图片",
+        "pricingAndStock": "定价、库存和变体",
+        "basePrice": "基本价格",
+        "basePriceRequired": "基本价格是必填项",
+        "stock": "库存",
+        "variants": "变体",
+        "variantType": "分类",
+        "variantOption": "选项",
+        "variantList": "分类列表",
+        "price": "价格",
+        "addVariant": "添加变体",
+        "applyToAll": "应用于全部",
+        "saveDraft": "保存草稿",
+        "publish": "发布产品",
+        "descriptionTitle": "产品描述",
+        "descriptionLabel": "产品详细描述",
+        "descriptionHint": "（不要插入链接/地址/电话号码/网站/卖家徽标）",
+        "characteristicsTitle": "产品特性",
+        "characteristicLabel": "特性 {{index}}",
+        "shippingTitle": "配送信息",
+        "weight": "重量 (g)",
+        "packageSize": "包装尺寸",
+        "packageSizeHint": "（如果尺寸输入有误，实际运费会有所不同）",
+        "shippingUnit": "物流承运商",
+        "shippingUnitPlaceholder": "选择物流承运商",
+        "length": "长度 (cm)",
+        "width": "宽度 (cm)",
+        "height": "高度 (cm)",
+        "shippingFee": "预计运费",
+        "enterValue": "输入值",
+        "variantSku": "变体 SKU",
+        "gtin": "GTIN",
+        "productInfoTab": "产品信息",
+        "productPreviewTab": "产品预览",
+        "contentScore": "内容得分",
+        "poor": "较差",
+        "addMinImages": "添加至少 3 张主图",
+        "fillRequiredAttributes": "填写必填属性",
+        "fillMainSpecs": "填写产品主要规格",
+        "addMinDescImages": "在描述中添加至少 1 张图片",
+        "addMinDescWords": "添加至少 30 个字的描述",
+        "detailInfo": "详细信息",
+        "productDetailTitle": "产品详情",
+        "productDetailHint": "这是在自定义模式中显示的内容，适合手机框架。",
+        "viewMore": "查看更多",
+        "description": "描述",
+        "zeroVariants": "0 个变体"
+      }
+    }
+  },
 
   "auth": {
     "login": {
@@ -448,51 +575,64 @@
     }
   },
   "about": {
-    "badge": "关于我们公司",
-    "heroTitle": "共同构建未来",
-    "heroDesc": "我们的使命是彻底改变人们在线连接、购物和分享故事的方式。",
+    "badge": "关于本项目",
+    "heroTitle": "构建更简单的电子商务",
+    "heroDesc": "FastE 是一个纯粹为学习、研究和技术探索而构建的电子商务平台。",
     "getInTouch": "联系我们",
-    "readBlog": "阅读我们的博客",
-    "missionTitle": "我们的使命",
-    "missionDesc1": "打造一个无缝的数字市场，为买卖双方赋能，培养一个高质产品和卓越服务蓬勃发展的社区。",
-    "missionDesc2": "我们相信电子商务的民主化，让各种规模的企业都能参与，同时保持最高标准的质量和客户满意度。",
-    "visionTitle": "我们的愿景",
-    "visionDesc1": "成为全球最受信任的在线市场，让创新与诚信相遇，每笔交易都为所有利益相关者创造价值。",
-    "visionDesc2": "我们设想一个技术能够促成人与人之间有意义联系的未来，超越地理界线，创造增长机会。",
-    "coreValuesTitle": "我们的核心价值观",
-    "coreValuesDesc": "这些原则指导我们的每一项决策并塑造我们的公司文化。",
+    "readBlog": "博客",
+    "missionTitle": "使命",
+    "missionDesc1": "FastE 的使命是提供一个功能完整的电子商务平台——包括产品、订单、用户和支付管理——用于研究和学习目的。",
+    "missionDesc2": "该项目由一位对技术充满热情的个人开发，旨在探索电子商务领域的现代技术。",
+    "visionTitle": "愿景",
+    "visionDesc1": "创建一个全面的演示系统，反映真实市场平台（如 Shopee、Lazada、Tiki）的核心功能。",
+    "visionDesc2": "帮助自己和社区深入了解系统架构、UI/UX、API 以及实际应用中的状态管理。",
+    "coreValuesTitle": "核心价值观",
+    "coreValuesDesc": "指导项目每一个决策的原则。",
+    "teamTitle": "团队",
+    "teamDesc": "这个项目由热情和自学驱动。",
+    "ctaTitle": "探索用户和产品",
+    "ctaDesc": "体验平台的全部功能——从客户界面到卖家仪表板。",
+    "exploreShops": "立即探索",
     "values": {
-      "customerFirst": "客户至上",
-      "customerFirstDesc": "我们在每一项决策中都优先考虑客户需求和满意度。",
-      "innovation": "创新",
-      "innovationDesc": "我们不断突破边界，拥抱新技术、新思想。",
-      "integrity": "诚信",
-      "integrityDesc": "我们在所有业务往来中秉持透明和诚实。",
-      "community": "社区",
-      "communityDesc": "我们相信与团队和客户建立强有力的关系。"
+      "customerFirst": "真实体验",
+      "customerFirstDesc": "每个功能都基于真实场景构建，而非理论概念。",
+      "innovation": "持续创新",
+      "innovationDesc": "持续更新技术、设计模式和软件架构以保持领先。",
+      "integrity": "诚实",
+      "integrityDesc": "代码简洁、可读且易于扩展。",
+      "community": "分享",
+      "communityDesc": "旨在与开发者社区分享知识和灵感。"
     },
-    "teamTitle": "见见我们的团队",
-    "teamDesc": "由共同愿景凝聚在一起的才华横溢的人才，旨在转型数字市场。",
-    "stats": {
-      "activeSellers": "活跃卖家",
-      "productsListed": "列出的产品",
-      "happyCustomers": "快乐的客户",
-      "countriesServed": "服务的国家"
-    },
-    "ctaTitle": "加入我们的社区",
-    "ctaDesc": "无论您是寻求业务增长的卖家，还是寻找优质产品的买家，我们都欢迎您的加入。",
-    "exploreShops": "探索店铺",
     "teamRoles": {
-      "ceo": "创始人兼 CEO",
-      "cto": "CTO",
-      "design": "设计主管",
-      "ops": "运营主管"
+      "ceo": "作者 & 开发者",
+      "cto": "后端工程师",
+      "design": "UI/UX 设计师",
+      "ops": "DevOps & 基础设施"
     },
     "teamBios": {
-      "ceo": "在科技创业领域拥有 15 年以上经验的远见卓识领导者",
-      "cto": "对可扩展架构充满热情的全栈工程师",
-      "design": "专注于以用户为中心体验的创意设计师",
-      "ops": "确保业务平稳增长的运营专家"
+      "ceo": "FastE 项目的发起人，负责设计和实现整个前端系统。",
+      "cto": "设计 RESTful API，管理数据库，处理业务逻辑。",
+      "design": "构建一致、易用且美观的设计系统。",
+      "ops": "管理部署、CI/CD 和环境配置。"
+    },
+    "stats": {
+      "activeSellers": "模拟卖家",
+      "productsListed": "演示产品",
+      "happyCustomers": "已构建功能",
+      "countriesServed": "支持语言"
+    },
+    "disclaimer": {
+      "badgeText": "这是一个学习项目",
+      "title": "关于本项目",
+      "desc1": "FastE 完全为学习、探索和技术发现而构建。这是一个个人项目，没有任何企业或组织的支持。",
+      "desc2": "该项目没有商业目的，不产生利润，也不以任何形式谋求个人利益。",
+      "commitmentTitle": "承诺",
+      "commitments": {
+        "1": "不将真实用户数据用于销售或广告",
+        "2": "平台上显示的所有数据均为演示/假设数据",
+        "3": "未经适当许可不得用于商业目的",
+        "4": "源代码公开共享，仅供参考和学习"
+      }
     }
   },
   "contact": {

@@ -1,8 +1,14 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Sparkles } from "lucide-react"
+import { useTranslation } from "react-i18next";
+
 
 export function CongratulationsCard() {
+  const { t } = useTranslation();
+
   return (
     <Card className="relative overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30">
       <CardContent className="p-6">
@@ -18,11 +24,15 @@ export function CongratulationsCard() {
 
         <div className="relative space-y-4">
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-semibold text-balance">Congratulations Toby!</h3>
+            <h3 className="text-lg font-semibold text-balance">
+              {t('sellercenter.common.congratulations', { name: 'Toby' })}
+            </h3>
             <Sparkles className="h-5 w-5 text-orange-500" />
           </div>
 
-          <p className="text-sm text-muted-foreground">Best seller of the month</p>
+          <p className="text-sm text-muted-foreground">
+            {t('sellercenter.common.bestSeller')}
+          </p>
 
           <div className="space-y-1">
             <p className="text-3xl font-bold">$15,231.89</p>
@@ -30,10 +40,10 @@ export function CongratulationsCard() {
           </div>
 
           <Button variant="outline" size="sm" className="mt-2 bg-transparent">
-            View Sales
+            {t('sellercenter.common.viewSales')}
           </Button>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

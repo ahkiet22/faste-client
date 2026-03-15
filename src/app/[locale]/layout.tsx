@@ -8,6 +8,7 @@ import AppWrapper from '@/hocs/AppWrappers';
 import { Suspense } from 'react';
 import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
 import dynamic from 'next/dynamic';
+import { LoadingDialog } from '@/components/loading/LoadingDialog';
 
 
 
@@ -96,7 +97,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingDialog isLoading />}>
           <TranslationProvider
             locale={locale}
             resources={resources}

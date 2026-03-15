@@ -80,120 +80,43 @@ export const USER_MENU_ITEMS: IMenuItem[] = [
 
 export const SELLER_MENU_ITEMS: IMenuItem[] = [
   {
-    title: 'Trang chủ',
+    title: 'sellerMenu.home',
     url: ROUTE_CONFIG.SELLER.DASHBOARD,
     icon: 'mdi:view-dashboard-outline',
     isActive: true,
   },
-  // {
-  //   title: 'Thông báo',
-  //   url: ROUTE_CONFIG.SELLER.NOTIFICATION,
-  //   icon: 'tdesign:notification',
-  // },
   {
-    title: 'Sản phẩm',
+    title: 'sellerMenu.products.title',
     icon: 'gridicons:product',
     items: [
-      { title: 'Danh sách sản phẩm', url: ROUTE_CONFIG.SELLER.PRODUCT.LIST },
-      { title: 'Thêm sản phẩm', url: ROUTE_CONFIG.SELLER.PRODUCT.CREATE },
-      // { title: 'Kho hàng', url: ROUTE_CONFIG.SELLER.PRODUCT.STOCK },
-      // { title: 'Quản lý hình ảnh', url: ROUTE_CONFIG.SELLER.PRODUCT.MEDIA },
-      // { title: 'Quản lý đánh giá', url: ROUTE_CONFIG.SELLER.PRODUCT.REVIEW },
+      {
+        title: 'sellerMenu.products.list',
+        url: ROUTE_CONFIG.SELLER.PRODUCT.LIST,
+      },
+      {
+        title: 'sellerMenu.products.add',
+        url: ROUTE_CONFIG.SELLER.PRODUCT.CREATE,
+      },
     ],
   },
   {
-    title: 'Đơn hàng',
+    title: 'sellerMenu.orders.title',
     icon: 'lets-icons:order',
     items: [
-      { title: 'Tất cả đơn hàng', url: ROUTE_CONFIG.SELLER.ORDER.LIST },
-      // { title: 'Đơn hủy / Trả hàng', url: ROUTE_CONFIG.SELLER.ORDER.RETURN },
-      // { title: 'Đánh giá từ khách', url: ROUTE_CONFIG.SELLER.ORDER.REVIEW },
+      { title: 'sellerMenu.orders.all', url: ROUTE_CONFIG.SELLER.ORDER.LIST },
     ],
   },
-  // {
-  //   title: 'Chat',
-  //   url: ROUTE_CONFIG.SELLER.CHAT,
-  //   icon: 'ri:chat-ai-line',
-  // },
   {
-    title: 'Gian hàng',
+    title: 'sellerMenu.store.title',
     icon: 'mdi:store-outline',
     items: [
-      { title: 'Thiết kế gian hàng', url: ROUTE_CONFIG.SELLER.STORE.DESIGN },
-      { title: 'Thông tin shop', url: ROUTE_CONFIG.SELLER.STORE.INFO },
+      {
+        title: 'sellerMenu.store.design',
+        url: ROUTE_CONFIG.SELLER.STORE.DESIGN,
+      },
+      { title: 'sellerMenu.store.info', url: ROUTE_CONFIG.SELLER.STORE.INFO },
     ],
   },
-  // {
-  //   title: 'Flash Sale',
-  //   icon: 'mdi:flash-outline',
-  //   items: [
-  //     {
-  //       title: 'Tham gia Flash Sale toàn sàn',
-  //       url: ROUTE_CONFIG.SELLER.FLASH_SALE.GLOBAL,
-  //     },
-  //     {
-  //       title: 'Flash Sale của shop',
-  //       url: ROUTE_CONFIG.SELLER.FLASH_SALE.SHOP,
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Tài chính & Ví',
-  //   icon: 'mdi:wallet-outline',
-  //   items: [
-  //     { title: 'Doanh thu', url: ROUTE_CONFIG.SELLER.WALLET.REVENUE },
-  //     { title: 'Ví nội bộ', url: ROUTE_CONFIG.SELLER.WALLET.INTERNAL },
-  //     { title: 'Ví blockchain', url: ROUTE_CONFIG.SELLER.WALLET.BLOCKCHAIN },
-  //   ],
-  // },
-  // {
-  //   title: 'Kho voucher',
-  //   icon: 'mdi:voucher-outline',
-  //   items: [
-  //     { title: 'Danh sách voucher', url: ROUTE_CONFIG.SELLER.VOUCHER.LIST },
-  //     { title: 'Tạo voucher mới', url: ROUTE_CONFIG.SELLER.VOUCHER.CREATE },
-  //     { title: 'Thống kê & báo cáo', url: ROUTE_CONFIG.SELLER.VOUCHER.STATS },
-  //   ],
-  // },
-  // {
-  //   title: 'Marketing',
-  //   icon: 'solar:sale-outline',
-  //   items: [
-  //     {
-  //       title: 'Chiến dịch marketing',
-  //       url: ROUTE_CONFIG.SELLER.MARKETING.CAMPAIGN,
-  //     },
-  //     { title: 'Quản lý quảng cáo', url: ROUTE_CONFIG.SELLER.MARKETING.ADS },
-  //   ],
-  // },
-  // {
-  //   title: 'Trung tâm dịch vụ',
-  //   icon: 'mdi:headset',
-  //   items: [
-  //     {
-  //       title: 'Khiếu nại / Tranh chấp',
-  //       url: ROUTE_CONFIG.SELLER.SERVICE_CENTER.COMPLAINTS,
-  //     },
-  //     {
-  //       title: 'Yêu cầu trả hàng / Hoàn tiền',
-  //       url: ROUTE_CONFIG.SELLER.SERVICE_CENTER.RETURNS,
-  //     },
-  //     {
-  //       title: 'Hỗ trợ khách hàng',
-  //       url: ROUTE_CONFIG.SELLER.SERVICE_CENTER.SUPPORT,
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Cài đặt',
-  //   icon: 'uil:user',
-  //   items: [
-  //     { title: 'Thông tin cá nhân', url: ROUTE_CONFIG.SELLER.ACCOUNT },
-  //     { title: 'Địa chỉ', url: ROUTE_CONFIG.SELLER.ADDRESS },
-  //     { title: 'Đổi mật khẩu', url: ROUTE_CONFIG.SELLER.CHANGE_PASSWORD },
-  //     { title: 'Cài đặt cá nhân', url: ROUTE_CONFIG.SELLER.SETTINGS },
-  //   ],
-  // },
 ];
 
 export const ADMIN_MENU_ITEMS: IMenuItem[] = [
