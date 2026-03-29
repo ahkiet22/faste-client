@@ -149,8 +149,8 @@ const OrderCard = memo(function OrderCard({
         }
         return (
           <div key={order.transactionId + od.id}>
-            <div className="px-4 sm:px-6 py-3 border-b border-border flex items-center justify-between">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="px-4 sm:px-6 py-3 border-b border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 flex-1 min-w-0">
                 <span className="font-semibold text-foreground text-sm sm:text-base">
                   {od.Shop.name}
                 </span>
@@ -171,9 +171,7 @@ const OrderCard = memo(function OrderCard({
                   <span>{t('order.viewShop')}</span>
                 </Button>
               </div>
-              <div
-                className={`text-right text-xs sm:text-sm font-semibold ${getOrderStatusMeta(od.status).color}`}
-              >
+              <div className={`text-left sm:text-right text-xs sm:text-sm font-semibold whitespace-nowrap ${getOrderStatusMeta(od.status).color}`}>
                 {getOrderStatusMeta(od.status).label}
               </div>
             </div>
@@ -193,7 +191,7 @@ const OrderCard = memo(function OrderCard({
                 </div>
 
                 {/* Product Details */}
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 space-y-1">
                   <h3 className="font-medium text-foreground line-clamp-2 text-sm">
                     {od.items[0].productName}
                   </h3>

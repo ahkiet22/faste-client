@@ -5,7 +5,7 @@ export const topNavItems = [
 ];
 
 export const rightNavItems = [
-  { href: '/# ', label: 'navigation.myAccount' },
+  { href: '/user/account', label: 'navigation.myAccount' },
   { href: '/support', label: 'navigation.support' },
 ];
 

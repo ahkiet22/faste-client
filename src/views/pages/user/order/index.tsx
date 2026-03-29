@@ -227,7 +227,7 @@ export default function OrdersPage() {
             onValueChange={handleChangeTab}
             className="w-full"
           >
-            <TabsList className="w-full justify-start bg-transparent border-b border-border rounded-none h-auto p-0 gap-0">
+            <TabsList className="w-full justify-start bg-transparent border-b border-border rounded-none h-auto p-0 gap-0 overflow-x-auto overflow-y-hidden scrollbar-hide">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}

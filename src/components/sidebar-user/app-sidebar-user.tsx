@@ -20,10 +20,9 @@ export default function AppSidebar() {
 
   return (
     <Sidebar
-      side="right"
+      side="left"
       variant="floating"
-      collapsible="none"
-      className="w-[300px] h-auto relative bg-transparent"
+      className="md:w-[300px] h-auto relative bg-transparent"
     >
       <SidebarContent>
         <SidebarGroup>

@@ -121,7 +121,7 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="flex gap-4 h-full">
+    <div className="flex flex-col lg:flex-row gap-8 h-full">
       {isLoading && <LoadingDialog isLoading />}
       <div className="flex-[7]">
         <h1 className="text-lg font-medium text-muted-foreground mb-6">
@@ -130,7 +130,7 @@ export default function AccountPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Profile Avatar */}
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <ProfileAvatar avatar={data.avatar} />
             <div className="flex-1 space-y-4">
               <div>
@@ -155,7 +155,7 @@ export default function AccountPage() {
             <Label className="text-sm font-medium">
               {t('account.birthday')}
             </Label>
-            <div className="flex gap-2 mt-1">
+            <div className="grid grid-cols-3 gap-2 mt-1">
               {(['day', 'month', 'year'] as const).map((fieldName) => (
                 <Controller
                   key={fieldName}
@@ -233,7 +233,7 @@ export default function AccountPage() {
         </form>
       </div>
 
-      <div className="w-[1px] h-[500px] bg-gray-200"></div>
+      <div className="hidden lg:block w-[1px] min-h-[500px] bg-gray-200"></div>
 
       <div className="flex-[3]">
         <ContactInfoCard

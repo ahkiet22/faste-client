@@ -36,7 +36,7 @@ const OrderList = memo(function OrderList({
   handleConfirnReceived,
 }: OrderListProps) {
   return (
-    <div className="min-h-[600px] mx-auto">
+    <div className=" mx-auto">
       {isLoading ? (
         <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, i) => (

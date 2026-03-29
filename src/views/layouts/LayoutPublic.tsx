@@ -15,7 +15,7 @@ export default function LayoutPublic({ children }: { children: ReactNode }) {
       <Header />
       {/* <div>Header</div> */}
       <main className="bg-[#F5F5F5] dark:bg-[#121212] py-8">
-        <ChatWidget />
+        {/* <ChatWidget /> */}
         {children}
       </main>
       <Footer />

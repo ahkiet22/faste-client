@@ -121,7 +121,7 @@ export default function AddressPage() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="text-xl font-medium text-foreground">Địa chỉ của tôi</h1>
         <Button
           className="bg-orange-500 hover:bg-orange-600 text-white"
@@ -139,7 +139,7 @@ export default function AddressPage() {
         <div className="space-y-4">
           {addresses.map((address) => (
             <Card key={address.id} className="p-4 border border-border">
-              <div className="flex justify-between items-start">
+              <div className="flex flex-col md:flex-row justify-between items-start gap-4">
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-3">
                     <span className="font-medium text-foreground">
@@ -148,7 +148,7 @@ export default function AddressPage() {
                     <span className="text-muted-foreground">
                       {address.phone}
                     </span>
-                    <div className="flex gap-1">
+                    <div className="flex flex-wrap gap-1">
                       {address.tags.map((tag, index) => (
                         <Badge
                           key={index}
@@ -165,7 +165,7 @@ export default function AddressPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 ml-4">
+                <div className="flex flex-row md:flex-col items-center md:items-end gap-2 pr-2 md:pr-0 border-t md:border-t-0 pt-2 md:pt-0 w-full md:w-auto mt-2 md:mt-0">
                   <Button
                     variant="link"
                     className="text-blue-600 hover:text-blue-700 p-0 h-auto font-normal"
