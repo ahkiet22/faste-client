@@ -45,19 +45,23 @@ export const AddToCartSection = memo(
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-4">
-          <Button
-            variant="outline"
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
             disabled={isDisabled}
             onClick={onAddToCart}
-            className="bg-red-100 text-red-500 border-red-500 hover:bg-red-50"
+            className={`flex items-center justify-center px-4 py-2 border rounded-lg transition-colors flex-1
+            ${isDisabled ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' : 'bg-red-50 text-red-500 border-red-500 hover:bg-red-100'}`}
           >
             <ShoppingCart className="w-5 h-5 mr-2" />
             {t('product.addToCart')}
-          </Button>
-          <Button disabled={isDisabled} className="bg-red-500 hover:bg-red-400">
+          </button>
+          <button
+            disabled={isDisabled}
+            className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors flex-1
+            ${isDisabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-red-500 text-white hover:bg-red-600'}`}
+          >
             {t('product.buyNow')}
-          </Button>
+          </button>
         </div>
       </div>
     );

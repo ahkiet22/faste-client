@@ -26,9 +26,9 @@ export const ProductSpecs = memo(({ product, totalSold }: Props) => {
     <div className="bg-white dark:bg-black w-full p-4 space-y-2">
       <h2 className="uppercase font-medium mb-2">{t('product.description')}</h2>
       {specs.map((spec, idx) => (
-        <div key={idx} className="flex gap-x-4">
-          <span className="w-40 text-gray-400">{t(spec.label)}:</span>
-          <span>{spec.value}</span>
+        <div key={idx} className="flex flex-col sm:flex-row sm:gap-x-4 py-1">
+          <span className="w-full sm:w-40 text-gray-400 text-sm">{t(spec.label)}:</span>
+          <span className="text-sm sm:text-base">{spec.value}</span>
         </div>
       ))}
     </div>

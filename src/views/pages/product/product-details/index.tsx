@@ -186,11 +186,11 @@ const ProductDetails = (props: TProps) => {
 
   return (
     <div className="flex flex-col gap-y-4">
-      <div className="flex items-start justify-between gap-x-8 bg-white dark:bg-black w-full p-4">
-        <div className="w-2/5">
+      <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-8 bg-white dark:bg-black w-full p-4">
+        <div className="w-full lg:w-2/5">
           <ImageGallery images={allImages} productName={product.name} />
         </div>
-        <div className="w-3/5 space-y-2">
+        <div className="w-full lg:w-3/5 space-y-4">
           <ProductInfo
             product={product}
             matchedSku={matchedSku}
@@ -222,11 +222,11 @@ const ProductDetails = (props: TProps) => {
       <ProductSpecs product={product} totalSold={totalSold} />
 
       <div className="bg-white dark:bg-black w-full p-4">
-        <div className="flex items-center justify-between bg-gray-50">
-          <h3 className="uppercase font-medium">{t('product.description')}</h3>
+        <div className="flex flex-col md:flex-row md:items-center justify-between bg-gray-50 p-2 md:p-0">
+          <h3 className="uppercase font-medium mb-2 md:mb-0">{t('product.description')}</h3>
           <div className="flex items-center gap-x-4">
             <span className="text-sm text-gray-400">{t('common.share')}:</span>
-            <div className="flex items-center gap-x-2">
+            <div className="flex items-center gap-x-2 flex-wrap">
               {socials.map((item) => (
                 <a
                   key={item.type}

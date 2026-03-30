@@ -37,7 +37,7 @@ export function ImageGallery({
   return (
     <div className="w-full">
       <div
-        className="w-[420px] h-[420px] mb-4 cursor-zoom-in overflow-hidden rounded-lg bg-muted"
+        className="w-full max-w-[420px] aspect-square mb-4 cursor-zoom-in overflow-hidden rounded-lg bg-muted mx-auto lg:mx-0"
         onClick={() => setIsLightboxOpen(true)}
         role="button"
         tabIndex={0}
@@ -113,9 +113,9 @@ export function ImageGallery({
       bg-black/95 border-none rounded-none p-0
     "
         >
-          <div className="flex w-full max-w-[1200px] h-[80vh] items-center justify-center gap-6 px-4">
-            {/* Sidebar Thumbnails */}
-            <div className="w-[90px] h-full overflow-y-auto flex flex-col gap-2 pl-2">
+          <div className="flex flex-col md:flex-row w-full max-w-[1200px] h-[90vh] md:h-[80vh] items-center justify-center gap-6 px-4 py-8">
+            {/* Sidebar Thumbnails - Responsive */}
+            <div className="hidden md:flex w-[90px] h-full overflow-y-auto flex-col gap-2 pl-2">
               {images.map((img, idx) => (
                 <button
                   key={idx}
@@ -137,8 +137,31 @@ export function ImageGallery({
               ))}
             </div>
 
+            {/* Mobile Thumbnails Scrollbar */}
+            <div className="flex md:hidden w-full overflow-x-auto gap-2 py-2 hide-scrollbar">
+              {images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setSelectedImage(img)}
+                  className={`relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
+                    selectedImage === img
+                      ? 'border-red-500 ring-2 ring-red-300'
+                      : 'border-transparent'
+                  }`}
+                >
+                  <Image
+                    src={img}
+                    alt={`Thumbnail ${idx + 1}`}
+                    width={80}
+                    height={80}
+                    className="object-cover w-full h-full"
+                  />
+                </button>
+              ))}
+            </div>
+
             {/* Main Image Section */}
-            <div className="flex-1 flex items-center justify-center relative">
+            <div className="flex-1 flex items-center justify-center relative w-full overflow-hidden">
               {/* Background (prevent layout shift) */}
               <div
                 className="absolute inset-0 bg-center bg-no-repeat bg-contain opacity-40 transition-all duration-300"

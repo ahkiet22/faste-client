@@ -71,14 +71,14 @@ export const ProductReviews = memo(({ product }: { product: any }) => {
     <div className="flex flex-col items-start w-full p-4 bg-white dark:bg-black">
       <div className="uppercase font-medium mb-4">{t('product.reviews')}</div>
 
-      <div className="bg-red-50 w-full mb-4 px-4 py-4 flex items-start gap-x-4">
-        <div className="flex flex-col items-center">
+      <div className="bg-red-50 w-full mb-4 px-4 py-4 flex flex-col md:flex-row items-center md:items-start gap-4">
+        <div className="flex flex-col items-center flex-shrink-0">
           <div className="text-red-500 text-xl font-medium">
             <span className="text-3xl">{product.rating}</span> {t('common.outOf5')}
           </div>
           <ProductRating rating={product.rating ?? 0} size={18} />
         </div>
-        <div className="flex gap-x-4 mb-4">
+        <div className="flex flex-wrap justify-center md:justify-start gap-2">
           {FILLTER_REVIEW.map((item) => (
             <button
               key={item.value + item.text}
@@ -89,7 +89,7 @@ export const ProductReviews = memo(({ product }: { product: any }) => {
                 selectedRating === (item.value === 0 ? null : item.value)
                   ? 'border border-red-300 bg-white'
                   : 'bg-white text-gray-700 '
-              } py-1 px-4 rounded-md`}
+              } py-1 px-3 md:px-4 rounded-md text-sm transition-colors hover:bg-gray-50`}
             >
               {`${item.text}`}
             </button>

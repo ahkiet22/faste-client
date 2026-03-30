@@ -20,16 +20,16 @@ export const ProductInfo = memo(({ product, matchedSku, totalSold }: Props) => {
     <div>
       <h1 className="text-xl font-[450]">{product.name}</h1>
 
-      <div className="flex items-center gap-x-2 my-2">
+      <div className="flex items-center gap-x-2 gap-y-1 my-2 flex-wrap">
         <Rating defaultValue={product.rating ?? 0} readOnly className="gap-x-0">
           {Array.from({ length: 5 }).map((_, index) => (
             <RatingButton className="text-yellow-500" key={index} size={12} />
           ))}
         </Rating>
+        <div className="hidden sm:block h-4 w-[1px] bg-gray-400" />
+        <span className="text-sm">{product.ratingCount ?? 0} {t('product.reviews')}</span>
         <div className="h-4 w-[1px] bg-gray-400" />
-        <span>{product.ratingCount ?? 0} {t('product.reviews')}</span>
-        <div className="h-4 w-[1px] bg-gray-400" />
-        <span>{t('product.sold')}: {product.sold ?? totalSold}</span>
+        <span className="text-sm">{t('product.sold')}: {product.sold ?? totalSold}</span>
       </div>
 
       <p className="text-xl font-semibold mt-4">

@@ -179,12 +179,13 @@ export const ADMIN_MENU_ITEMS: IMenuItem[] = [
     ],
   },
   {
-    title: 'Marketing & Banner',
+    title: 'Marketing & Cửa hàng',
     icon: 'solar:sale-outline',
     items: [
       { title: 'Chiến dịch sàn', url: ROUTE_CONFIG.ADMIN.MARKETING.CAMPAIGN },
       { title: 'Voucher sàn', url: ROUTE_CONFIG.ADMIN.MARKETING.VOUCHER },
       { title: 'Flash Sale', url: ROUTE_CONFIG.ADMIN.MARKETING.FLASH_SALE },
+      { title: 'Danh sách cửa hàng', url: ROUTE_CONFIG.ADMIN.CONTENT.BANNER },
       { title: 'Quản lý Banner', url: ROUTE_CONFIG.ADMIN.CONTENT.BANNER },
     ],
   },
