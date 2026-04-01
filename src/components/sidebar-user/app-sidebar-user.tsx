@@ -10,8 +10,8 @@ import {
 import { USER_MENU_ITEMS } from '@/configs/sidebar-items';
 import { NavMain } from './nav-main-user';
 import Image from 'next/image';
-import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/hooks';
 
 
 export default function AppSidebar() {

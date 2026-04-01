@@ -11,7 +11,7 @@ export const breakpoints: Record<number, Breakpoint> = {
   1920: '2xl', // >= 1920
 };
 
-export function useBreakpoint() {
+export default function useBreakpoint() {
   const [breakpoint, setBreakPoint] = useState<Breakpoint>('xs');
   const [windowSize, setWindowSize] = useState({
     width: 0,

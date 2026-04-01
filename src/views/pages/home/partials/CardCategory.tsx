@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetCategories } from '@/hooks/queries/useGetCategories';
+import { useGetCategories } from '@/hooks/api/queries/useGetCategories';
 import { keepPreviousData } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';

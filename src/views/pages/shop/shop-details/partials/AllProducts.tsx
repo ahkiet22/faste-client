@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useGetAllProductPublicByShop } from '@/hooks/queries/useGetAllProductPublicByShop';
+import { useGetAllProductPublicByShop } from '@/hooks/api/queries/useGetAllProductPublicByShop';
 import { getAllProductsPublicByShop } from '@/services/product';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { keepPreviousData } from '@tanstack/react-query';

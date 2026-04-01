@@ -11,7 +11,6 @@ export const getAllShopsPublic = async (
       params,
     });
 
-    console.log('SHOPS', res.data);
     return res.data;
   } catch (error: any) {
     const errorMessage =

@@ -3,7 +3,7 @@
 import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks'
 
 type AclGuardProps = {
   children: ReactNode;

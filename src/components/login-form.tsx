@@ -11,9 +11,9 @@ import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAuth } from '@/hooks/use-auth';
 import { Icon } from '@iconify/react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/hooks'
 
 
 // Định nghĩa schema validation với yup

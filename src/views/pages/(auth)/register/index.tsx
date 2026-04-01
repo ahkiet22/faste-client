@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks'
 import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent } from '@/components/ui/card';

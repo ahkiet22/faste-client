@@ -740,5 +740,86 @@
       "description": "Description"
     }
   },
-  "NotFound": "Not found"
+  "NotFound": "Not found",
+  "sellerRegister": {
+    "cardTitle": "Register Shop",
+    "cardDescription": "Complete the steps to register your shop",
+    "steps": {
+      "storeInfo": {
+        "title": "Shop Information",
+        "description": "Enter basic information about your shop"
+      },
+      "bizInfo": {
+        "title": "Business Information",
+        "description": "Type and payment methods"
+      },
+      "delivery": {
+        "title": "Delivery Options",
+        "description": "Select delivery methods"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Shop Name",
+        "placeholder": "Enter shop name"
+      },
+      "slug": {
+        "label": "Slug (Auto-generated)",
+        "placeholder": "auto-generated-slug",
+        "description": "Slug will be automatically generated from shop name"
+      },
+      "logo": {
+        "label": "Logo URL",
+        "placeholder": "https://example.com/logo.png"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter a detailed description of your shop..."
+      },
+      "address": {
+        "label": "Select Shipping Address",
+        "placeholder": "Select shipping address"
+      },
+      "bizType": {
+        "label": "Business Type",
+        "placeholder": "Select business type",
+        "individual": "Individual",
+        "household": "Business Household",
+        "company": "Company"
+      },
+      "taxCode": {
+        "label": "Tax Code",
+        "placeholder": "Enter tax code"
+      },
+      "payment": {
+        "label": "Payment Methods",
+        "cod": "Cash on Delivery",
+        "sepay": "Bank Transfer",
+        "web3": "Web3 / Crypto"
+      },
+      "delivery": {
+        "label": "Select Delivery Types"
+      }
+    },
+    "validation": {
+      "nameRequired": "Shop name is required",
+      "nameMin": "Shop name must be at least 3 characters",
+      "slugRequired": "Slug is required",
+      "slugMin": "Slug must be at least 3 characters",
+      "slugMatches": "Slug can only contain lowercase letters, numbers, and hyphens",
+      "logoRequired": "Logo URL is required",
+      "logoUrl": "Invalid logo URL",
+      "descRequired": "Description is required",
+      "descMin": "Description must be at least 10 characters",
+      "addressRequired": "Shipping address is required",
+      "bizTypeRequired": "Business type is required",
+      "taxCodeRequired": "Tax code is required",
+      "taxCodeMin": "Tax code must be at least 10 characters",
+      "paymentRequired": "Select at least one payment method",
+      "deliveryRequired": "Select at least one delivery type"
+    },
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Register Shop"
+  }
 }

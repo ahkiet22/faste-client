@@ -8,7 +8,7 @@ import WidgetPanel from '@/components/storefront-config/widget-panel';
 import { toastify } from '@/components/ToastNotification';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks'
 import { getDetailShopById } from '@/services/shop';
 import {
   AddWidget,

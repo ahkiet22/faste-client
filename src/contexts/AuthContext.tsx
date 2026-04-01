@@ -20,7 +20,7 @@ import {
 } from '@/helpers/storage';
 import { toastify } from '@/components/ToastNotification';
 import { injectAuthDependencies } from '@/utils/axios';
-import { useGetProfile } from '@/hooks/queries/useGetProfile';
+import { useGetProfile } from '@/hooks/api/queries/useGetProfile';
 import { keepPreviousData } from '@tanstack/react-query';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';

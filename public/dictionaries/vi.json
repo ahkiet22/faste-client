@@ -740,5 +740,86 @@
       "description": "Nội dung"
     }
   },
-  "NotFound": "Không tìm thấy"
+  "NotFound": "Không tìm thấy",
+  "sellerRegister": {
+    "cardTitle": "Đăng ký Cửa hàng",
+    "cardDescription": "Hoàn thành các bước để đăng ký cửa hàng của bạn",
+    "steps": {
+      "storeInfo": {
+        "title": "Thông tin Cửa hàng",
+        "description": "Điền thông tin cơ bản về cửa hàng"
+      },
+      "bizInfo": {
+        "title": "Thông tin Kinh doanh",
+        "description": "Loại hình và phương thức thanh toán"
+      },
+      "delivery": {
+        "title": "Loại Giao Hàng",
+        "description": "Chọn các loại giao hàng"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Tên Cửa hàng",
+        "placeholder": "Nhập tên cửa hàng"
+      },
+      "slug": {
+        "label": "Slug (Tự động sinh từ tên)",
+        "placeholder": "slug-tu-dong",
+        "description": "Slug sẽ tự động sinh từ tên cửa hàng"
+      },
+      "logo": {
+        "label": "URL Logo",
+        "placeholder": "https://example.com/logo.png"
+      },
+      "description": {
+        "label": "Mô tả",
+        "placeholder": "Mô tả chi tiết về cửa hàng của bạn..."
+      },
+      "address": {
+        "label": "Chọn Địa chỉ Giao hàng",
+        "placeholder": "Chọn địa chỉ giao hàng"
+      },
+      "bizType": {
+        "label": "Loại Hình Kinh doanh",
+        "placeholder": "Chọn loại hình kinh doanh",
+        "individual": "Cá nhân",
+        "household": "Hộ kinh doanh",
+        "company": "Công ty"
+      },
+      "taxCode": {
+        "label": "Mã Số Thuế",
+        "placeholder": "Nhập mã số thuế"
+      },
+      "payment": {
+        "label": "Phương Thức Thanh Toán",
+        "cod": "Thanh toán khi nhận hàng",
+        "sepay": "Chuyển khoản ngân hàng",
+        "web3": "Web3 / Crypto"
+      },
+      "delivery": {
+        "label": "Chọn Loại Giao Hàng"
+      }
+    },
+    "validation": {
+      "nameRequired": "Tên cửa hàng là bắt buộc",
+      "nameMin": "Tên cửa hàng phải có ít nhất 3 ký tự",
+      "slugRequired": "Slug là bắt buộc",
+      "slugMin": "Slug phải có ít nhất 3 ký tự",
+      "slugMatches": "Slug chỉ chứa chữ thường, số và dấu gạch ngang",
+      "logoRequired": "URL logo là bắt buộc",
+      "logoUrl": "URL logo không hợp lệ",
+      "descRequired": "Mô tả là bắt buộc",
+      "descMin": "Mô tả phải có ít nhất 10 ký tự",
+      "addressRequired": "Địa chỉ giao hàng là bắt buộc",
+      "bizTypeRequired": "Loại hình kinh doanh là bắt buộc",
+      "taxCodeRequired": "Mã số thuế là bắt buộc",
+      "taxCodeMin": "Mã số thuế phải có ít nhất 10 ký tự",
+      "paymentRequired": "Chọn ít nhất một phương thức thanh toán",
+      "deliveryRequired": "Chọn ít nhất một loại giao hàng"
+    },
+    "back": "Quay lại",
+    "continue": "Tiếp tục",
+    "submit": "Đăng ký Cửa hàng"
+  }
 }

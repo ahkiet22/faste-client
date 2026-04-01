@@ -23,7 +23,7 @@ import { ProductVariantTable } from './partials/ProductVariantTable';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useGetCategories } from '@/hooks/queries/useGetCategories';
+import { useGetCategories } from '@/hooks/api/queries/useGetCategories';
 
 // -- Icon --
 import { Icon } from '@iconify/react/dist/iconify.js';

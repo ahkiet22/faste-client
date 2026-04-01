@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ROUTE_CONFIG } from '@/configs/router';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks'
 import { createUrlQuery } from '@/utils/create-query-url';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import Link from 'next/link';

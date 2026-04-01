@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks'
 import React, { useCallback } from 'react';
 
 interface CartPopoverProps {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -36,66 +36,54 @@ import { getDetailShopMe } from '@/services/shop';
 import { useRouter } from 'next/navigation';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
-import { LoadingSpinner } from '@/components/loading/LoadingSpinner';
-
-// Mock data
-const addressShipOptions = [
-  { id: 1, label: 'Hồ Chí Minh' },
-  { id: 2, label: 'Hà Nội' },
-  { id: 3, label: 'Đà Nẵng' },
-];
-
-const deliveryTypes = [
-  { id: 1, name: 'Giao Nhanh' },
-  { id: 2, name: 'Hoả Tốc' },
-  { id: 3, name: 'Tiết Kiệm' },
-];
-
-// Validation schema
-const registerShopSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Tên cửa hàng là bắt buộc')
-    .min(3, 'Tên cửa hàng phải có ít nhất 3 ký tự'),
-  slug: yup
-    .string()
-    .required('Slug là bắt buộc')
-    .min(3, 'Slug phải có ít nhất 3 ký tự')
-    .matches(/^[a-z0-9-]+$/, 'Slug chỉ chứa chữ thường, số và dấu gạch ngang'),
-  logo: yup
-    .string()
-    .required('URL logo là bắt buộc')
-    .url('URL logo không hợp lệ'),
-  description: yup
-    .string()
-    .required('Mô tả là bắt buộc')
-    .min(10, 'Mô tả phải có ít nhất 10 ký tự'),
-  addressShipId: yup.number().required('Địa chỉ giao hàng là bắt buộc'),
-  businessType: yup
-    .string()
-    .required('Loại hình kinh doanh là bắt buộc')
-    .oneOf(['INDIVIDUAL', 'BUSINESS_HOUSEHOLD', 'COMPANY']),
-  taxCode: yup
-    .string()
-    .required('Mã số thuế là bắt buộc')
-    .min(10, 'Mã số thuế phải có ít nhất 10 ký tự'),
-  paymentMethods: yup
-    .array()
-    .of(yup.string().oneOf(['COD', 'SEPAY', 'WEB3']))
-    .min(1, 'Chọn ít nhất một phương thức thanh toán'),
-  deliveryTypeIds: yup
-    .array()
-    .of(yup.number())
-    .min(1, 'Chọn ít nhất một loại giao hàng'),
-});
-
-type RegisterShopFormType = yup.InferType<typeof registerShopSchema>;
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterSellerPage() {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [slugDebounce, setSlugDebounce] = useState<NodeJS.Timeout | null>(null);
   const router = useRouter();
+
+  // Validation schema using translations
+  const registerShopSchema = useMemo(() => yup.object().shape({
+    name: yup
+      .string()
+      .required(t('sellerRegister.validation.nameRequired'))
+      .min(3, t('sellerRegister.validation.nameMin')),
+    slug: yup
+      .string()
+      .required(t('sellerRegister.validation.slugRequired'))
+      .min(3, t('sellerRegister.validation.slugMin'))
+      .matches(/^[a-z0-9-]+$/, t('sellerRegister.validation.slugMatches')),
+    logo: yup
+      .string()
+      .required(t('sellerRegister.validation.logoRequired'))
+      .url(t('sellerRegister.validation.logoUrl')),
+    description: yup
+      .string()
+      .required(t('sellerRegister.validation.descRequired'))
+      .min(10, t('sellerRegister.validation.descMin')),
+    addressShipId: yup.number().required(t('sellerRegister.validation.addressRequired')),
+    businessType: yup
+      .string()
+      .required(t('sellerRegister.validation.bizTypeRequired'))
+      .oneOf(['INDIVIDUAL', 'BUSINESS_HOUSEHOLD', 'COMPANY']),
+    taxCode: yup
+      .string()
+      .required(t('sellerRegister.validation.taxCodeRequired'))
+      .min(10, t('sellerRegister.validation.taxCodeMin')),
+    paymentMethods: yup
+      .array()
+      .of(yup.string().oneOf(['COD', 'SEPAY', 'WEB3']))
+      .min(1, t('sellerRegister.validation.paymentRequired')),
+    deliveryTypeIds: yup
+      .array()
+      .of(yup.number())
+      .min(1, t('sellerRegister.validation.deliveryRequired')),
+  }), [t]);
+
+  type RegisterShopFormType = yup.InferType<typeof registerShopSchema>;
 
   const form = useForm<RegisterShopFormType>({
     resolver: yupResolver(registerShopSchema) as any,
@@ -112,6 +100,36 @@ export default function RegisterSellerPage() {
     },
     mode: 'onChange',
   });
+
+  const addressShipOptions = [
+    { id: 1, label: t('search.location') + ': Hồ Chí Minh' },
+    { id: 2, label: t('search.location') + ': Hà Nội' },
+    { id: 3, label: t('search.location') + ': Đà Nẵng' },
+  ];
+
+  const deliveryTypes = [
+    { id: 1, name: t('checkout.delivery.express') },
+    { id: 2, name: t('checkout.delivery.provider') },
+    { id: 3, name: t('checkout.delivery.economy') },
+  ];
+
+  const steps = useMemo(() => [
+    {
+      title: t('sellerRegister.steps.storeInfo.title'),
+      icon: 'mdi:information-variant',
+      description: t('sellerRegister.steps.storeInfo.description'),
+    },
+    {
+      title: t('sellerRegister.steps.bizInfo.title'),
+      icon: 'mdi:briefcase',
+      description: t('sellerRegister.steps.bizInfo.description'),
+    },
+    {
+      title: t('sellerRegister.steps.delivery.title'),
+      icon: 'mdi:truck-fast',
+      description: t('sellerRegister.steps.delivery.description'),
+    },
+  ], [t]);
 
   const fetchShopMe = async () => {
     setIsLoading(true);
@@ -185,25 +203,8 @@ export default function RegisterSellerPage() {
     console.log('Form Submit:', values);
   };
 
-  const steps = [
-    {
-      title: 'Thông tin Cửa hàng',
-      icon: 'mdi:information-variant',
-      description: 'Điền thông tin cơ bản về cửa hàng',
-    },
-    {
-      title: 'Thông tin Kinh doanh',
-      icon: 'mdi:briefcase',
-      description: 'Loại hình và phương thức thanh toán',
-    },
-    {
-      title: 'Loại Giao Hàng',
-      icon: 'mdi:truck-fast',
-      description: 'Chọn các loại giao hàng',
-    },
-  ];
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingDialog isLoading  />;
   }
 
   return (
@@ -213,10 +214,10 @@ export default function RegisterSellerPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Icon icon="mdi:store" width={24} height={24} />
-              Đăng ký Cửa hàng
+              {t('sellerRegister.cardTitle')}
             </CardTitle>
             <CardDescription>
-              Hoàn thành các bước để đăng ký cửa hàng của bạn
+              {t('sellerRegister.cardDescription')}
             </CardDescription>
 
             <div className="mt-6 w-full flex items-center justify-center gap-2">
@@ -267,8 +268,8 @@ export default function RegisterSellerPage() {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Tên Cửa hàng</FormLabel>
-                          <Input placeholder="Nhập tên cửa hàng" {...field} />
+                          <FormLabel>{t('sellerRegister.form.name.label')}</FormLabel>
+                          <Input placeholder={t('sellerRegister.form.name.placeholder')} {...field} />
                           <FormMessage />
                         </FormItem>
                       )}
@@ -279,14 +280,14 @@ export default function RegisterSellerPage() {
                       name="slug"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Slug (Tự động sinh từ tên)</FormLabel>
+                          <FormLabel>{t('sellerRegister.form.slug.label')}</FormLabel>
                           <Input
-                            placeholder="slug-tu-dong"
+                            placeholder={t('sellerRegister.form.slug.placeholder')}
                             {...field}
                             disabled
                           />
                           <FormDescription>
-                            Slug sẽ tự động sinh từ tên cửa hàng
+                            {t('sellerRegister.form.slug.description')}
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -298,9 +299,9 @@ export default function RegisterSellerPage() {
                       name="logo"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>URL Logo</FormLabel>
+                          <FormLabel>{t('sellerRegister.form.logo.label')}</FormLabel>
                           <Input
-                            placeholder="https://example.com/logo.png"
+                            placeholder={t('sellerRegister.form.logo.placeholder')}
                             {...field}
                           />
                           <FormMessage />
@@ -313,10 +314,10 @@ export default function RegisterSellerPage() {
                       name="description"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Mô tả</FormLabel>
+                          <FormLabel>{t('sellerRegister.form.description.label')}</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Mô tả chi tiết về cửa hàng của bạn..."
+                              placeholder={t('sellerRegister.form.description.placeholder')}
                               className="resize-none"
                               rows={4}
                               {...field}
@@ -332,7 +333,7 @@ export default function RegisterSellerPage() {
                       name="addressShipId"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Chọn Địa chỉ Giao hàng</FormLabel>
+                          <FormLabel>{t('sellerRegister.form.address.label')}</FormLabel>
                           <Controller
                             name="addressShipId"
                             control={form.control}
@@ -349,7 +350,7 @@ export default function RegisterSellerPage() {
                               >
                                 <FormControl>
                                   <SelectTrigger>
-                                    <SelectValue placeholder="Chọn địa chỉ giao hàng" />
+                                    <SelectValue placeholder={t('sellerRegister.form.address.placeholder')} />
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -379,7 +380,7 @@ export default function RegisterSellerPage() {
                       name="businessType"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Loại Hình Kinh doanh</FormLabel>
+                          <FormLabel>{t('sellerRegister.form.bizType.label')}</FormLabel>
                           <Controller
                             name="businessType"
                             control={form.control}
@@ -390,18 +391,18 @@ export default function RegisterSellerPage() {
                               >
                                 <FormControl>
                                   <SelectTrigger>
-                                    <SelectValue placeholder="Chọn loại hình kinh doanh" />
+                                    <SelectValue placeholder={t('sellerRegister.form.bizType.placeholder')} />
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
                                   <SelectItem value="INDIVIDUAL">
-                                    Cá nhân
+                                    {t('sellerRegister.form.bizType.individual')}
                                   </SelectItem>
                                   <SelectItem value="BUSINESS_HOUSEHOLD">
-                                    Hộ kinh doanh
+                                    {t('sellerRegister.form.bizType.household')}
                                   </SelectItem>
                                   <SelectItem value="COMPANY">
-                                    Công ty
+                                    {t('sellerRegister.form.bizType.company')}
                                   </SelectItem>
                                 </SelectContent>
                               </Select>
@@ -417,8 +418,8 @@ export default function RegisterSellerPage() {
                       name="taxCode"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Mã Số Thuế</FormLabel>
-                          <Input placeholder="Nhập mã số thuế" {...field} />
+                          <FormLabel>{t('sellerRegister.form.taxCode.label')}</FormLabel>
+                          <Input placeholder={t('sellerRegister.form.taxCode.placeholder')} {...field} />
                           <FormMessage />
                         </FormItem>
                       )}
@@ -426,7 +427,7 @@ export default function RegisterSellerPage() {
 
                     <div>
                       <FormLabel className="mb-3 block">
-                        Phương Thức Thanh Toán
+                        {t('sellerRegister.form.payment.label')}
                       </FormLabel>
                       <div className="space-y-3">
                         {['COD', 'SEPAY', 'WEB3'].map((method) => (
@@ -457,10 +458,10 @@ export default function RegisterSellerPage() {
                                   </FormControl>
                                   <FormLabel className="font-normal cursor-pointer">
                                     {method === 'COD'
-                                      ? 'Thanh toán khi nhận hàng'
+                                      ? t('sellerRegister.form.payment.cod')
                                       : method === 'SEPAY'
-                                        ? 'Chuyển khoản ngân hàng'
-                                        : 'Web3 / Crypto'}
+                                        ? t('sellerRegister.form.payment.sepay')
+                                        : t('sellerRegister.form.payment.web3')}
                                   </FormLabel>
                                 </FormItem>
                               );
@@ -479,7 +480,7 @@ export default function RegisterSellerPage() {
                   <div className="space-y-4">
                     <div>
                       <FormLabel className="mb-3 block">
-                        Chọn Loại Giao Hàng
+                        {t('sellerRegister.form.delivery.label')}
                       </FormLabel>
                       <div className="space-y-3">
                         {deliveryTypes.map((delivery) => (
@@ -543,7 +544,7 @@ export default function RegisterSellerPage() {
                       height={20}
                       className="mr-2"
                     />
-                    Quay lại
+                    {t('sellerRegister.back')}
                   </Button>
 
                   {currentStep < 2 ? (
@@ -552,7 +553,7 @@ export default function RegisterSellerPage() {
                       onClick={handleNextStep}
                       className="flex-1"
                     >
-                      Tiếp tục
+                      {t('sellerRegister.continue')}
                       <Icon
                         icon="mdi:chevron-right"
                         width={20}
@@ -568,7 +569,7 @@ export default function RegisterSellerPage() {
                         height={20}
                         className="mr-2"
                       />
-                      Đăng ký Cửa hàng
+                      {t('sellerRegister.submit')}
                     </Button>
                   )}
                 </div>
@@ -580,3 +581,4 @@ export default function RegisterSellerPage() {
     </div>
   );
 }
+

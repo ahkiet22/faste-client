@@ -12,7 +12,7 @@ import LocaleSwitcher from '@/components/locale-switcher';
 import PromoBar from './PromoBar';
 import { TopNavigation } from './TopNavigation';
 import BottomNavigation from './BottomNavigation';
-import { useGetCart } from '@/hooks/queries/useGetCart';
+import { useGetCart } from '@/hooks/api/queries/useGetCart';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useCartStore } from '@/stores/cart-store';
 import CartPopover from './CartPopover';

@@ -24,8 +24,8 @@ import { StoreConfig } from '@/types/widget';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { useTranslation } from 'react-i18next';
+import { useBreakpoint } from '@/hooks';
 
 interface DesktopPreviewProps {
   config: StoreConfig;

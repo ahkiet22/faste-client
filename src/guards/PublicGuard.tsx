@@ -1,6 +1,6 @@
 'use client';
 // ** hooks
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks'
 // ** React Imports
 import { ReactNode, ReactElement, useEffect, memo } from 'react';
 

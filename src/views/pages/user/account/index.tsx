@@ -21,9 +21,9 @@ import {
 import ContactInfoCard from './partials/ContactInfoCard';
 import { ProfileAvatar } from './partials/ProfileAvatar';
 import { GENDER } from '@/constants';
-import { useGetProfile } from '@/hooks/queries/useGetProfile';
+import { useGetProfile } from '@/hooks/api/queries/useGetProfile';
 import { keepPreviousData } from '@tanstack/react-query';
-import { useMutationUpdateProfile } from '@/hooks/mutations/use-update-profile';
+import { useMutationUpdateProfile } from '@/hooks/api/mutations/use-update-profile';
 import { toastify } from '@/components/ToastNotification';
 import { useTranslation } from 'react-i18next';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
