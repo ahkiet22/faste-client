@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import ListVerticalLayout from '../ListVerticalLayout';
+import ListVerticalLayout from '../ListVerticalLayoutAdmin';
 
 export default function LayoutAdmin({ children }: { children: ReactNode }) {
   return (
