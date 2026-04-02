@@ -4,7 +4,7 @@ import { getAllProductsPublic } from '@/services/product';
 import LayoutPublic from '@/views/layouts/LayoutPublic/LayoutPublic';
 import HomePage from '@/views/pages/home';
 import { Metadata, Viewport } from 'next';
-import { ReactElement } from 'react';
+import { ReactElement, Suspense } from 'react';
 
 interface TProps {
   data: [];
@@ -76,9 +76,14 @@ async function getProductsData(): Promise<TProps> {
     };
   }
 }
-export default async function Home() {
+
+async function HomeContent() {
   const products = await getProductsData();
-  const { data, limit, page, totalItem, totalPage } = products;
+
+  return <HomePage {...products} />;
+}
+
+export default async function Home() {
   console.log(
     '© Copyright belongs to the account [ahkiet lekiett2201@gmail.com]. Unauthorized copying, selling, distribution, or modification is prohibited.',
   );
@@ -88,13 +93,9 @@ export default async function Home() {
       authGuard={false}
       guestGuard={false}
     >
-      <HomePage
-        data={data}
-        limit={limit}
-        page={page}
-        totalItem={totalItem}
-        totalPage={totalPage}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <HomeContent />
+      </Suspense>
     </GuardLayoutWrapper>
   );
 }

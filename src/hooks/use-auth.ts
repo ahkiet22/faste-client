@@ -5,6 +5,7 @@ import { TLoginAuth, TRegisterAuth } from '@/types/auth';
 import { loginAuth, logoutAuth, registerAuth } from '@/services/auth';
 import {
   setLocalAccessToken,
+  setLocalUserData,
   clearLocalUserData,
   clearCheckoutItems,
 } from '@/helpers/storage';
@@ -26,6 +27,16 @@ export const useAuth = () => {
       const { accessToken } = response.data;
 
       setLocalAccessToken(accessToken);
+
+      try {
+        const { getProfile } = await import('@/services/profile');
+        const profileRes = await getProfile();
+        setUser(profileRes.data);
+        setLocalUserData(profileRes.data);
+      } catch (err) {
+        console.error('Failed to fetch profile after login', err);
+      }
+
       toastify.success('Login', 'Login successfully!');
 
       await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PROFILE] });

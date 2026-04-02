@@ -3,7 +3,7 @@
 import CardSpotlightDemo from '@/components/CardSpotlight';
 import SpotlightSlider from '@/components/SpotlightSlider';
 import { Button } from '@/components/ui/button';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import Image from 'next/image';
 // bg-[#140540]
 export default function Home() {

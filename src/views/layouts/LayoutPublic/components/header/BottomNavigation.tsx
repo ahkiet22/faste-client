@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { navigationItems } from "@/configs/header";
 import { cn } from "@/lib/utils";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";

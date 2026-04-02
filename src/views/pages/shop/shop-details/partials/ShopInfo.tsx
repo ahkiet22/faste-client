@@ -7,7 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { memo } from 'react';
 
 interface TProps {

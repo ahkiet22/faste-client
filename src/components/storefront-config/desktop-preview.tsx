@@ -21,7 +21,7 @@ import {
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { StoreConfig } from '@/types/widget';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,5 +1,5 @@
 import { navigationItems } from '@/configs/header';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import Link from 'next/link';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

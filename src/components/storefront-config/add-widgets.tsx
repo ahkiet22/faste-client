@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/sheet';
 import { availableWidgets, templateWidgets } from '@/configs/widget-template';
 import { Widget, WidgetType } from '@/types/widget';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 

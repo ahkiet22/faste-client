@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { getOrdersByShop } from '@/services/order';
 import { Tooltip, TooltipContent } from '@/components/ui/tooltip';
 import { TooltipTrigger } from '@radix-ui/react-tooltip';

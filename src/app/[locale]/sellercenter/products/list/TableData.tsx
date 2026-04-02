@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { useAuth } from '@/hooks'
 import { createUrlQuery } from '@/utils/create-query-url';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +28,9 @@ const UserDropdownMenu = () => {
   const handleNavigateMyAccount = () => {
     router.replace(ROUTE_CONFIG.USER.INFO.ACCOUNT);
   };
+
+  console.log('user', user);
+  
   return (
     <div className="group relative">
       <Button

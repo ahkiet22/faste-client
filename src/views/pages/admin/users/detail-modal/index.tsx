@@ -8,7 +8,7 @@ import { TAdminUser } from '@/types/admin/user';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import dayjs from 'dayjs';
 import { Separator } from '@/components/ui/separator';
 

@@ -57,7 +57,7 @@ const CardCategory = () => {
               .map((item: any, index: number) => (
                 <Link
                   href={'/product?categoryIds=' + item.id}
-                  key={item.id}
+                  key={item.id + index + 'skeleton'}
                   className={`
                     flex flex-col items-center justify-between p-2 h-40
                     bg-white dark:bg-black border-gray-200

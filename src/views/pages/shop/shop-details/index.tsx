@@ -3,7 +3,7 @@
 import WidgetRenderer from '@/components/storefront-config/widget-renderer';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { MessageCircle, Search, Star } from 'lucide-react';
 import Image from 'next/image';
 import { AllProducts } from './partials/AllProducts';

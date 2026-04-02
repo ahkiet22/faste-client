@@ -26,7 +26,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useGetCategories } from '@/hooks/api/queries/useGetCategories';
 
 // -- Icon --
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 
 import { generateSKUsV2 } from '@/helpers/generate-skus';
 import { generateSlug } from '@/helpers/generate-slug';

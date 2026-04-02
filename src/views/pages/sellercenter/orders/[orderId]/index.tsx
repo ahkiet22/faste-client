@@ -49,7 +49,7 @@ import {
   statusToLabel,
 } from '@/configs/order';
 import Image from 'next/image';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { formatCurrency } from '@/helpers/currency';
 import { getAddressShipIsDefaultUser } from '@/services/address-ship';
 import { OrderStatus } from '@/types/order';

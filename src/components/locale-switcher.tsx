@@ -11,7 +11,7 @@ import {
 } from './ui/dropdown-menu';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 
 export default function LocaleSwitcher() {
   const pathname = usePathname();

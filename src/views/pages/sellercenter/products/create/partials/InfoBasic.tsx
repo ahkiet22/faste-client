@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Image from 'next/image';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { ImagePlus } from 'lucide-react';
 import { ChangeEvent, memo, RefObject } from 'react';
 

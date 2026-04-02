@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { toastify } from '@/components/ToastNotification';
 import { PaginationWithLinks } from '@/components/pagination-table';
 import { getAdminSellers } from '@/services/admin-user';

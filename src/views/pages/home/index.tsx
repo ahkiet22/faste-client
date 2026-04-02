@@ -4,7 +4,7 @@ import CartProduct from '@/components/CardProduct';
 import CardCategory from './partials/CardCategory';
 import { Button } from '@/components/ui/button';
 import BannerWeb from './partials/BannerWeb';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { Card } from '@/components/ui/card';
 import PrimaryProductCard from './partials/PrimaryProductCard';
 import Image from 'next/image';
@@ -24,7 +24,9 @@ interface TProps {
 const HomePage = (props: TProps) => {
   const { data: products, limit, page, totalItem, totalPage } = props;
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t } = useTranslation(undefined, { useSuspense: false });
+  const bestSelling = products.slice(0, 7);
+  const newProducts = products.slice(7);
 
   return (
     <>
@@ -37,14 +39,19 @@ const HomePage = (props: TProps) => {
         <div className="w-full mb-5">
           <div className="bg-white dark:bg-black w-full mb-4">
             <div className="text-center uppercase text-base font-medium text-red-400 py-2 w-full flex justify-center items-center gap-2">
-              <Icon icon="mingcute:fire-line" width="24" height="24" />
+              <Icon
+                icon="mingcute:fire-line"
+                width="24"
+                height="24"
+                suppressHydrationWarning
+              />
               {t('product.bestSelling')}
             </div>
             <div className="bg-red-500 h-1 w-full"></div>
           </div>
 
           {/* Other products */}
-          {products && products.length > 0 ? (
+          {bestSelling && bestSelling.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 items-stretch">
               {/* Primary product card */}
               <div className="col-span-2">
@@ -53,7 +60,7 @@ const HomePage = (props: TProps) => {
                 </Card>
               </div>
 
-              {products.map((product: any) => (
+              {bestSelling.map((product: any) => (
                 <CartProduct key={product.id} data={product} />
               ))}
             </div>
@@ -81,10 +88,10 @@ const HomePage = (props: TProps) => {
             <div className="bg-red-500 h-1 w-full"></div>
           </div>
           <div className="flex flex-col gap-y-2 w-full">
-            {products && products.length > 0 ? (
+            {newProducts && newProducts.length > 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                {products.map((product, index) => (
-                  <CartProduct key={index} data={product} />
+                {newProducts.map((product: any, index) => (
+                  <CartProduct key={index + product.id} data={product} />
                 ))}
               </div>
             ) : (

@@ -1,7 +1,7 @@
 'use client';
 
 import GuardLayoutWrapper from '@/hocs/GuardLayoutWrapper';
-import LayoutSeller from '@/views/layouts/LayoutSeller';
+import LayoutSeller from '@/views/layouts/LayoutSeller/LayoutSeller';
 import { ReactElement, useEffect, useState } from 'react';
 import { getDetailShopMe } from '@/services/shop';
 import { useRouter } from 'next/navigation';

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { ProductRating } from '@/components/ProductRating';
 import Image from 'next/image';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 
 type ReviewCardProps = {
   review: any;

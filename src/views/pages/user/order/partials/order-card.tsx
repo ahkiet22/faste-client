@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTE_CONFIG } from '@/configs/router';

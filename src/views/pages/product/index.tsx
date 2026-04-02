@@ -13,7 +13,7 @@ import {
 import { Rating, RatingButton } from '@/components/ui/shadcn-io/rating';
 import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { useSearchStore } from '@/stores/useSearchStore';
 import { getSearchProduct } from '@/services/search';
 import { TParamsSearch } from '@/types/params';

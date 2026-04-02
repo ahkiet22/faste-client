@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCheckoutItems, clearCheckoutItems } from '@/helpers/storage';
 import { ChevronRight } from 'lucide-react';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { useRouter } from 'next/navigation';
 import { ROUTE_CONFIG } from '@/configs/router';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';

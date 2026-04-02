@@ -3,7 +3,7 @@
 import { Card } from '@/components/ui/card';
 import { RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { useTranslation } from 'react-i18next';
 import { formatCurrencyWithExchange } from '@/utils';
 

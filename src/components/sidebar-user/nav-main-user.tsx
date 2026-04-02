@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/sidebar';
 import { IMenuItem } from '@/configs/sidebar-items';
 import Link from 'next/link';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { useTranslation } from 'react-i18next';
 
 

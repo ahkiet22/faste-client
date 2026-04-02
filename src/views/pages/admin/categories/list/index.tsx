@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { toastify } from '@/components/ToastNotification';
 import { PaginationWithLinks } from '@/components/pagination-table';
 import { getAdminCategories, deleteCategory } from '@/services/admin-category';

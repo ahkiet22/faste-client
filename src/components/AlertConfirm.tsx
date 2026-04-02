@@ -8,7 +8,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 
 type AlertType = 'warning' | 'info' | 'success' | 'error';
 

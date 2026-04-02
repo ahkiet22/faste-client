@@ -4,7 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import Image from 'next/image';
 
 export const DetailModal = ({ review, open, onOpenChange }: any) => {

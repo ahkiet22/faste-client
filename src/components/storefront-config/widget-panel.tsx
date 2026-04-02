@@ -22,7 +22,7 @@ import {
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Widget } from '@/types/widget';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { widgetIconLabel } from '@/configs/template';
 import {
   Dialog,

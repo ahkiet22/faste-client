@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import Image from 'next/image';
 
 const PrimaryProductCard = () => {

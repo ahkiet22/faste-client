@@ -13,7 +13,7 @@ import {
   statusToLabel,
 } from '@/configs/order';
 import { formatCurrency } from '@/helpers/currency';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import { Button } from '@/components/ui/button';

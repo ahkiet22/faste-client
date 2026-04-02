@@ -25,7 +25,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { TAdminBrand, TCreateBrandInput } from '@/types/admin/brand';
 import { createBrand, updateBrand } from '@/services/admin-brand';
 import Image from 'next/image';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { toastify } from '@/components/ToastNotification';
 
 const brandSchema = z.object({

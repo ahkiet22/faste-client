@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/select';
 import { useGetAllProductPublicByShop } from '@/hooks/api/queries/useGetAllProductPublicByShop';
 import { getAllProductsPublicByShop } from '@/services/product';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import { Icon } from '@iconify/react';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 type TProps = {
