@@ -19,7 +19,6 @@
       "cosmetics": "Cosmetics"
     }
   },
-
   "footer": {
     "newsletterTitle": "Join our newsletter",
     "newsletterDesc": "Subscribe now for the latest updates on promotions and coupons. We promise not to spam.",
@@ -165,7 +164,6 @@
       }
     }
   },
-
   "auth": {
     "login": {
       "title": "Welcome back",
@@ -285,7 +283,6 @@
       "confirmReceived": "Confirm order received"
     }
   },
-
   "common": {
     "viewMore": "View more",
     "saveChanges": "Save changes",
@@ -306,7 +303,6 @@
       "error": "Error"
     }
   },
-
   "navigation": {
     "home": "Home",
     "products": "Products",
@@ -338,8 +334,6 @@
     "hrs": "hrs",
     "min": "min"
   },
-
-
   "account": {
     "accountInfo": "Account Information",
     "personalInfo": "Personal Information",
@@ -348,7 +342,6 @@
     "birthday": "Date of Birth",
     "phoneEmail": "Phone Number & Email"
   },
-
   "userMenu": {
     "myAccount": "My Account",
     "account": "Account",
@@ -365,12 +358,22 @@
     "viewedProducts": "Viewed Products",
     "favoriteProducts": "Favorite Products"
   },
-
   "address": {
-    "myAddress": "My Address",
-    "addNewAddress": "Add New Address"
+    "myAddresses": "My Addresses",
+    "addNew": "Add new address",
+    "address": "Address",
+    "loading": "Loading address list...",
+    "emptyTitle": "No address found",
+    "emptyDescription": "You haven't saved any address yet. Let's add a new address to make shopping easier and more convenient!",
+    "addNow": "Add address now",
+    "default": "Default",
+    "deliveryAddress": "Delivery Address",
+    "update": "Update",
+    "delete": "Delete",
+    "setDefault": "Set as default",
+    "deleteConfirmTitle": "Confirm delete address",
+    "deleteConfirmDescription": "Are you sure you want to delete this address? This action cannot be undone."
   },
-
   "cart": {
     "cart": "Cart",
     "productsInCart": "Products in Cart",
@@ -389,7 +392,6 @@
     "emptyCart": "Your cart is empty",
     "deliveryEstimation": "Delivery in 2-4 days"
   },
-
   "checkout": {
     "title": "Checkout",
     "selectShippingMethod": "Select Shipping Method",
@@ -415,7 +417,6 @@
     "confirmDesc": "Are you sure you want to place the order with the selected details?",
     "ordering": "Placing order..."
   },
-
   "shop": {
     "shop": "Shop",
     "shopProfile": "Shop Profile",
@@ -467,7 +468,6 @@
       "somethingWrong": "Something went wrong, please try again!"
     }
   },
-
   "search": {
     "filterTitle": "Search Filters",
     "location": "Seller Location",
@@ -493,13 +493,11 @@
     "noProducts": "No products found",
     "tryAnotherKeyword": "Try another keyword or adjust your filters"
   },
-
   "theme": {
     "light": "Light",
     "dark": "Dark",
     "system": "System"
   },
-
   "support": {
     "helpCenter": "Help Center",
     "title": "We're Here to Help",
@@ -821,5 +819,75 @@
     "back": "Back",
     "continue": "Continue",
     "submit": "Register Shop"
+  },
+  "addressModal": {
+    "editTitle": "Edit address",
+    "addTitle": "Add new address",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Eg: John Doe",
+    "phone": "Phone number",
+    "phonePlaceholder": "0123456789",
+    "houseNumber": "House number",
+    "houseNumberPlaceholder": "123/45",
+    "street": "Street",
+    "streetPlaceholder": "Main St",
+    "division": "Shipping Region",
+    "fullAddress": "Full address",
+    "fullAddressPlaceholder": "House number, street name, ward, district...",
+    "zipcode": "Zipcode",
+    "zipcodePlaceholder": "70000",
+    "instruction": "Instruction (Optional)",
+    "instructionPlaceholder": "Eg: Near the convenience store...",
+    "setAsDefault": "Set as default address",
+    "useForDelivery": "Use for delivery",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "save": "Save address",
+    "success": "Success",
+    "updateSuccess": "Address updated successfully",
+    "addSuccess": "New address added successfully",
+    "error": "Error",
+    "saveError": "Could not save address"
+  },
+  "security": {
+    "success": "Success",
+    "error": "Error",
+    "cancel": "Cancel",
+    "done": "Done",
+    "emailNotFound": "Email not found. Please log in again.",
+    "2fa": {
+      "title": "Two-Factor Authentication",
+      "description": "Add an extra layer of security to your account using an authenticator app",
+      "appName": "Authenticator App",
+      "appDescription": "Use an app like Google Authenticator or Authy to get security codes",
+      "enableFailed": "Failed to enable 2FA",
+      "disabledSuccess": "Two-factor authentication disabled successfully",
+      "enableTitle": "Enable Two-Factor Authentication",
+      "disableTitle": "Disable Two-Factor Authentication",
+      "scanQrDesc": "Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy).",
+      "confirmDisable": "Confirm Disable"
+    },
+    "sessions": {
+      "title": "Active Sessions",
+      "description": "Manage your active login sessions and devices",
+      "current": "Current",
+      "localhost": "Localhost",
+      "logout": "Logout",
+      "empty": "No active sessions found.",
+      "unknownDevice": "Unknown Device"
+    },
+    "otp": {
+      "invalidCode": "Please enter the 6-digit code",
+      "verifyFailed": "Verification failed",
+      "emailSent": "OTP sent to your email",
+      "sendFailed": "Failed to send email OTP",
+      "emailDesc": "Please enter the 6-digit code sent to {{email}}.",
+      "appDesc": "Please enter the 6-digit code from your authenticator app to confirm disabling 2FA.",
+      "useEmailInstead": "Use Email OTP instead?",
+      "notReceived": "Didn't receive the code?",
+      "resend": "Resend Email OTP",
+      "sending": "Sending...",
+      "verifying": "Verifying..."
+    }
   }
 }

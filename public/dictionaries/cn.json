@@ -19,7 +19,6 @@
       "cosmetics": "化妆品"
     }
   },
-
   "footer": {
     "newsletterTitle": "订阅我们的时事通讯",
     "newsletterDesc": "现在订阅以获取最新的促销和优惠券更新。我们承诺不发送垃圾邮件。",
@@ -165,7 +164,6 @@
       }
     }
   },
-
   "auth": {
     "login": {
       "title": "欢迎回来",
@@ -285,7 +283,6 @@
       "confirmReceived": "确认收到订单"
     }
   },
-
   "common": {
     "viewMore": "查看更多",
     "saveChanges": "保存更改",
@@ -306,7 +303,6 @@
       "error": "错误"
     }
   },
-
   "navigation": {
     "home": "首页",
     "products": "产品",
@@ -338,8 +334,6 @@
     "hrs": "小时",
     "min": "分钟"
   },
-
-
   "account": {
     "accountInfo": "账户信息",
     "personalInfo": "个人信息",
@@ -348,7 +342,6 @@
     "birthday": "出生日期",
     "phoneEmail": "电话和电子邮箱"
   },
-
   "userMenu": {
     "myAccount": "我的账户",
     "account": "账户",
@@ -365,12 +358,22 @@
     "viewedProducts": "浏览过的产品",
     "favoriteProducts": "收藏的产品"
   },
-
   "address": {
-    "myAddress": "我的地址",
-    "addNewAddress": "添加新地址"
+    "myAddresses": "我的地址",
+    "addNew": "新增地址",
+    "address": "地址",
+    "loading": "正在加载地址列表...",
+    "emptyTitle": "未找到地址",
+    "emptyDescription": "您还没有保存任何地址。立即添加新地址，让购物更轻松便捷！",
+    "addNow": "立即添加地址",
+    "default": "默认",
+    "deliveryAddress": "收货地址",
+    "update": "更新",
+    "delete": "删除",
+    "setDefault": "设为默认",
+    "deleteConfirmTitle": "确认删除地址",
+    "deleteConfirmDescription": "您确定要删除此地址吗？此操作无法撤销。"
   },
-
   "cart": {
     "cart": "购物车",
     "productsInCart": "购物车中的产品",
@@ -389,7 +392,6 @@
     "emptyCart": "您的购物车是空的",
     "deliveryEstimation": "2-4 天内送达"
   },
-
   "checkout": {
     "title": "结算",
     "selectShippingMethod": "选择配送方式",
@@ -415,7 +417,6 @@
     "confirmDesc": "您确定要按所选详情下订单吗？",
     "ordering": "下单中..."
   },
-
   "shop": {
     "shop": "店铺",
     "shopProfile": "店铺资料",
@@ -468,7 +469,6 @@
       "somethingWrong": "出错了，请稍后再试！"
     }
   },
-
   "search": {
     "filterTitle": "搜索过滤器",
     "location": "卖家所在地",
@@ -494,13 +494,11 @@
     "noProducts": "未找到产品",
     "tryAnotherKeyword": "尝试其他关键词或调整过滤器"
   },
-
   "theme": {
     "light": "浅色",
     "dark": "深色",
     "system": "系统"
   },
-
   "support": {
     "helpCenter": "帮助中心",
     "title": "我们在这里为您提供帮助",
@@ -741,5 +739,75 @@
       "description": "描述"
     }
   },
-  "NotFound": "未找到"
+  "NotFound": "未找到",
+  "addressModal": {
+    "editTitle": "编辑地址",
+    "addTitle": "新增地址",
+    "fullName": "姓名",
+    "fullNamePlaceholder": "例：张三",
+    "phone": "电话号码",
+    "phonePlaceholder": "0123456789",
+    "houseNumber": "门牌号",
+    "houseNumberPlaceholder": "123/45",
+    "street": "街道",
+    "streetPlaceholder": "主街",
+    "division": "配送区域",
+    "fullAddress": "详细地址",
+    "fullAddressPlaceholder": "门牌号，街道名称，区，市...",
+    "zipcode": "邮政编码",
+    "zipcodePlaceholder": "70000",
+    "instruction": "备注（可选）",
+    "instructionPlaceholder": "例：靠近便利店...",
+    "setAsDefault": "设为默认地址",
+    "useForDelivery": "用于配送",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "save": "保存地址",
+    "success": "成功",
+    "updateSuccess": "地址更新成功",
+    "addSuccess": "新地址添加成功",
+    "error": "错误",
+    "saveError": "无法保存地址"
+  },
+  "security": {
+    "success": "成功",
+    "error": "错误",
+    "cancel": "取消",
+    "done": "完成",
+    "emailNotFound": "未找到邮箱。请重新登录。",
+    "2fa": {
+      "title": "双因素认证",
+      "description": "使用认证应用为您的账户添加额外的安全层",
+      "appName": "认证应用",
+      "appDescription": "使用 Google Authenticator 或 Authy 等应用获取安全码",
+      "enableFailed": "启用双因素认证失败",
+      "disabledSuccess": "双因素认证已成功禁用",
+      "enableTitle": "启用双因素认证",
+      "disableTitle": "禁用双因素认证",
+      "scanQrDesc": "使用您的认证应用（例如 Google Authenticator、Authy）扫描下方二维码。",
+      "confirmDisable": "确认禁用"
+    },
+    "sessions": {
+      "title": "活跃会话",
+      "description": "管理您的活跃登录会话和设备",
+      "current": "当前",
+      "localhost": "本地主机",
+      "logout": "登出",
+      "empty": "未找到活跃会话。",
+      "unknownDevice": "未知设备"
+    },
+    "otp": {
+      "invalidCode": "请输入6位数字验证码",
+      "verifyFailed": "验证失败",
+      "emailSent": "OTP已发送至您的邮箱",
+      "sendFailed": "发送邮件OTP失败",
+      "emailDesc": "请输入发送至 {{email}} 的6位数字验证码。",
+      "appDesc": "请输入认证应用中的6位数字验证码以确认禁用2FA。",
+      "useEmailInstead": "改用邮件OTP？",
+      "notReceived": "没有收到验证码？",
+      "resend": "重新发送邮件OTP",
+      "sending": "发送中...",
+      "verifying": "验证中..."
+    }
+  }
 }

@@ -109,7 +109,7 @@ export default async function Page({ params }: Props) {
       authGuard={false}
       guestGuard={false}
     >
-      <main className="max-w-6xl mx-auto p-4 md:p-6 w-full">
+      <main className="max-w-7xl mx-auto p-4 md:p-6 w-full">
         <ProductDetails product={product} />
 
         <Script

@@ -1,34 +1,89 @@
 import { API_ENDPOINT } from '@/configs/api';
-import { ApiResponse } from '@/types/api-response';
 import axiosInstance from '@/utils/axios';
+import {
+  CreateAddressShipBodyType,
+  UpdateAddressShipBodyType,
+  AddressShipType,
+} from '@/types/address-ship';
+import { TPagination } from '@/types/params';
 
-export const getAddressShipIsDefaultUser = async (
-  id: number,
-): Promise<ApiResponse> => {
-  try {
-    const res = await axiosInstance.get(
-      `${API_ENDPOINT.ADDRESS_SHIP.INDEX}/default/${id}`,
-    );
+export const addressShipService = {
+  getAllAddressShips: async (query?: TPagination) => {
+    try {
+      const res = await axiosInstance.get(API_ENDPOINT.ADDRESS_SHIP.INDEX, {
+        params: query,
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error getting all address ships:', error);
+      throw error;
+    }
+  },
 
-    return {
-      status: 'success',
-      message: 'Fetch address ship default by user success.',
-      data: res.data.data,
-      error: null,
-      errorCode: null,
-    };
-  } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
+  createAddressShip: async (body: CreateAddressShipBodyType) => {
+    try {
+      const res = await axiosInstance.post(
+        API_ENDPOINT.ADDRESS_SHIP.INDEX,
+        body,
+      );
+      return res.data;
+    } catch (error) {
+      console.error('Error creating address ship:', error);
+      throw error;
+    }
+  },
 
-    return {
-      status: 'error',
-      message:
-        'Unable to fetch address ship default by user. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
-  }
+  getAddressShipById: async (id: number | string) => {
+    try {
+      const res = await axiosInstance.get(
+        `${API_ENDPOINT.ADDRESS_SHIP.INDEX}/${id}`,
+      );
+      return res.data;
+    } catch (error) {
+      console.error('Error getting address ship by id:', error);
+      throw error;
+    }
+  },
+
+  getAddressShipDefault: async (id: number | string) => {
+    try {
+      const res = await axiosInstance.get(
+        `${API_ENDPOINT.ADDRESS_SHIP.INDEX}/default/${id}`,
+      );
+      return res.data;
+    } catch (error) {
+      console.error('Error getting address ship default:', error);
+      throw error;
+    }
+  },
+
+  updateAddressShip: async (
+    id: number | string,
+    body: UpdateAddressShipBodyType,
+  ) => {
+    try {
+      const res = await axiosInstance.patch(
+        `${API_ENDPOINT.ADDRESS_SHIP.INDEX}/${id}`,
+        body,
+      );
+      return res.data;
+    } catch (error) {
+      console.error('Error updating address ship:', error);
+      throw error;
+    }
+  },
+
+  deleteAddressShip: async (id: number | string) => {
+    try {
+      const res = await axiosInstance.delete(
+        `${API_ENDPOINT.ADDRESS_SHIP.INDEX}/${id}`,
+      );
+      return res.data;
+    } catch (error) {
+      console.error('Error deleting address ship:', error);
+      throw error;
+    }
+  },
 };
+
+export default addressShipService;

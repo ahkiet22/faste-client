@@ -40,6 +40,9 @@ export const API_ENDPOINT = {
   CART: {
     INDEX: `${BASE_URL}/cart`,
   },
+  PROVINCES: {
+    INDEX: `${BASE_URL}/provinces`,
+  },
   SETTING: {
     CITY: {
       INDEX: `${BASE_URL}/city`,

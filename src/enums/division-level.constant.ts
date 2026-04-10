@@ -1,0 +1,6 @@
+export enum DIVISION_LEVEL {
+  STATE = 'STATE',
+  CITY = 'CITY',
+  DISTRICT = 'DISTRICT',
+  WARD = 'WARD',
+}

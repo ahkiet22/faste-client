@@ -27,7 +27,7 @@ import { Icon } from '@iconify/react';
 import { getOrdersByShop } from '@/services/order.service';
 import { Tooltip, TooltipContent } from '@/components/ui/tooltip';
 import { TooltipTrigger } from '@radix-ui/react-tooltip';
-import { getAddressShipIsDefaultUser } from '@/services/address-ship.service';
+import { addressShipService } from '@/services/address-ship.service';
 import { toastify } from '@/components/ToastNotification';
 import { OrderStatus } from '@/types/order';
 import {
@@ -166,7 +166,7 @@ export default function OrderListPage() {
   };
 
   const fetchAddresswhipDefault = async (id: number) => {
-    const res = await getAddressShipIsDefaultUser(id);
+    const res = await addressShipService.getAddressShipDefault(id);
     if (res.status === 'success') {
       if (selectedOrder) {
         selectedOrder.addressShip = res.data;

@@ -26,9 +26,9 @@ export default function BottomNavigation() {
               >
                 <Icon icon={item.icon} className="w-5 h-5" />
                 <span>{t(item.label)}</span>
-                {item.hasDropdown && (
+                {/* {item.hasDropdown && (
                   <Icon icon="icon-park-outline:down" className="w-4 h-4" />
-                )}
+                )} */}
               </Link>
             ))}
           </nav>

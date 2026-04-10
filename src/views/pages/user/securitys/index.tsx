@@ -39,8 +39,10 @@ import { vi } from 'date-fns/locale';
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useState } from 'react';
 import { toastify } from '@/components/ToastNotification';
+import { useTranslation } from 'react-i18next';
 
 export const SecurityPage = () => {
+  const { t } = useTranslation();
   const { user, setUser } = useAuth();
   const [devices, setDevices] = useState<TDevice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -82,60 +84,51 @@ export const SecurityPage = () => {
     if (is2FALoading) return;
 
     if (checked) {
-      // Enabling 2FA
       setIs2FALoading(true);
       try {
         const res = await enableTwoFactorAuth();
-        console.log('Enable 2FA response:', res);
         if (res.uri) {
           setQrCodeUri(res.uri);
           setShowQRDialog(true);
         }
       } catch (error: any) {
         toastify.error(
-          'Login',
-          error.response?.data?.message || 'Failed to enable 2FA',
+          t('security.2fa.title'),
+          error.response?.data?.message || t('security.2fa.enableFailed'),
         );
       } finally {
         setIs2FALoading(false);
       }
     } else {
-      // Disabling 2FA
       if (!user?.email) {
-        toastify.error('Error', 'Email not found. Please log in again.');
+        toastify.error(t('security.error'), t('security.emailNotFound'));
         return;
       }
-
       setShowOTPDialog(true);
     }
   };
 
   const handleVerifyDisable = async () => {
     if (otpCode.length < 6) {
-      toastify.error('Error', 'Please enter the 6-digit code');
+      toastify.error(t('security.error'), t('security.otp.invalidCode'));
       return;
     }
 
     setIsSubmittingOTP(true);
     try {
-      // NOTE: We send it as totpCode. The server must be updated to handle email code if provided as totpCode.
       await disableTwoFactorAuth({ totpCode: otpCode });
-      toastify.success(
-        'Success',
-        'Two-factor authentication disabled successfully',
-      );
+      toastify.success(t('security.success'), t('security.2fa.disabledSuccess'));
       setShowOTPDialog(false);
       setOtpCode('');
       setIsEmailMode(false);
-      // Refresh profile to sync state
       const profileRes = await getProfile();
       if (profileRes.data) {
         setUser(profileRes.data);
       }
     } catch (error: any) {
       toastify.error(
-        'Error',
-        error.response?.data?.message || 'Verification failed',
+        t('security.error'),
+        error.response?.data?.message || t('security.otp.verifyFailed'),
       );
     } finally {
       setIsSubmittingOTP(false);
@@ -152,11 +145,11 @@ export const SecurityPage = () => {
         type: VerificationCodeTypeType.DISABLE_2FA,
       });
       setIsEmailMode(true);
-      toastify.success('Success', 'OTP sent to your email');
+      toastify.success(t('security.success'), t('security.otp.emailSent'));
     } catch (error: any) {
       toastify.error(
-        'Error',
-        error.response?.data?.message || 'Failed to send email OTP',
+        t('security.error'),
+        error.response?.data?.message || t('security.otp.sendFailed'),
       );
     } finally {
       setIsSendingEmailOTP(false);
@@ -167,11 +160,7 @@ export const SecurityPage = () => {
 
   const getDeviceIcon = (userAgent: string) => {
     const ua = userAgent.toLowerCase();
-    if (
-      ua.includes('mobi') ||
-      ua.includes('android') ||
-      ua.includes('iphone')
-    ) {
+    if (ua.includes('mobi') || ua.includes('android') || ua.includes('iphone')) {
       return 'lucide:smartphone';
     }
     if (ua.includes('tablet') || ua.includes('ipad')) {
@@ -185,53 +174,37 @@ export const SecurityPage = () => {
     if (ua.includes('postman')) return 'Postman Desktop';
     if (ua.includes('chrome')) return 'Chrome on Desktop';
     if (ua.includes('firefox')) return 'Firefox on Desktop';
-    if (ua.includes('safari') && !ua.includes('chrome'))
-      return 'Safari on Apple';
+    if (ua.includes('safari') && !ua.includes('chrome')) return 'Safari on Apple';
     if (ua.includes('edge')) return 'Edge on Windows';
-    return userAgent.split('/')[0] || 'Unknown Device';
+    return userAgent.split('/')[0] || t('security.sessions.unknownDevice');
   };
-
-  console.log('Devices:', qrCodeUri);
 
   return (
     <>
       <div className="space-y-6">
+        {/* 2FA Card */}
         <Card className="border-none shadow-sm bg-card/50 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-xl font-bold flex items-center gap-2">
               <Icon icon="lucide:shield-check" className="text-primary" />
-              Two-Factor Authentication
+              {t('security.2fa.title')}
             </CardTitle>
-            <CardDescription>
-              Add an extra layer of security to your account using an
-              authenticator app
-            </CardDescription>
+            <CardDescription>{t('security.2fa.description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="group flex items-center justify-between p-5 border border-border/50 rounded-xl bg-background/50 hover:border-primary/30 transition-all duration-300">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Icon
-                    icon="lucide:shield-ellipsis"
-                    className="w-6 h-6 text-primary"
-                  />
+                  <Icon icon="lucide:shield-ellipsis" className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground">
-                    Authenticator App
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Use an app like Google Authenticator or Authy to get
-                    security codes
-                  </p>
+                  <p className="font-semibold text-foreground">{t('security.2fa.appName')}</p>
+                  <p className="text-sm text-muted-foreground">{t('security.2fa.appDescription')}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 {is2FALoading && (
-                  <Icon
-                    icon="lucide:loader-2"
-                    className="w-4 h-4 animate-spin text-muted-foreground"
-                  />
+                  <Icon icon="lucide:loader-2" className="w-4 h-4 animate-spin text-muted-foreground" />
                 )}
                 <Switch
                   checked={current2FAState}
@@ -243,24 +216,20 @@ export const SecurityPage = () => {
           </CardContent>
         </Card>
 
+        {/* Active Sessions Card */}
         <Card className="border-none shadow-sm bg-card/50 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-xl font-bold flex items-center gap-2">
               <Icon icon="lucide:history" className="text-primary" />
-              Active Sessions
+              {t('security.sessions.title')}
             </CardTitle>
-            <CardDescription>
-              Manage your active login sessions and devices
-            </CardDescription>
+            <CardDescription>{t('security.sessions.description')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {isLoading ? (
               <div className="space-y-3">
                 {[1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="h-20 w-full animate-pulse bg-muted rounded-xl"
-                  />
+                  <div key={i} className="h-20 w-full animate-pulse bg-muted rounded-xl" />
                 ))}
               </div>
             ) : devices.length > 0 ? (
@@ -271,29 +240,22 @@ export const SecurityPage = () => {
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Icon
-                        icon={getDeviceIcon(device.userAgent)}
-                        className="w-6 h-6 text-primary"
-                      />
+                      <Icon icon={getDeviceIcon(device.userAgent)} className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="font-semibold text-foreground">
-                          {getDeviceName(device.userAgent)}
-                        </p>
+                        <p className="font-semibold text-foreground">{getDeviceName(device.userAgent)}</p>
                         {device.isActive && (
                           <Badge
                             variant="secondary"
                             className="bg-green-500/10 text-green-600 border-0 h-5 px-2 text-[10px]"
                           >
-                            Current
+                            {t('security.sessions.current')}
                           </Badge>
                         )}
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                        <span>
-                          {device.ip === '::1' ? 'Localhost' : device.ip}
-                        </span>
+                        <span>{device.ip === '::1' ? t('security.sessions.localhost') : device.ip}</span>
                         <span>•</span>
                         <span>
                           {formatDistanceToNow(new Date(device.lastActive), {
@@ -309,13 +271,13 @@ export const SecurityPage = () => {
                     size="sm"
                     className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
                   >
-                    Logout
+                    {t('security.sessions.logout')}
                   </Button>
                 </div>
               ))
             ) : (
               <div className="text-center py-10 text-muted-foreground">
-                No active sessions found.
+                {t('security.sessions.empty')}
               </div>
             )}
           </CardContent>
@@ -328,18 +290,14 @@ export const SecurityPage = () => {
         onOpenChange={(open) => {
           setShowQRDialog(open);
           if (!open) {
-            // If closed, we might want to refresh profile because it might have been enabled
             getProfile().then((res) => res.data && setUser(res.data));
           }
         }}
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Enable Two-Factor Authentication</DialogTitle>
-            <DialogDescription>
-              Scan the QR code below with your authenticator app (e.g., Google
-              Authenticator, Authy).
-            </DialogDescription>
+            <DialogTitle>{t('security.2fa.enableTitle')}</DialogTitle>
+            <DialogDescription>{t('security.2fa.scanQrDesc')}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col items-center justify-center space-y-4 py-4">
             <div className="p-4 bg-white rounded-lg">
@@ -350,7 +308,7 @@ export const SecurityPage = () => {
             </p>
           </div>
           <DialogFooter>
-            <Button onClick={() => setShowQRDialog(false)}>Done</Button>
+            <Button onClick={() => setShowQRDialog(false)}>{t('security.done')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -359,19 +317,15 @@ export const SecurityPage = () => {
       <Dialog open={showOTPDialog} onOpenChange={setShowOTPDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Disable Two-Factor Authentication</DialogTitle>
+            <DialogTitle>{t('security.2fa.disableTitle')}</DialogTitle>
             <DialogDescription>
               {isEmailMode
-                ? `Please enter the 6-digit code sent to ${user?.email}.`
-                : 'Please enter the 6-digit code from your authenticator app to confirm disabling 2FA.'}
+                ? t('security.otp.emailDesc', { email: user?.email })
+                : t('security.otp.appDesc')}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col items-center justify-center space-y-6 py-6">
-            <InputOTP
-              maxLength={6}
-              value={otpCode}
-              onChange={(value) => setOtpCode(value)}
-            >
+            <InputOTP maxLength={6} value={otpCode} onChange={(value) => setOtpCode(value)}>
               <InputOTPGroup>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />
@@ -391,12 +345,12 @@ export const SecurityPage = () => {
                 disabled={isSendingEmailOTP}
                 className="text-primary h-auto p-0"
               >
-                {isSendingEmailOTP ? 'Sending...' : 'Use Email OTP instead?'}
+                {isSendingEmailOTP ? t('security.otp.sending') : t('security.otp.useEmailInstead')}
               </Button>
             ) : (
               <div className="text-center">
                 <p className="text-xs text-muted-foreground mb-1">
-                  Didn&apos;t receive the code?
+                  {t('security.otp.notReceived')}
                 </p>
                 <Button
                   variant="link"
@@ -406,7 +360,7 @@ export const SecurityPage = () => {
                   disabled={isSendingEmailOTP}
                   className="text-primary h-auto p-0"
                 >
-                  {isSendingEmailOTP ? 'Sending...' : 'Resend Email OTP'}
+                  {isSendingEmailOTP ? t('security.otp.sending') : t('security.otp.resend')}
                 </Button>
               </div>
             )}
@@ -420,13 +374,13 @@ export const SecurityPage = () => {
                 setIsEmailMode(false);
               }}
             >
-              Cancel
+              {t('security.cancel')}
             </Button>
             <Button
               onClick={handleVerifyDisable}
               disabled={isSubmittingOTP || otpCode.length < 6}
             >
-              {isSubmittingOTP ? 'Verifying...' : 'Confirm Disable'}
+              {isSubmittingOTP ? t('security.otp.verifying') : t('security.2fa.confirmDisable')}
             </Button>
           </DialogFooter>
         </DialogContent>

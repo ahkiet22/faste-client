@@ -51,7 +51,7 @@ import {
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { formatCurrency } from '@/helpers/currency';
-import { getAddressShipIsDefaultUser } from '@/services/address-ship.service';
+import { addressShipService } from '@/services/address-ship.service';
 import { OrderStatus } from '@/types/order';
 import {
   Dialog,
@@ -86,7 +86,7 @@ export const OrderDetailPage = ({ orderId }: Props) => {
     setLoading(false);
   };
   const fetchAddresswhipDefault = async (id: number) => {
-    const res = await getAddressShipIsDefaultUser(id);
+    const res = await addressShipService.getAddressShipDefault(id);
     if (res.status === 'success') {
       if (orderData) {
         orderData.addressShip = res.data;

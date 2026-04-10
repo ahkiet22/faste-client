@@ -19,7 +19,6 @@
       "cosmetics": "Mỹ phẩm"
     }
   },
-
   "footer": {
     "newsletterTitle": "Tham gia bản tin của chúng tôi",
     "newsletterDesc": "Đăng ký ngay để nhận thông tin cập nhật mới nhất về các chương trình khuyến mãi và mã giảm giá. Chúng tôi cam kết không gửi thư rác.",
@@ -165,7 +164,6 @@
       }
     }
   },
-
   "auth": {
     "login": {
       "title": "Chào mừng trở lại",
@@ -285,7 +283,6 @@
       "confirmReceived": "Xác nhận đã nhận hàng"
     }
   },
-
   "common": {
     "viewMore": "Xem thêm",
     "saveChanges": "Lưu thay đổi",
@@ -306,7 +303,6 @@
       "error": "Lỗi"
     }
   },
-
   "navigation": {
     "home": "Trang chủ",
     "products": "Sản phẩm",
@@ -338,8 +334,6 @@
     "hrs": "giờ",
     "min": "phút"
   },
-
-
   "account": {
     "accountInfo": "Thông tin tài khoản",
     "personalInfo": "Thông tin cá nhân",
@@ -348,7 +342,6 @@
     "birthday": "Ngày sinh",
     "phoneEmail": "Số điện thoại và Email"
   },
-
   "userMenu": {
     "myAccount": "Tài khoản của tôi",
     "account": "Tài khoản",
@@ -365,12 +358,22 @@
     "viewedProducts": "Sản phẩm đã xem",
     "favoriteProducts": "Sản phẩm yêu thích"
   },
-
   "address": {
-    "myAddress": "Địa chỉ của tôi",
-    "addNewAddress": "Thêm địa chỉ mới"
+    "myAddresses": "Địa chỉ của tôi",
+    "addNew": "Thêm địa chỉ mới",
+    "address": "Địa chỉ",
+    "loading": "Đang tải danh sách địa chỉ...",
+    "emptyTitle": "Chưa có địa chỉ nào",
+    "emptyDescription": "Bạn chưa lưu địa chỉ nào. Hãy thêm địa chỉ mới để dễ dàng và thuận tiện hơn trong việc mua sắm nhé!",
+    "addNow": "Thêm địa chỉ ngay",
+    "default": "Mặc định",
+    "deliveryAddress": "Địa chỉ nhận hàng",
+    "update": "Cập nhật",
+    "delete": "Xóa",
+    "setDefault": "Thiết lập mặc định",
+    "deleteConfirmTitle": "Xác nhận xóa địa chỉ",
+    "deleteConfirmDescription": "Bạn có chắc chắn muốn xóa địa chỉ này? Hành động này không thể hoàn tác."
   },
-
   "cart": {
     "cart": "Giỏ hàng",
     "productsInCart": "Sản phẩm trong giỏ",
@@ -389,7 +392,6 @@
     "emptyCart": "Giỏ hàng của bạn trống",
     "deliveryEstimation": "Giao từ 2-4 ngày"
   },
-
   "checkout": {
     "title": "Thanh toán",
     "selectShippingMethod": "Chọn hình thức giao hàng",
@@ -415,7 +417,6 @@
     "confirmDesc": "Bạn có chắc chắn muốn đặt hàng với các thông tin đã chọn?",
     "ordering": "Đang đặt hàng..."
   },
-
   "shop": {
     "shop": "Cửa hàng",
     "shopProfile": "Hồ sơ cửa hàng",
@@ -467,7 +468,6 @@
       "somethingWrong": "Đã có lỗi xảy ra vui lòng thử lại!"
     }
   },
-
   "search": {
     "filterTitle": "Bộ lọc tìm kiếm",
     "location": "Nơi bán",
@@ -493,13 +493,11 @@
     "noProducts": "Không tìm thấy sản phẩm",
     "tryAnotherKeyword": "Hãy thử từ khóa khác hoặc thay đổi bộ lọc tìm kiếm"
   },
-
   "theme": {
     "light": "Sáng",
     "dark": "Tối",
     "system": "Hệ thống"
   },
-
   "support": {
     "helpCenter": "Trung tâm trợ giúp",
     "title": "Chúng tôi Ở đây để Giúp đỡ",
@@ -821,5 +819,75 @@
     "back": "Quay lại",
     "continue": "Tiếp tục",
     "submit": "Đăng ký Cửa hàng"
+  },
+  "addressModal": {
+    "editTitle": "Chỉnh sửa địa chỉ",
+    "addTitle": "Thêm địa chỉ mới",
+    "fullName": "Họ tên",
+    "fullNamePlaceholder": "VD: Nguyễn Văn A",
+    "phone": "Số điện thoại",
+    "phonePlaceholder": "0901234567",
+    "houseNumber": "Số nhà",
+    "houseNumberPlaceholder": "123/45",
+    "street": "Tên đường",
+    "streetPlaceholder": "Lê Lợi",
+    "division": "Khu vực vận chuyển",
+    "fullAddress": "Địa chỉ đầy đủ",
+    "fullAddressPlaceholder": "Số nhà, tên đường, phường, quận...",
+    "zipcode": "Mã Zipcode",
+    "zipcodePlaceholder": "70000",
+    "instruction": "Ghi chú (Tùy chọn)",
+    "instructionPlaceholder": "VD: Gần cửa hàng tiện lợi...",
+    "setAsDefault": "Đặt làm địa chỉ mặc định",
+    "useForDelivery": "Sử dụng cho giao hàng",
+    "cancel": "Hủy bỏ",
+    "saving": "Đang lưu...",
+    "save": "Lưu địa chỉ",
+    "success": "Thành công",
+    "updateSuccess": "Cập nhật địa chỉ thành công",
+    "addSuccess": "Thêm địa chỉ mới thành công",
+    "error": "Lỗi",
+    "saveError": "Không thể lưu địa chỉ"
+  },
+  "security": {
+    "success": "Thành công",
+    "error": "Lỗi",
+    "cancel": "Hủy",
+    "done": "Hoàn tất",
+    "emailNotFound": "Không tìm thấy email. Vui lòng đăng nhập lại.",
+    "2fa": {
+      "title": "Xác thực hai yếu tố",
+      "description": "Thêm lớp bảo mật cho tài khoản của bạn bằng ứng dụng xác thực",
+      "appName": "Ứng dụng xác thực",
+      "appDescription": "Sử dụng ứng dụng như Google Authenticator hoặc Authy để lấy mã bảo mật",
+      "enableFailed": "Không thể bật xác thực hai yếu tố",
+      "disabledSuccess": "Đã tắt xác thực hai yếu tố thành công",
+      "enableTitle": "Bật xác thực hai yếu tố",
+      "disableTitle": "Tắt xác thực hai yếu tố",
+      "scanQrDesc": "Quét mã QR bên dưới bằng ứng dụng xác thực (ví dụ: Google Authenticator, Authy).",
+      "confirmDisable": "Xác nhận tắt"
+    },
+    "sessions": {
+      "title": "Phiên đăng nhập",
+      "description": "Quản lý các phiên đăng nhập và thiết bị đang hoạt động",
+      "current": "Hiện tại",
+      "localhost": "Máy cục bộ",
+      "logout": "Đăng xuất",
+      "empty": "Không tìm thấy phiên đăng nhập nào.",
+      "unknownDevice": "Thiết bị không xác định"
+    },
+    "otp": {
+      "invalidCode": "Vui lòng nhập mã 6 chữ số",
+      "verifyFailed": "Xác minh thất bại",
+      "emailSent": "OTP đã được gửi đến email của bạn",
+      "sendFailed": "Không thể gửi OTP qua email",
+      "emailDesc": "Vui lòng nhập mã 6 chữ số được gửi đến {{email}}.",
+      "appDesc": "Vui lòng nhập mã 6 chữ số từ ứng dụng xác thực để xác nhận tắt 2FA.",
+      "useEmailInstead": "Dùng OTP qua Email?",
+      "notReceived": "Không nhận được mã?",
+      "resend": "Gửi lại OTP",
+      "sending": "Đang gửi...",
+      "verifying": "Đang xác minh..."
+    }
   }
 }
