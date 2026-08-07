@@ -43,7 +43,7 @@ export default function Page() {
   const fetchDataProduct = async () => {
     try {
       const res = await getAllProductPublicBySeller();
-      if (res.statusCode === 200) {
+      if (res.success) {
         setProducts(res.data);
       }
     } catch (error) {

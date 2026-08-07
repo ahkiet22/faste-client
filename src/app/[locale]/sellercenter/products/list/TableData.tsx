@@ -82,7 +82,7 @@ export function TableData(props: TProps) {
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">
+          <TableHead className="w-25">
             <Checkbox />
           </TableHead>
           <TableHead></TableHead>

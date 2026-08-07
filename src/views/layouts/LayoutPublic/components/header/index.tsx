@@ -12,12 +12,6 @@ import LocaleSwitcher from '@/components/locale-switcher';
 import PromoBar from './PromoBar';
 import { TopNavigation } from './TopNavigation';
 import BottomNavigation from './BottomNavigation';
-import {
-  CART_QUERY_PARAMS,
-  useGetCart,
-} from '@/hooks/api/queries/useGetCart';
-import { keepPreviousData } from '@tanstack/react-query';
-import { useCartStore } from '@/stores/cart.store';
 import CartPopover from './CartPopover';
 import SearchHeader from './SearchHeader';
 import UserDropdownMenu from './UserDropdownMenu';
@@ -32,21 +26,6 @@ const Header = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const isHeaderVisible = useHeaderVisibility({ disabled: isOpen });
-  const totalCartItemRef = useRef<number>(0);
-  const { data, isLoading } = useGetCart(
-    CART_QUERY_PARAMS,
-    {
-      select: (data) => data.data,
-      staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      placeholderData: keepPreviousData,
-    },
-  );
-  const totalCartItemStore = useCartStore((s) => s.totalCartItem);
-  if (!isLoading) {
-    totalCartItemRef.current = totalCartItemStore;
-  }
 
   return (
     <header
@@ -142,10 +121,7 @@ const Header = () => {
               </Button>
 
               {/* Cart */}
-              <CartPopover
-                data={data}
-                totalCartItem={totalCartItemRef.current}
-              />
+              <CartPopover />
 
               {/* Theme Toggle */}
               <ModeToggle />

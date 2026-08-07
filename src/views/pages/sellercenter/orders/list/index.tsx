@@ -235,6 +235,24 @@ export default function OrderListPage() {
             ))}
           </SelectContent>
         </Select>
+        <Select
+          value={paymentMethodFilter}
+          onValueChange={(value) => {
+            setPaymentMethodFilter(value);
+            setCurrentPage(1);
+          }}
+        >
+          <SelectTrigger className="w-full md:w-[220px]">
+            <SelectValue placeholder={t('sellercenter.orders.filterPayment')} />
+          </SelectTrigger>
+          <SelectContent>
+            {PAYMENT_METHODS.map((method) => (
+              <SelectItem key={method.value} value={method.value}>
+                {method.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <Tabs

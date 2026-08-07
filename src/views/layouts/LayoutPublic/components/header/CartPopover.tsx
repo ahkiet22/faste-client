@@ -8,18 +8,30 @@ import { Badge } from '@/components/ui/badge';
 import { formatCurrencyWithExchange } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks'
-import React, { useCallback } from 'react';
+import { useAuth } from '@/hooks';
+import React, { useCallback, useRef } from 'react';
+import { CART_QUERY_PARAMS, useGetCart } from '@/hooks/api';
+import { keepPreviousData } from '@tanstack/react-query';
+import { useCartStore } from '@/stores/cart.store';
 
-interface CartPopoverProps {
-  totalCartItem: number;
-  data: any;
-}
-
-function CartPopover({ totalCartItem, data }: CartPopoverProps) {
+function CartPopover() {
   const { i18n, t } = useTranslation();
   const { user } = useAuth();
   const router = useRouter();
+  const totalCartItemRef = useRef<number>(0);
+
+  const { data, isLoading } = useGetCart(CART_QUERY_PARAMS, {
+    select: (data) => data.data,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    placeholderData: keepPreviousData,
+  });
+
+  const totalCartItemStore = useCartStore((s) => s.totalCartItem);
+  if (!isLoading) {
+    totalCartItemRef.current = totalCartItemStore;
+  }
 
   const handleNavigateUtils = useCallback(
     (path: string) => {
@@ -41,22 +53,24 @@ function CartPopover({ totalCartItem, data }: CartPopoverProps) {
             variant="destructive"
             className="absolute -top-1 -right-1 w-5 h-5 rounded-full p-0 flex items-center justify-center text-xs bg-orange-500"
           >
-            {totalCartItem}
+            {totalCartItemRef.current}
           </Badge>
         )}
       </Button>
       <div
         className={`absolute right-0 z-10 py-2 hidden w-90 space-y-1 bg-white dark:bg-gray-900 shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all duration-300 rounded-sm ${user ? 'group-hover:block' : ''}`}
       >
-        <div className="text-sm text-gray-300 px-2">{t('product.newAdded')}</div>
+        <div className="text-sm text-gray-300 px-2">
+          {t('product.newAdded')}
+        </div>
         {data ? (
-          <div className="mb-4 max-w-[400px] max-h-[400px]">
+          <div className="mb-4 max-w-100 max-h-100">
             {data.map((ci: any, indexCi: number) => (
               <div key={ci.shop.shopid + indexCi}>
                 {ci.cartItems.map((item: any, indexItem: number) => (
                   <div
                     key={indexCi + indexItem + item.id + item.sku.id}
-                    className="flex items-start max-w-[400px] max-h-14 hover:bg-gray-100 p-2 cursor-pointer"
+                    className="flex items-start max-w-100 max-h-14 hover:bg-gray-100 p-2 cursor-pointer"
                     onClick={() =>
                       handleNavigateUtils(`/product/${item.sku.product.slugId}`)
                     }
@@ -100,7 +114,7 @@ function CartPopover({ totalCartItem, data }: CartPopoverProps) {
           </div>
         )}
         <div className="flex items-center justify-between px-2">
-          <div className="text-xs text-gray-300">{`${totalCartItem ? totalCartItem : 0} ${t('cart.productsInCart')}`}</div>
+          <div className="text-xs text-gray-300">{`${totalCartItemRef.current ? totalCartItemRef.current : 0} ${t('cart.productsInCart')}`}</div>
           <Link href={'/cart'} className="cursor-pointer">
             <Button className="cursor-pointer">{t('cart.viewCart')}</Button>
           </Link>
