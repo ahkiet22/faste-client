@@ -33,8 +33,10 @@ export const ROUTE_CONFIG = {
     NOTIFICATION: '/sellercenter/notification',
 
     PRODUCT: {
+      INDEX: '/sellercenter/products',
       LIST: '/sellercenter/products/list',
       CREATE: '/sellercenter/products/create',
+      EDIT: '/sellercenter/products/edit',
       STOCK: '/sellercenter/products/stock',
       MEDIA: '/sellercenter/products/media',
       REVIEW: '/sellercenter/products/reviews',

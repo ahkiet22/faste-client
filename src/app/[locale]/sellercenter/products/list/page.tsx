@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { toastify } from '@/components/ToastNotification';
 import { TableData } from './TableData';
 import { PaginationWithLinks } from '@/components/pagination-table';
+import { TableSkeleton } from './TableSkeleton';
 
 
 
@@ -65,7 +66,7 @@ export default function Page() {
         totalPage={products.totalPage}
       />
     ) : (
-      <div>Đang tải dữ liệu...</div>
+      <TableSkeleton rowCount={10} />
     ),
     selling: <div>Giao diện cho Đang bán</div>,
     draft: <div>Giao diện cho Bản nháp</div>,

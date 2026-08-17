@@ -4,6 +4,7 @@ import { TBodyCreateProduct } from '@/types/product';
 import axiosInstance from '@/utils/axios';
 import axios from 'axios';
 
+// enpoint public
 export const getAllProductsPublic = async (
   params: { page?: number; limit?: number } = { page: 1, limit: 12 },
 ) => {
@@ -82,11 +83,42 @@ export const getAllProductPublicBySeller = async (
   }
 };
 
+// enpoint for seller or admin
 export const createProductBySeller = async (data: TBodyCreateProduct) => {
   try {
     const res = await axiosInstance.post(
       `${API_ENDPOINT.MANAGE_PRODUCT.PRODUCT.INDEX}`,
       data,
+    );
+
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getProductById = async (id: string) => {
+  try {
+    const res = await axiosInstance.get(
+      `${API_ENDPOINT.MANAGE_PRODUCT.PRODUCT.INDEX}/${id}`,
+    );
+
+    console.log('GET DETAILS', res.data);
+
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateProductBySeller = async (
+  id: string,
+  data: Partial<TBodyCreateProduct>,
+) => {
+  try {
+    const res = await axiosInstance.patch(
+      `${API_ENDPOINT.MANAGE_PRODUCT.PRODUCT.INDEX}/${id}`,
+      { data },
     );
 
     return res.data;
