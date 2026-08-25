@@ -58,3 +58,5 @@ export const LANGUAGE_OPTIONS = [
     value: 'kr',
   },
 ];
+
+export const LANGUAGE_MAP = LANGUAGE_OPTIONS.flatMap((lang) => lang.value);

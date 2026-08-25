@@ -18,7 +18,7 @@ export const getAllProductsPublic = async (
 
     return res.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -42,17 +42,7 @@ export const getAllProductsPublicByShop = async (
       errorCode: null,
     };
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-
-    return {
-      status: 'error',
-      message: 'Unable to fetch product by shop. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
@@ -64,7 +54,7 @@ export const getDetailProductPublicBySlug = async (slugId: string) => {
 
     return res.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -79,7 +69,7 @@ export const getAllProductPublicBySeller = async (
 
     return res.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -93,7 +83,7 @@ export const createProductBySeller = async (data: TBodyCreateProduct) => {
 
     return res.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -107,7 +97,7 @@ export const getProductById = async (id: string) => {
 
     return res.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -123,6 +113,6 @@ export const updateProductBySeller = async (
 
     return res.data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };

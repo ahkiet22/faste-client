@@ -13,16 +13,7 @@ export const getAllShopsPublic = async (
 
     return res.data;
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-    return {
-      status: 'error',
-      message: 'Unable to fetch shop data. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
@@ -42,16 +33,7 @@ export const getAllShopsIsPublic = async (
       errorCode: null,
     };
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-    return {
-      status: 'error',
-      message: 'Unable to fetch shop data. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
@@ -68,17 +50,7 @@ export const getDetailShopPublicBySlug = async (
       errorCode: null,
     };
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-
-    return {
-      status: 'error',
-      message: 'Unable to fetch shop details. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
@@ -93,17 +65,7 @@ export const getDetailShopById = async (id: number): Promise<ApiResponse> => {
       errorCode: null,
     };
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-
-    return {
-      status: 'error',
-      message: 'Unable to fetch shop details. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
@@ -118,41 +80,24 @@ export const getDetailShopMe = async (): Promise<ApiResponse> => {
       errorCode: null,
     };
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-
-    return {
-      status: 'error',
-      message: 'Unable to fetch shop details. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
 export const registerSeller = async (data: FormData): Promise<ApiResponse> => {
   try {
-    const res = await axiosInstance.post(`${API_ENDPOINT.SHOP.INDEX}/register`);
+    const res = await axiosInstance.post(
+      `${API_ENDPOINT.SHOP.INDEX}/register`,
+      data,
+    );
     return {
       status: 'success',
-      message: 'Fetch shop details success.',
+      message: 'Register seller success.',
       data: res.data.data,
       error: null,
       errorCode: null,
     };
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-
-    return {
-      status: 'error',
-      message: 'Unable to fetch shop details. Please try again later.',
-      data: null,
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };

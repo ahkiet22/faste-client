@@ -31,8 +31,6 @@ import {
 } from '@/components/ui/sheet';
 import { Filter } from 'lucide-react';
 
-import page from '@/app/[locale]/sellercenter/vouchers/list/page';
-
 type TSearchProducts = {
   total: number;
   page: number;
@@ -44,7 +42,7 @@ export const ProductListPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { searchText } = useSearchStore();
+  const { searchText, setSearchText } = useSearchStore();
 
   const [searchProducts, setSearchProducts] = useState<TSearchProducts>({
     total: 0,
@@ -55,6 +53,7 @@ export const ProductListPage = () => {
   const [loading, setLoading] = useState(true);
 
   const filters = {
+    keyword: searchParams.get('keyword') || '',
     order: searchParams.get('order') || '',
     orderBy: searchParams.get('orderBy') || '',
     rating: searchParams.get('rating') || '',
@@ -86,7 +85,7 @@ export const ProductListPage = () => {
 
   useEffect(() => {
     fetchProduct({
-      keyword: searchText,
+      keyword: filters.keyword,
       order: filters.order ? (filters.order as 'asc' | 'desc') : 'asc',
       // rating: Number(filters.rating),
       page: Number(filters.page),
@@ -95,6 +94,13 @@ export const ProductListPage = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
+
+  useEffect(() => {
+    const urlKeyword = searchParams.get('keyword') || '';
+    if (urlKeyword !== searchText) {
+      setSearchText(urlKeyword);
+    }
+  }, [searchParams, searchText, setSearchText]);
 
   return (
     <Suspense fallback={<LoadingSpinner />}>

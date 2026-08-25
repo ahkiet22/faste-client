@@ -105,6 +105,626 @@
           }
         ]
       }
+    ],
+    "/product/ao-thun-nam": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Áo Thun Nam?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Áo Thun Nam is a product available on FastE. Áo thun nam cotton thoáng mát"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does Áo Thun Nam cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Áo Thun Nam costs 150.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Áo Thun Nam available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Áo Thun Nam is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Áo Thun Nam",
+        "url": "https://fasteapp.vercel.app/product/ao-thun-nam"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Ao thun nam",
+            "item": "https://fasteapp.vercel.app/product/ao-thun-nam"
+          }
+        ]
+      }
+    ],
+    "/product/laptop-gaming-asus-rog": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Laptop Gaming ASUS ROG?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Laptop Gaming ASUS ROG is a product available on FastE. Laptop gaming hiệu năng cao với card đồ họa RTX và màn hình 144Hz"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does Laptop Gaming ASUS ROG cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Laptop Gaming ASUS ROG costs 35.000.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Laptop Gaming ASUS ROG available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Laptop Gaming ASUS ROG is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Laptop Gaming ASUS ROG",
+        "url": "https://fasteapp.vercel.app/product/laptop-gaming-asus-rog"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Laptop gaming asus rog",
+            "item": "https://fasteapp.vercel.app/product/laptop-gaming-asus-rog"
+          }
+        ]
+      }
+    ],
+    "/product/iphone-15-pro-max": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is iPhone 15 Pro Max?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iPhone 15 Pro Max is a product available on FastE. Siêu phẩm smartphone với chip A17 Pro, camera tele 5x và khung titan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does iPhone 15 Pro Max cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iPhone 15 Pro Max costs 30.000.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is iPhone 15 Pro Max available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iPhone 15 Pro Max is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "iPhone 15 Pro Max",
+        "url": "https://fasteapp.vercel.app/product/iphone-15-pro-max"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Iphone 15 pro max",
+            "item": "https://fasteapp.vercel.app/product/iphone-15-pro-max"
+          }
+        ]
+      }
+    ],
+    "/product/sui-crypto-coin-fanboi-black-sui-coin-crypto-tshirt-womens-unisex-small": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt is a product available on FastE. <p><span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">This classic unisex jersey short sleeve tee fits like a well-loved favorite. Soft cotton and quality print make users fall in love with it over and over again. These t-shirts have-ribbed knit collars to bolster shaping. The shoulders are tapered for a better fit o"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt costs 30.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt",
+        "url": "https://fasteapp.vercel.app/product/sui-crypto-coin-fanboi-black-sui-coin-crypto-tshirt-womens-unisex-small"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Sui crypto coin fanboi black sui coin crypto tshirt womens unisex small",
+            "item": "https://fasteapp.vercel.app/product/sui-crypto-coin-fanboi-black-sui-coin-crypto-tshirt-womens-unisex-small"
+          }
+        ]
+      }
+    ],
+    "/product/ram-ddr5-pc-8gb16gb-bus-520056006000-mhz-kingston": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston is a product available on FastE. <h2 class=\"ql-align-justify\"><strong style=\"background-color: rgb(255, 255, 255); color: rgb(51, 51, 51);\">Đánh giá chi tiết RAM Kingston Fury Beast RGB 32GB (1x32GB) bus 6000 DDR5</strong></h2><p class=\"ql-align-justify\"><strong style=\"background-color: rgb(255, 255, 255); color: rgb(17, 17, 17);\">RAM Kingston Fury Beast RGB 32GB (1x32GB) bus 6000 DDR5</strong><span style=\"background-color: rgb(255, 255, 255);"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston costs 2.990.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston",
+        "url": "https://fasteapp.vercel.app/product/ram-ddr5-pc-8gb16gb-bus-520056006000-mhz-kingston"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Ram ddr5 pc 8gb16gb bus 520056006000 mhz kingston",
+            "item": "https://fasteapp.vercel.app/product/ram-ddr5-pc-8gb16gb-bus-520056006000-mhz-kingston"
+          }
+        ]
+      }
+    ],
+    "/product/vga-asus-dual-geforce-rtx-3060-oc-12gb-dual-rtx3060-o12g-v2": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2 is a product available on FastE. <h2 class=\"ql-align-justify\"><strong style=\"color: rgb(54, 54, 54);\">Card màn hình Asus DUAL RTX 3060 O12G V2 - Đồ họa hàng đầu</strong></h2><p class=\"ql-align-justify\"><strong style=\"color: rgb(54, 54, 54);\">Card màn hình Asus DUAL RTX 3060 O12G V2</strong><span style=\"color: rgb(74, 74, 74);\"> được ra lò cách đây không lâu, hiện tại là sản phẩm mới của dòng Asus. So với những phiên bản trước mà </span>"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2 cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2 costs 7.690.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2 available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2 is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2",
+        "url": "https://fasteapp.vercel.app/product/vga-asus-dual-geforce-rtx-3060-oc-12gb-dual-rtx3060-o12g-v2"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Vga asus dual geforce rtx 3060 oc 12gb dual rtx3060 o12g v2",
+            "item": "https://fasteapp.vercel.app/product/vga-asus-dual-geforce-rtx-3060-oc-12gb-dual-rtx3060-o12g-v2"
+          }
+        ]
+      }
+    ],
+    "/product/vga-asus-rog-astral-geforce-rtx-5090-oc-32gb-rog-astral-rtx5090-o32g-gaming": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING is a product available on FastE. <h2 class=\"ql-align-justify\"><strong style=\"color: rgb(54, 54, 54);\">VGA Asus ROG Astral GeForce RTX 5090 OC 32GB – Sức mạnh đồ họa tối thượng </strong></h2><p class=\"ql-align-justify\"><span style=\"color: rgb(74, 74, 74);\">ROG Astral GeForce RTX 5090 OC 32GB được kết hợp ấn tượng giữa hiệu năng siêu cấp và thiết kế tinh xảo. Đây là lựa chọn hàng đầu cho các gamer và nhà sáng tạo nội dung "
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING costs 109.990.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING",
+        "url": "https://fasteapp.vercel.app/product/vga-asus-rog-astral-geforce-rtx-5090-oc-32gb-rog-astral-rtx5090-o32g-gaming"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Vga asus rog astral geforce rtx 5090 oc 32gb rog astral rtx5090 o32g gaming",
+            "item": "https://fasteapp.vercel.app/product/vga-asus-rog-astral-geforce-rtx-5090-oc-32gb-rog-astral-rtx5090-o32g-gaming"
+          }
+        ]
+      }
+    ],
+    "/product/bo-mach-chu-msi-b760m-gaming-plus-wifi-ddr4": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4 is a product available on FastE. <h2><strong style=\"background-color: rgb(255, 255, 255); color: rgb(51, 51, 51);\">Đánh giá chi tiết Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4</strong></h2><blockquote><em style=\"background-color: rgb(255, 255, 255); color: rgb(17, 17, 17);\">Dành cho các game thủ và người dùng phổ thông thông thái đang tìm kiếm một nền tảng hiệu năng cao mà không muốn chi quá nhiều cho RAM DDR5. </em><strong style=\"background-color: rg"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4 cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4 costs 3.490.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4 available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4 is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4",
+        "url": "https://fasteapp.vercel.app/product/bo-mach-chu-msi-b760m-gaming-plus-wifi-ddr4"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Bo mach chu msi b760m gaming plus wifi ddr4",
+            "item": "https://fasteapp.vercel.app/product/bo-mach-chu-msi-b760m-gaming-plus-wifi-ddr4"
+          }
+        ]
+      }
+    ],
+    "/product/the-clean-coder-a-code-of-conduct-for-professional-programmers": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is The Clean Coder: A Code of Conduct for Professional Programmers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Clean Coder: A Code of Conduct for Professional Programmers is a product available on FastE. <p><span style=\"background-color: rgb(255, 255, 255); color: rgb(15, 17, 17);\">Programmers who endure and succeed amidst swirling uncertainty and nonstop pressure share a common attribute: They care deeply about the practice of creating software. They treat it as a craft. They are professionals.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(15, 17, 17);\">In </span><strong"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does The Clean Coder: A Code of Conduct for Professional Programmers cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Clean Coder: A Code of Conduct for Professional Programmers costs 1.000.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is The Clean Coder: A Code of Conduct for Professional Programmers available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Clean Coder: A Code of Conduct for Professional Programmers is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "The Clean Coder: A Code of Conduct for Professional Programmers",
+        "url": "https://fasteapp.vercel.app/product/the-clean-coder-a-code-of-conduct-for-professional-programmers"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "The clean coder a code of conduct for professional programmers",
+            "item": "https://fasteapp.vercel.app/product/the-clean-coder-a-code-of-conduct-for-professional-programmers"
+          }
+        ]
+      }
+    ],
+    "/product/iphone-17": [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is iPhone 17?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iPhone 17 is a product available on FastE. iPhone 17 với chip A17 Pro mạnh mẽ, camera cải tiến, và thiết kế khung titan nhẹ nhưng bền bỉ. Trải nghiệm màn hình Super Retina XDR sắc nét và tính năng Face ID an toàn."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does iPhone 17 cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iPhone 17 costs 32.000.000 ₫."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is iPhone 17 available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "iPhone 17 is currently out of stock on FastE."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "iPhone 17",
+        "url": "https://fasteapp.vercel.app/product/iphone-17"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://fasteapp.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Product",
+            "item": "https://fasteapp.vercel.app/product"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Iphone 17",
+            "item": "https://fasteapp.vercel.app/product/iphone-17"
+          }
+        ]
+      }
     ]
   }
 }

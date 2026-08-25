@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, Suspense } from 'react';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 
@@ -21,6 +21,8 @@ import { ModeToggle } from '@/components/ModeToggle';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import { useHeaderVisibility } from './use-header-visibility';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchStore } from '@/stores/useSearchStore';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -141,22 +143,7 @@ const Header = () => {
                   <div className="flex flex-col gap-4 p-4">
                     {/* Mobile Search */}
                     <div className="md:hidden pt-4">
-                      <div className="relative">
-                        <Input
-                          type="text"
-                          placeholder={t('header.searchPlaceholder')}
-                          className="pr-10 bg-muted/50 border-0 rounded-2xl"
-                        />
-                        <Button
-                          size="sm"
-                          className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl"
-                        >
-                          <Icon
-                            icon="material-symbols-light:search"
-                            className="w-4 h-4"
-                          />
-                        </Button>
-                      </div>
+                      <MobileSearchInput setIsOpen={setIsOpen} />
                     </div>
 
                     {/* Mobile Navigation */}
@@ -180,6 +167,63 @@ const Header = () => {
       {/* Bottom Navigation (Desktop) */}
       <BottomNavigation />
     </header>
+  );
+};
+
+const MobileSearchInputContent = ({ setIsOpen }: { setIsOpen: (o: boolean) => void }) => {
+  const { t } = useTranslation();
+  const { searchText, setSearchText } = useSearchStore();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleMobileSearch = () => {
+    setIsOpen(false);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('keyword', searchText);
+    router.replace(`/product?${params.toString()}`);
+  };
+
+  return (
+    <div className="relative">
+      <Input
+        type="text"
+        placeholder={t('header.searchPlaceholder')}
+        className="pr-10 bg-muted/50 border-0 rounded-2xl"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleMobileSearch();
+          }
+        }}
+      />
+      <Button
+        size="sm"
+        className="absolute right-1 top-1/2 -translate-y-1/2 rounded-xl cursor-pointer"
+        onClick={handleMobileSearch}
+      >
+        <Icon
+          icon="material-symbols-light:search"
+          className="w-4 h-4"
+        />
+      </Button>
+    </div>
+  );
+};
+
+const MobileSearchInput = ({ setIsOpen }: { setIsOpen: (o: boolean) => void }) => {
+  return (
+    <Suspense fallback={
+      <div className="relative">
+        <Input
+          type="text"
+          className="pr-10 bg-muted/50 border-0 rounded-2xl"
+          disabled
+        />
+      </div>
+    }>
+      <MobileSearchInputContent setIsOpen={setIsOpen} />
+    </Suspense>
   );
 };
 

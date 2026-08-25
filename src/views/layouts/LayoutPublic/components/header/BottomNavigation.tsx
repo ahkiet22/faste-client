@@ -1,14 +1,20 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from   "@/components/ui/badge";
 import { navigationItems } from "@/configs/header";
 import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";
+import { LANGUAGE_MAP, LANGUAGE_OPTIONS } from "@/configs/i18n";
 
 export default function BottomNavigation() {
   const { t } = useTranslation();
   const pathname = usePathname();
+
+  const normalizedPathname =
+  LANGUAGE_MAP.find((lang) => pathname.startsWith(`/${lang}`))
+    ? pathname.replace(/^\/[^/]+/, '') || '/'
+    : pathname;
   return (
     <div className="hidden lg:block bg-background border-t border-border">
       <div className="container mx-auto max-w-7xl px-4">
@@ -21,7 +27,7 @@ export default function BottomNavigation() {
                 className={cn(
                   'flex items-center gap-2 text-sm font-medium transition-colors',
                   'text-muted-foreground hover:text-purple-600',
-                  (pathname === item.href || (item.href === '/' && pathname.length <= 3)) && 'text-foreground',
+                  (normalizedPathname === item.href || (item.href === '/' && normalizedPathname.length <= 3)) && 'text-foreground',
                 )}
               >
                 <Icon icon={item.icon} className="w-5 h-5" />

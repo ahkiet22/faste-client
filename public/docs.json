@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated": "2026-08-17T08:10:38.213Z",
+  "generated": "2026-08-25T07:02:40.890Z",
   "site": {
     "title": "FastE",
     "description": "FastE is a modern e-commerce platform optimized for buyers, sellers, and AI answer engines.",
@@ -16,12 +16,52 @@
       "title": "FastE FAQ"
     },
     {
+      "url": "https://fasteapp.vercel.app/product/ao-thun-nam",
+      "title": "Áo Thun Nam"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/bo-mach-chu-msi-b760m-gaming-plus-wifi-ddr4",
+      "title": "Bo mạch chủ MSI B760M GAMING PLUS WIFI DDR4"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/iphone-15-pro-max",
+      "title": "iPhone 15 Pro Max"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/iphone-17",
+      "title": "iPhone 17"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/laptop-gaming-asus-rog",
+      "title": "Laptop Gaming ASUS ROG"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/ram-ddr5-pc-8gb16gb-bus-520056006000-mhz-kingston",
+      "title": "RAM DDR5 PC 8GB/16GB bus 5200/5600/6000 MHz Kingston"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/sui-crypto-coin-fanboi-black-sui-coin-crypto-tshirt-womens-unisex-small",
+      "title": "SUI Crypto Coin Fanboi Black Sui Coin Crypto T-Shirt Women's Unisex-Adults Small Classic Fit Short Sleeve Crew Neck T-Shirt"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/the-clean-coder-a-code-of-conduct-for-professional-programmers",
+      "title": "The Clean Coder: A Code of Conduct for Professional Programmers"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/vga-asus-dual-geforce-rtx-3060-oc-12gb-dual-rtx3060-o12g-v2",
+      "title": "VGA ASUS Dual Geforce RTX 3060 OC 12GB DUAL-RTX3060-O12G-V2"
+    },
+    {
+      "url": "https://fasteapp.vercel.app/product/vga-asus-rog-astral-geforce-rtx-5090-oc-32gb-rog-astral-rtx5090-o32g-gaming",
+      "title": "VGA Asus ROG Astral Geforce RTX 5090 OC 32GB ROG-ASTRAL-RTX5090-O32G-GAMING"
+    },
+    {
       "url": "https://fasteapp.vercel.app/shop",
       "title": "Browse FastE Shops"
     }
   ],
   "metadata": {
-    "totalDocuments": 3,
+    "totalDocuments": 13,
     "generator": "aeo.js",
     "generatorUrl": "https://aeojs.org"
   }

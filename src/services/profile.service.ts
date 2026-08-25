@@ -21,17 +21,7 @@ export const updateProfile = async (data: TUpdateProfile) => {
     );
     return res.data;
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message || 'Unknown error occurred';
-    const errorCode = error?.response?.status || 500;
-
-    return {
-      status: 'error',
-      data: null,
-      message: 'Unable to update profile. Please try again later.',
-      error: errorMessage,
-      errorCode: errorCode,
-    };
+    throw error;
   }
 };
 
