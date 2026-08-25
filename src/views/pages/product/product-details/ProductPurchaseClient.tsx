@@ -20,6 +20,7 @@ type Props = {
     | 'basePrice'
     | 'rating'
     | 'ratingCount'
+    | 'totalViews'
     | 'sold'
     | 'variants'
     | 'skus'
@@ -91,7 +92,7 @@ export default function ProductPurchaseClient({ product, images }: Props) {
         <ProductInfo
           product={product}
           matchedSku={matchedSku}
-          totalSold={totalSold}
+          totalSold={totalSold}       
         />
         {skus.length > 0 && variants.length > 0 ? (
           <VariantSelector

@@ -36,8 +36,10 @@ export default function ProductDetails({
           basePrice: product.basePrice,
           rating: product.rating,
           ratingCount: product.ratingCount,
+          totalViews: product.totalViews,
           sold: product.sold,
           variants: product.variants ?? [],
+
           skus,
         }}
       />

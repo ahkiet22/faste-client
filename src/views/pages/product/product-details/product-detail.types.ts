@@ -35,6 +35,7 @@ export type ProductDetail = {
   price?: number;
   status?: string;
   rating?: number;
+  totalViews?: number;
   ratingCount?: number;
   sold?: number;
   brand?: { name?: string } | string;
