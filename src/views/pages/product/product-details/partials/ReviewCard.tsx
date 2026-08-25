@@ -15,6 +15,7 @@ export const ReviewCard = ({ review, skus }: ReviewCardProps) => {
   const attributeText = Object.entries(sku?.attributes ?? {})
     .map(([key, value]) => `${key}: ${value}`)
     .join(' • ');
+
   return (
     <div className="border-b border-gray-200 py-4 flex gap-x-4">
       {/* Avatar */}

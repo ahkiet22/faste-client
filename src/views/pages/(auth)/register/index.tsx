@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAuth } from '@/hooks'
+import { useAuth } from '@/hooks';
 import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -23,6 +23,8 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { REGEXP_ONLY_DIGITS, REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
+import { toastify } from '@/components/ToastNotification';
+import axios from 'axios';
 
 const emailSchema = yup
   .object({
@@ -72,7 +74,6 @@ export function RegisterPage({
   const { register: registerUser, loading } = useAuth();
   const { t } = useTranslation();
 
-
   const [step, setStep] = useState<'email' | 'otp' | 'register'>('email');
   const [email, setEmail] = useState('');
   const [isOTPVerified, setIsOTPVerified] = useState(false);
@@ -96,13 +97,33 @@ export function RegisterPage({
   });
 
   const handleSendOTP = async (data: { email: string }) => {
-    const res = await sendOTP({
-      email: data.email,
-      type: VerificationCodeTypeType.REGISTER,
-    });
-    if (res.statusCode === 200) {
-      setEmail(data.email);
-      setStep('otp');
+    try {
+      const res = await sendOTP({
+        email: data.email,
+        type: VerificationCodeTypeType.REGISTER,
+      });
+      if (res.statusCode === 200) {
+        setEmail(data.email);
+        setStep('otp');
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const apiError = error.response?.data?.error;
+
+        if (apiError?.path === 'email') {
+          toastify.error(
+            'Email Error',
+            apiError.message || 'Email already exists',
+          );
+
+          return;
+        }
+      }
+
+      toastify.error(
+        'Server Error',
+        'Something went wrong. Please try again later.',
+      );
     }
   };
 
@@ -153,7 +174,9 @@ export function RegisterPage({
             <div className="flex flex-col gap-6">
               {/* Header */}
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">{t('auth.register.title')}</h1>
+                <h1 className="text-2xl font-bold">
+                  {t('auth.register.title')}
+                </h1>
                 <p className="text-muted-foreground">
                   {step === 'email' && t('auth.register.subtitle.email')}
                   {step === 'otp' && t('auth.register.subtitle.otp')}
@@ -168,7 +191,9 @@ export function RegisterPage({
                   onSubmit={emailForm.handleSubmit(handleSendOTP)}
                 >
                   <div className="grid gap-3">
-                    <Label htmlFor="email">{t('auth.register.emailLabel')}</Label>
+                    <Label htmlFor="email">
+                      {t('auth.register.emailLabel')}
+                    </Label>
                     <Controller
                       name="email"
                       control={emailForm.control}
@@ -190,7 +215,9 @@ export function RegisterPage({
                   </div>
 
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? t('auth.register.sending') : t('auth.register.sendOtp')}
+                    {loading
+                      ? t('auth.register.sending')
+                      : t('auth.register.sendOtp')}
                   </Button>
                   <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                     <span className="bg-card text-muted-foreground relative z-10 px-2">
@@ -281,7 +308,7 @@ export function RegisterPage({
                             [data-input-otp-container=true]:justify-center!
                             [data-input-otp-container=true]:items-center!
                             [data-input-otp-container=true]:pointer-events-auto!"
-                          >
+                        >
                           <InputOTPGroup className="flex justify-center gap-x-4 w-full">
                             {Array.from({ length: 6 }, (_, i) => (
                               <InputOTPSlot
@@ -302,7 +329,9 @@ export function RegisterPage({
                   </div>
 
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? t('auth.register.verifying') : t('auth.register.verifyOtp')}
+                    {loading
+                      ? t('auth.register.verifying')
+                      : t('auth.register.verifyOtp')}
                   </Button>
 
                   <Button
@@ -329,7 +358,9 @@ export function RegisterPage({
                 >
                   {/* Email (readonly) */}
                   <div className="grid gap-3">
-                    <Label htmlFor="display-email">{t('auth.register.emailLabel')}</Label>
+                    <Label htmlFor="display-email">
+                      {t('auth.register.emailLabel')}
+                    </Label>
                     <Input
                       id="display-email"
                       type="email"
@@ -363,7 +394,9 @@ export function RegisterPage({
 
                   {/* Phone Number */}
                   <div className="grid gap-3">
-                    <Label htmlFor="phoneNumber">{t('auth.register.phoneNumberLabel')}</Label>
+                    <Label htmlFor="phoneNumber">
+                      {t('auth.register.phoneNumberLabel')}
+                    </Label>
                     <Controller
                       name="phoneNumber"
                       control={registerForm.control}
@@ -385,7 +418,9 @@ export function RegisterPage({
 
                   {/* Password */}
                   <div className="grid gap-3">
-                    <Label htmlFor="password">{t('auth.register.passwordLabel')}</Label>
+                    <Label htmlFor="password">
+                      {t('auth.register.passwordLabel')}
+                    </Label>
                     <Controller
                       name="password"
                       control={registerForm.control}
@@ -407,7 +442,9 @@ export function RegisterPage({
 
                   {/* Confirm Password */}
                   <div className="grid gap-3">
-                    <Label htmlFor="confirmPassword">{t('auth.register.confirmPasswordLabel')}</Label>
+                    <Label htmlFor="confirmPassword">
+                      {t('auth.register.confirmPasswordLabel')}
+                    </Label>
                     <Controller
                       name="confirmPassword"
                       control={registerForm.control}
@@ -427,8 +464,10 @@ export function RegisterPage({
                     )}
                   </div>
 
-                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? t('auth.register.creating') : t('auth.register.createAccount')}
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading
+                      ? t('auth.register.creating')
+                      : t('auth.register.createAccount')}
                   </Button>
 
                   <Button

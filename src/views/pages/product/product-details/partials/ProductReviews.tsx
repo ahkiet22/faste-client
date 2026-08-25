@@ -14,18 +14,23 @@ type Props = {
   productId: number;
   rating: number;
   skus: ProductSKU[];
-  initialReviews: ProductReview[];
+  initialReviews?: ProductReview[];
 };
 
 export function ProductReviews({
   productId,
   rating,
   skus,
-  initialReviews,
+  initialReviews = [],
 }: Props) {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const { t } = useTranslation();
-  const { data: reviews = [], isFetching } = useQuery({
+
+  const normalizedInitialReviews: ProductReview[] = Array.isArray(initialReviews)
+    ? initialReviews
+    : (initialReviews as any)?.items ?? (initialReviews as any)?.data ?? [];
+
+  const { data: reviews = [], isFetching } = useQuery<ProductReview[]>({
     queryKey: ['product-reviews', productId, selectedRating],
     queryFn: async ({ signal }) => {
       const response = await getAllReviews(
@@ -39,19 +44,28 @@ export function ProductReviews({
         },
         signal,
       );
-      return (response.data ?? []) as ProductReview[];
+
+      const result =
+        (response as any)?.data?.items ??
+        (response as any)?.data?.data ??
+        (response as any)?.items ??
+        (response as any)?.data ??
+        response;
+
+      return Array.isArray(result) ? (result as ProductReview[]) : [];
     },
-    initialData: selectedRating === null ? initialReviews : undefined,
+    initialData: selectedRating === null ? normalizedInitialReviews : undefined,
     placeholderData: keepPreviousData,
     staleTime: 60_000,
   });
+
   const filters = [null, 1, 2, 3, 4, 5] as const;
 
   return (
-    <div className="flex min-h-[520px] w-full flex-col items-start bg-white p-4 dark:bg-black">
+    <div className="flex min-h-130 w-full flex-col items-start bg-white p-4 dark:bg-black">
       <div className="mb-4 font-medium uppercase">{t('product.reviews')}</div>
       <div className="mb-4 flex min-h-24 w-full flex-col items-center gap-4 bg-red-50 px-4 py-4 md:flex-row md:items-start">
-        <div className="flex flex-shrink-0 flex-col items-center">
+        <div className="flex shrink-0 flex-col items-center">
           <div className="text-xl font-medium text-red-500">
             <span className="text-3xl">{rating}</span> {t('common.outOf5')}
           </div>
@@ -64,7 +78,11 @@ export function ProductReviews({
               type="button"
               onClick={() => setSelectedRating(value)}
               aria-pressed={selectedRating === value}
-              className={`${selectedRating === value ? 'border border-red-300 bg-white' : 'bg-white text-gray-700'} rounded-md px-3 py-1 text-sm transition-colors hover:bg-gray-50 md:px-4`}
+              className={`${
+                selectedRating === value
+                  ? 'border border-red-300 bg-white'
+                  : 'bg-white text-gray-700'
+              } rounded-md px-3 py-1 text-sm transition-colors hover:bg-gray-50 md:px-4`}
             >
               {value === null
                 ? t('common.all')
@@ -74,7 +92,7 @@ export function ProductReviews({
         </div>
       </div>
       <div className="relative w-full space-y-4" aria-busy={isFetching}>
-        {reviews.length > 0 ? (
+        {Array.isArray(reviews) && reviews.length > 0 ? (
           reviews.map((review) => (
             <ReviewCard key={review.id} review={review} skus={skus} />
           ))
