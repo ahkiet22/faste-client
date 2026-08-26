@@ -31,17 +31,16 @@ interface InfoBasicProps {
   blockRefBasic: RefObject<HTMLDivElement | null>;
   control: any;
   errors: any;
-  getValues: any;
   brandData: any[];
   categorys: any[];
   handleDeleteImage: (index: number) => void;
   handleImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
   isUploading?: boolean;
+  images: any[];
 }
 
 const InfoBasic = memo(function InfoBasic({
   blockRefBasic,
-  getValues,
   control,
   errors,
   brandData,
@@ -49,6 +48,7 @@ const InfoBasic = memo(function InfoBasic({
   handleDeleteImage,
   handleImageChange,
   isUploading,
+  images,
 }: InfoBasicProps) {
   const { t } = useTranslation();
 
@@ -199,10 +199,10 @@ const InfoBasic = memo(function InfoBasic({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="brandId">{`${t('sellercenter.products.create.images')} (${getValues('images')?.length > 0 ? getValues('images').length : 0}/8)`}</Label>
+        <Label htmlFor="brandId">{`${t('sellercenter.products.create.images')} (${images?.length > 0 ? images.length : 0}/8)`}</Label>
         <div className="flex gap-x-2">
-          {getValues('images') &&
-            getValues('images').map((image: any, index: number) => (
+          {images &&
+            images.map((image: any, index: number) => (
               <div
                 className="group w-16 h-16 border-2 border-dashed border-border rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors relative"
                 key={index}

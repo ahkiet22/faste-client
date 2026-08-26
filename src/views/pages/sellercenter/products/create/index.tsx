@@ -55,58 +55,62 @@ type RichTextEditorHandle = {
 export const CreateProductPage = () => {
   const { t } = useTranslation();
 
-  const productSchema = useMemo(() => yup.object().shape({
-    name: yup
-      .string()
-      .min(3, t('sellercenter.products.create.nameMinLen'))
-      .max(255, t('sellercenter.products.create.nameMaxLen'))
-      .required(t('sellercenter.products.create.nameRequired')),
-    categories: yup
-      .array()
-      .of(yup.number().integer('ID danh mục phải là số nguyên'))
-      .required(t('sellercenter.products.create.categoryRequired')),
-    brandId: yup.number().integer('ID thương hiệu phải là số nguyên'),
-    images: yup.array().required(t('sellercenter.products.create.imagesRequired')),
-    variants: yup
-      .array()
-      .of(
-        yup.object().shape({
-          value: yup.string().required('Giá trị thuộc tính là bắt buộc'),
-          options: yup
-            .array()
-            .of(yup.string().required('Tùy chọn không được rỗng'))
-            .required('Danh sách tùy chọn là bắt buộc'),
-        }),
-      )
-      .required('Danh sách thuộc tính sản phẩm là bắt buộc'),
+  const productSchema = useMemo(
+    () =>
+      yup.object().shape({
+        name: yup
+          .string()
+          .min(3, t('sellercenter.products.create.nameMinLen'))
+          .max(255, t('sellercenter.products.create.nameMaxLen'))
+          .required(t('sellercenter.products.create.nameRequired')),
+        categories: yup
+          .array()
+          .of(yup.number().integer('ID danh mục phải là số nguyên'))
+          .required(t('sellercenter.products.create.categoryRequired')),
+        brandId: yup.number().integer('ID thương hiệu phải là số nguyên'),
+        images: yup
+          .array()
+          .required(t('sellercenter.products.create.imagesRequired')),
+        variants: yup
+          .array()
+          .of(
+            yup.object().shape({
+              value: yup.string().required('Giá trị thuộc tính là bắt buộc'),
+              options: yup
+                .array()
+                .of(yup.string().required('Tùy chọn không được rỗng'))
+                .required('Danh sách tùy chọn là bắt buộc'),
+            }),
+          )
+          .required('Danh sách thuộc tính sản phẩm là bắt buộc'),
 
-    skus: yup
-      .array()
-      .of(
-        yup.object().shape({
-          skuCode: yup.string().required('Mã SKU là bắt buộc'),
-          price: yup
-            .number()
-            .required('Giá SKU là bắt buộc'),
-          attributes: yup.object().required('Thuộc tính SKU là bắt buộc'),
-          quantity: yup
-            .number()
-            .integer('Số lượng phải là số nguyên')
-            .min(0, 'Số lượng không thể âm')
-            .required('Số lượng SKU là bắt buộc'),
-        }),
-      )
-      .required('Danh sách SKU sản phẩm là bắt buộc'),
-    description: yup.string().required('Mô tả sản phẩm là bắt buộc'),
-    basePrice: yup
-      .number()
-      .required(t('sellercenter.products.create.basePriceRequired')),
-    status: yup
-      .mixed<'PUBLISHED' | 'DRAFT'>()
-      .oneOf(['PUBLISHED', 'DRAFT'], 'Trạng thái không hợp lệ')
-      .required('Trạng thái là bắt buộc'),
-    slugId: yup.string(),
-  }), [t]);
+        skus: yup
+          .array()
+          .of(
+            yup.object().shape({
+              skuCode: yup.string().required('Mã SKU là bắt buộc'),
+              price: yup.number().required('Giá SKU là bắt buộc'),
+              attributes: yup.object().required('Thuộc tính SKU là bắt buộc'),
+              quantity: yup
+                .number()
+                .integer('Số lượng phải là số nguyên')
+                .min(0, 'Số lượng không thể âm')
+                .required('Số lượng SKU là bắt buộc'),
+            }),
+          )
+          .required('Danh sách SKU sản phẩm là bắt buộc'),
+        description: yup.string().required('Mô tả sản phẩm là bắt buộc'),
+        basePrice: yup
+          .number()
+          .required(t('sellercenter.products.create.basePriceRequired')),
+        status: yup
+          .mixed<'PUBLISHED' | 'DRAFT'>()
+          .oneOf(['PUBLISHED', 'DRAFT'], 'Trạng thái không hợp lệ')
+          .required('Trạng thái là bắt buộc'),
+        slugId: yup.string(),
+      }),
+    [t],
+  );
   const blockRefs = {
     basic: useRef<HTMLDivElement>(null),
     characteristics: useRef<HTMLDivElement>(null),
@@ -179,9 +183,7 @@ export const CreateProductPage = () => {
       name: '',
       categories: [] as number[],
       brandId: undefined,
-      images: [
-        { previewUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg' },
-      ] as any[],
+      images: [] as any[],
       variants: [] as VariantsType,
       skus: [] as TSKUs[],
       description: '',
@@ -205,7 +207,8 @@ export const CreateProductPage = () => {
           setIsUploading(true);
           try {
             const uploadResults = await uploadMultipleFiles(newFiles, true);
-            uploadedUrls = uploadResults.map((res: any) => res.url);
+            console.log('uploadResults', uploadResults);
+            uploadedUrls = uploadResults.data.map((res: any) => res.url);
           } catch (error) {
             toastify.error('Images', 'Failed to upload product images');
             setIsUploading(false);
@@ -350,7 +353,10 @@ export const CreateProductPage = () => {
 
       const filesToSelect = Array.from(files).slice(0, remainingSlots);
       if (Array.from(files).length > remainingSlots) {
-        toastify.info('Images', `Only the first ${remainingSlots} images will be selected (max 8)`);
+        toastify.info(
+          'Images',
+          `Only the first ${remainingSlots} images will be selected (max 8)`,
+        );
       }
 
       const newItems = filesToSelect.map((file) => ({
@@ -425,7 +431,9 @@ export const CreateProductPage = () => {
 
   return (
     <div className="w-full">
-      {(isLoading || isLoadingBrand || isUploading) && <LoadingDialog isLoading />}
+      {(isLoading || isLoadingBrand || isUploading) && (
+        <LoadingDialog isLoading />
+      )}
       <div className="flex justify-between gap-x-4">
         <form
           className="w-3/4 flex flex-col gap-y-4"
@@ -597,10 +605,10 @@ export const CreateProductPage = () => {
             categorys={categorys}
             control={control}
             errors={errors}
-            getValues={getValues}
             handleDeleteImage={handleDeleteImage}
             handleImageChange={handleImageChange}
             isUploading={isUploading}
+            images={watch('images')}
           />
 
           <ProductCharacteristics
@@ -617,7 +625,8 @@ export const CreateProductPage = () => {
 
             <div className="grid gap-3">
               <label className="text-sm font-medium">
-                <span className="text-destructive">*</span> {t('sellercenter.products.create.basePrice')}
+                <span className="text-destructive">*</span>{' '}
+                {t('sellercenter.products.create.basePrice')}
               </label>
               <Controller
                 name="basePrice"
@@ -653,7 +662,9 @@ export const CreateProductPage = () => {
             </div>
 
             <div className="grid gap-3">
-              <label className="text-sm font-medium">{t('sellercenter.products.create.stock')}</label>
+              <label className="text-sm font-medium">
+                {t('sellercenter.products.create.stock')}
+              </label>
               <Input
                 max={9999}
                 defaultValue={0}
@@ -672,7 +683,8 @@ export const CreateProductPage = () => {
                 >
                   <div className="flex items-center gap-x-2">
                     <label className="text-sm font-medium max-w-14">
-                      {t('sellercenter.products.create.variantType')} {indexVariant + 1}
+                      {t('sellercenter.products.create.variantType')}{' '}
+                      {indexVariant + 1}
                     </label>
                     <Input
                       value={variant.value}
@@ -762,7 +774,9 @@ export const CreateProductPage = () => {
 
             {skus.length > 0 && (
               <>
-                <div className="font-semibold">{t('sellercenter.products.create.variantList')}</div>
+                <div className="font-semibold">
+                  {t('sellercenter.products.create.variantList')}
+                </div>
                 <div className="flex justify-between">
                   <div className="flex">
                     <InputGroup>

@@ -22,6 +22,11 @@ export function ImageGallery({
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({
+    transformOrigin: 'center',
+    transform: 'scale(1)',
+  });
+
   useEffect(() => {
     setSelectedImage(images[0]);
     setThumbnailStartIndex(0);
@@ -45,24 +50,89 @@ export function ImageGallery({
     );
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setZoomStyle({
+      transformOrigin: `${x}% ${y}%`,
+      transform: 'scale(1.8)',
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setZoomStyle({
+      transformOrigin: 'center',
+      transform: 'scale(1)',
+    });
+  };
+
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const currentIndex = images.indexOf(selectedImage);
+    const nextIdx = (currentIndex - 1 + images.length) % images.length;
+    setSelectedImage(images[nextIdx]);
+    if (nextIdx < thumbnailStartIndex || nextIdx >= thumbnailStartIndex + 5) {
+      setThumbnailStartIndex(Math.max(0, Math.min(images.length - 5, nextIdx)));
+    }
+  };
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const currentIndex = images.indexOf(selectedImage);
+    const nextIdx = (currentIndex + 1) % images.length;
+    setSelectedImage(images[nextIdx]);
+    if (nextIdx < thumbnailStartIndex || nextIdx >= thumbnailStartIndex + 5) {
+      setThumbnailStartIndex(Math.max(0, Math.min(images.length - 5, nextIdx - 4)));
+    }
+  };
+
   return (
     <div className="w-full">
       <div
-        className="relative mx-auto mb-4 aspect-square w-full max-w-[420px] cursor-zoom-in overflow-hidden rounded-lg bg-muted lg:mx-0"
+        className="relative mx-auto mb-4 aspect-square w-full max-w-[420px] cursor-zoom-in overflow-hidden rounded-lg bg-muted lg:mx-0 group"
         onClick={() => setIsLightboxOpen(true)}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && setIsLightboxOpen(true)}
         aria-label="Click to open image in fullscreen"
       >
-        <Image
-          src={selectedImage || '/placeholder.svg'}
-          alt={productName}
-          fill
-          sizes="(max-width: 1024px) 100vw, 40vw"
-          className="object-cover transition-opacity duration-300 ease-in-out"
-          priority
-        />
+        <div
+          className="w-full h-full transition-transform duration-200 ease-out"
+          style={zoomStyle}
+        >
+          <Image
+            key={selectedImage}
+            src={selectedImage || '/placeholder.svg'}
+            alt={productName}
+            fill
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            className="object-cover animate-fade-in"
+            priority
+          />
+        </div>
+
+        {images.length > 1 && (
+          <button
+            onClick={handlePrevImage}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/70 p-2 shadow opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/95 dark:bg-black/70 dark:hover:bg-black/95 cursor-pointer"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+          </button>
+        )}
+
+        {images.length > 1 && (
+          <button
+            onClick={handleNextImage}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/70 p-2 shadow opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/95 dark:bg-black/70 dark:hover:bg-black/95 cursor-pointer"
+            aria-label="Next image"
+          >
+            <ChevronRight className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+          </button>
+        )}
       </div>
 
       <div className="relative flex items-center gap-2">

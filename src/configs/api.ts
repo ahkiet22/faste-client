@@ -95,7 +95,7 @@ export const API_ENDPOINT = {
   MEDIA: {
     INDEX: `${BASE_URL}/media`,
     UPLOAD: `${BASE_URL}/media/upload`,
-    UPLOAD_MULTIPLE: `${BASE_URL}/media/upload-mutiple`,
+    UPLOAD_MULTIPLE: `${BASE_URL}/media/upload-multiple`,
     ALL: `${BASE_URL}/media/all`,
     PRESIGNED: (filename: string) => `${BASE_URL}/media/presigned/${filename}`,
     PRESIGNED_UPLOAD_URL: `${BASE_URL}/media/upload/presigned-url`,

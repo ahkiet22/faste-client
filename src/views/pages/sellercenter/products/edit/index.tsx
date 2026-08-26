@@ -436,10 +436,10 @@ export const EditProductPage = () => {
             categorys={categorys}
             control={control}
             errors={errors}
-            getValues={getValues}
             handleDeleteImage={handleDeleteImage}
             handleImageChange={handleImageChange}
             isUploading={isUploading}
+            images={watch('images')}
           />
 
           <ProductCharacteristics
