@@ -12,6 +12,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { useMutationUploadMultipleFiles } from '@/hooks/api/mutations/useUploadMultipleFiles';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/constants/query-keys';
+import { toastify } from '@/components/ToastNotification';
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -21,6 +25,22 @@ interface UploadModalProps {
 export function UploadModal({ isOpen, onClose }: UploadModalProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const queryClient = useQueryClient();
+
+  const uploadMutation = useMutationUploadMultipleFiles({
+    onSuccess: () => {
+      toastify.success('Upload Media', 'Files uploaded successfully!');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.MEDIA] });
+      setSelectedFiles([]);
+      onClose();
+    },
+    onError: (error: any) => {
+      toastify.error(
+        'Upload Media',
+        error?.response?.data?.message || error?.message || 'Failed to upload files',
+      );
+    },
+  });
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -52,9 +72,9 @@ export function UploadModal({ isOpen, onClose }: UploadModalProps) {
   };
 
   const handleUpload = () => {
-    // Handle upload logic here
-    setSelectedFiles([]);
-    onClose();
+    if (selectedFiles.length > 0) {
+      uploadMutation.mutate({ files: selectedFiles, isPublic: false });
+    }
   };
 
   return (
@@ -140,9 +160,11 @@ export function UploadModal({ isOpen, onClose }: UploadModalProps) {
             </Button>
             <Button
               onClick={handleUpload}
-              disabled={selectedFiles.length === 0}
+              disabled={selectedFiles.length === 0 || uploadMutation.isPending}
             >
-              Upload {selectedFiles.length > 0 && `(${selectedFiles.length})`}
+              {uploadMutation.isPending
+                ? 'Uploading...'
+                : `Upload ${selectedFiles.length > 0 ? `(${selectedFiles.length})` : ''}`}
             </Button>
           </div>
         </div>

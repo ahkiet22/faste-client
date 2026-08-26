@@ -38,7 +38,6 @@ export const ROUTE_CONFIG = {
       CREATE: '/sellercenter/products/create',
       EDIT: '/sellercenter/products/edit',
       STOCK: '/sellercenter/products/stock',
-      MEDIA: '/sellercenter/products/media',
       REVIEW: '/sellercenter/products/reviews',
     },
 
@@ -90,6 +89,7 @@ export const ROUTE_CONFIG = {
   // Admin dashboard
   ADMIN: {
     DASHBOARD: '/admin/dashboard',
+    MEDIA: '/admin/media',
 
     USER: {
       LIST: '/admin/users/list',

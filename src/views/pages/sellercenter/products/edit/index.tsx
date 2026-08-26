@@ -28,6 +28,7 @@ import { useGetCategories } from '@/hooks/api/queries/useGetCategories';
 // Giả định bạn có hook/service fetch & update sản phẩm:
 import { getProductById, updateProductBySeller } from '@/services/product.service';
 import { useQuery } from '@tanstack/react-query';
+import { uploadMultipleFiles } from '@/services/media.service';
 
 // -- Icon & Helpers --
 import { Icon } from '@iconify/react';
@@ -177,6 +178,8 @@ export const EditProductPage = () => {
     },
   );
 
+  const [isUploading, setIsUploading] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -191,7 +194,7 @@ export const EditProductPage = () => {
       name: '',
       categories: [] as number[],
       brandId: undefined,
-      images: [],
+      images: [] as { file?: File; previewUrl: string }[],
       variants: [] as VariantsType,
       skus: [] as TSKUs[],
       description: '',
@@ -208,7 +211,9 @@ export const EditProductPage = () => {
         name: productDetail.name || '',
         categories: productDetail.categories || [],
         brandId: productDetail.brandId,
-        images: productDetail.images || [],
+        images: (productDetail.images || []).map((imgUrl: string) => ({
+          previewUrl: imgUrl,
+        })),
         description: productDetail.description || '',
         basePrice: productDetail.basePrice || 0,
         status: productDetail.status || 'DRAFT',
@@ -227,7 +232,41 @@ export const EditProductPage = () => {
     try {
       setIsSubmitting(true);
       if (!Object.keys(errors).length) {
-        const res = await updateProductBySeller(productId, data);
+        const currentImages = getValues('images') || [];
+        const newFiles = currentImages
+          .filter((img: any) => img.file)
+          .map((img: any) => img.file);
+
+        let uploadedUrls: string[] = [];
+        if (newFiles.length > 0) {
+          setIsUploading(true);
+          try {
+            const uploadResults = await uploadMultipleFiles(newFiles, true);
+            uploadedUrls = uploadResults.map((res: any) => res.url);
+          } catch (error) {
+            toastify.error('Images', 'Failed to upload product images');
+            setIsUploading(false);
+            setIsSubmitting(false);
+            return;
+          } finally {
+            setIsUploading(false);
+          }
+        }
+
+        let uploadIndex = 0;
+        const finalImageUrls = currentImages.map((img: any) => {
+          if (img.file) {
+            return uploadedUrls[uploadIndex++];
+          }
+          return img.previewUrl;
+        });
+
+        const payload = {
+          ...data,
+          images: finalImageUrls,
+        };
+
+        const res = await updateProductBySeller(productId, payload);
         if (res.statusCode === 200 || res.statusCode === 204) {
           toastify.success('product', 'Update product successfully');
           router.refresh();
@@ -306,12 +345,24 @@ export const EditProductPage = () => {
       const files = event.target.files;
       if (!files || files.length === 0) return;
 
-      const fileArray = Array.from(files).map((file) =>
-        URL.createObjectURL(file),
-      );
-
       const currentImages = getValues('images') || [];
-      setValue('images', [...currentImages, ...fileArray]);
+      const remainingSlots = 8 - currentImages.length;
+      if (remainingSlots <= 0) {
+        toastify.error('Images', 'You can only upload up to 8 images');
+        return;
+      }
+
+      const filesToSelect = Array.from(files).slice(0, remainingSlots);
+      if (Array.from(files).length > remainingSlots) {
+        toastify.info('Images', `Only the first ${remainingSlots} images will be selected (max 8)`);
+      }
+
+      const newItems = filesToSelect.map((file) => ({
+        file,
+        previewUrl: URL.createObjectURL(file),
+      }));
+
+      setValue('images', [...currentImages, ...newItems]);
     },
     [getValues, setValue],
   );
@@ -319,6 +370,10 @@ export const EditProductPage = () => {
   const handleDeleteImage = useCallback(
     (index: number) => {
       const currentImages = getValues('images') || [];
+      const itemToDelete = currentImages[index];
+      if (itemToDelete?.file) {
+        URL.revokeObjectURL(itemToDelete.previewUrl);
+      }
       const filterImages = currentImages.filter((_, i) => i !== index);
       setValue('images', filterImages);
     },
@@ -335,9 +390,9 @@ export const EditProductPage = () => {
   useEffect(() => {
     const images = getValues('images');
     return () => {
-      images?.forEach((url) => {
-        if (url.startsWith('blob:')) {
-          URL.revokeObjectURL(url);
+      images?.forEach((img: any) => {
+        if (img?.file) {
+          URL.revokeObjectURL(img.previewUrl);
         }
       });
     };
@@ -364,7 +419,7 @@ export const EditProductPage = () => {
     }
   }, [variants, setValue]);
 
-  const isLoadingPage = isLoadingCategories || isLoadingBrand || isLoadingProduct || isSubmitting;
+  const isLoadingPage = isLoadingCategories || isLoadingBrand || isLoadingProduct || isSubmitting || isUploading;
 
   return (
     <div className="w-full">
@@ -384,6 +439,7 @@ export const EditProductPage = () => {
             getValues={getValues}
             handleDeleteImage={handleDeleteImage}
             handleImageChange={handleImageChange}
+            isUploading={isUploading}
           />
 
           <ProductCharacteristics

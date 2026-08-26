@@ -33,6 +33,7 @@ import { generateSlug } from '@/helpers/generate-slug';
 import { keepPreviousData } from '@tanstack/react-query';
 import { TSKUs, VariantsType } from '@/types/product';
 import { createProductBySeller } from '@/services/product.service';
+import { uploadMultipleFiles } from '@/services/media.service';
 
 // -- Partial --
 import ProductCharacteristics from './partials/ProductCharacteristics';
@@ -163,6 +164,8 @@ export const CreateProductPage = () => {
     },
   );
 
+  const [isUploading, setIsUploading] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -176,7 +179,9 @@ export const CreateProductPage = () => {
       name: '',
       categories: [] as number[],
       brandId: undefined,
-      images: ['https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg'],
+      images: [
+        { previewUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg' },
+      ] as any[],
       variants: [] as VariantsType,
       skus: [] as TSKUs[],
       description: '',
@@ -190,7 +195,40 @@ export const CreateProductPage = () => {
   const onSubmit = async (data: any) => {
     try {
       if (!Object.keys(errors).length) {
-        const res = await createProductBySeller(data);
+        const currentImages = getValues('images') || [];
+        const newFiles = currentImages
+          .filter((img: any) => img.file)
+          .map((img: any) => img.file);
+
+        let uploadedUrls: string[] = [];
+        if (newFiles.length > 0) {
+          setIsUploading(true);
+          try {
+            const uploadResults = await uploadMultipleFiles(newFiles, true);
+            uploadedUrls = uploadResults.map((res: any) => res.url);
+          } catch (error) {
+            toastify.error('Images', 'Failed to upload product images');
+            setIsUploading(false);
+            return;
+          } finally {
+            setIsUploading(false);
+          }
+        }
+
+        let uploadIndex = 0;
+        const finalImageUrls = currentImages.map((img: any) => {
+          if (img.file) {
+            return uploadedUrls[uploadIndex++];
+          }
+          return img.previewUrl;
+        });
+
+        const payload = {
+          ...data,
+          images: finalImageUrls,
+        };
+
+        const res = await createProductBySeller(payload);
         if (res.statusCode === 201) {
           toastify.success('product', 'Create product successfully');
           router.refresh();
@@ -303,29 +341,39 @@ export const CreateProductPage = () => {
       const files = event.target.files;
       if (!files || files.length === 0) return;
 
-      const fileArray = Array.from(files).map((file) =>
-        URL.createObjectURL(file),
-      );
-
       const currentImages = getValues('images') || [];
+      const remainingSlots = 8 - currentImages.length;
+      if (remainingSlots <= 0) {
+        toastify.error('Images', 'You can only upload up to 8 images');
+        return;
+      }
 
-      setValue('images', [...currentImages, ...fileArray]);
+      const filesToSelect = Array.from(files).slice(0, remainingSlots);
+      if (Array.from(files).length > remainingSlots) {
+        toastify.info('Images', `Only the first ${remainingSlots} images will be selected (max 8)`);
+      }
+
+      const newItems = filesToSelect.map((file) => ({
+        file,
+        previewUrl: URL.createObjectURL(file),
+      }));
+
+      setValue('images', [...currentImages, ...newItems]);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [getValues('images')],
+    [getValues, setValue],
   );
 
   const handleDeleteImage = useCallback(
     (index: number) => {
       const currentImages = getValues('images') || [];
-      const filterImages = currentImages.filter(
-        (_, indexImage) => indexImage !== index,
-      );
-
+      const itemToDelete = currentImages[index];
+      if (itemToDelete?.file) {
+        URL.revokeObjectURL(itemToDelete.previewUrl);
+      }
+      const filterImages = currentImages.filter((_, i) => i !== index);
       setValue('images', filterImages);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [getValues('images')],
+    [getValues, setValue],
   );
   // --- End Handle ---
 
@@ -340,7 +388,11 @@ export const CreateProductPage = () => {
   useEffect(() => {
     const images = getValues('images');
     return () => {
-      images?.forEach((url) => URL.revokeObjectURL(url));
+      images?.forEach((img: any) => {
+        if (img?.file) {
+          URL.revokeObjectURL(img.previewUrl);
+        }
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getValues('images')]);
@@ -373,7 +425,7 @@ export const CreateProductPage = () => {
 
   return (
     <div className="w-full">
-      {isLoading || (isLoadingBrand && <LoadingDialog isLoading />)}
+      {(isLoading || isLoadingBrand || isUploading) && <LoadingDialog isLoading />}
       <div className="flex justify-between gap-x-4">
         <form
           className="w-3/4 flex flex-col gap-y-4"
@@ -548,6 +600,7 @@ export const CreateProductPage = () => {
             getValues={getValues}
             handleDeleteImage={handleDeleteImage}
             handleImageChange={handleImageChange}
+            isUploading={isUploading}
           />
 
           <ProductCharacteristics

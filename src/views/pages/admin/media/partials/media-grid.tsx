@@ -1,7 +1,8 @@
 'use client';
 
 import { MediaCard } from "./media-card";
-
+import { useGetMedia } from '@/hooks/api/queries/useGetMedia';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface MediaItem {
   id: string;
@@ -20,7 +21,16 @@ interface MediaGridProps {
   onSelectionChange: (items: Set<string>) => void;
 }
 
-// Mock data
+const formatBytes = (bytes: number, decimals = 2) => {
+  if (!bytes) return '0 Bytes';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
+
+// Mock data (keep for safety if needed, or we will remove it)
 const mockMediaItems: MediaItem[] = [
   {
     id: '1',
@@ -95,8 +105,20 @@ export function MediaGrid({
   selectedItems,
   onSelectionChange,
 }: MediaGridProps) {
+  const { data: dbData, isLoading, isError, error } = useGetMedia({ page: 1, limit: 1000 });
+
+  // Map database entries to frontend expected MediaItem schema
+  const mediaItems: MediaItem[] = (dbData?.data || []).map((item: any) => ({
+    id: String(item.id || item.key),
+    name: item.key,
+    type: item.type?.toLowerCase() === 'video' ? 'video' : 'image',
+    size: formatBytes(item.size),
+    uploadDate: item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Unknown',
+    thumbnail: item.url,
+  }));
+
   // Filter items based on view, search, and filter
-  const filteredItems = mockMediaItems.filter((item) => {
+  const filteredItems = mediaItems.filter((item) => {
     // Filter by view
     if (view === 'trash') return false;
     if (view !== 'all' && item.type !== view.slice(0, -1)) return false;
@@ -125,6 +147,37 @@ export function MediaGrid({
     }
     onSelectionChange(newSelection);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex-1 overflow-auto p-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          {Array.from({ length: 12 }).map((_, index) => (
+            <div key={index} className="space-y-2">
+              <Skeleton className="aspect-video w-full rounded-lg" />
+              <div className="space-y-1">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-destructive font-medium">Error loading media</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {error instanceof Error ? error.message : String(error)}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (view === 'trash') {
     return (

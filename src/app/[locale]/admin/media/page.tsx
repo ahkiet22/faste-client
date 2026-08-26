@@ -1,4 +1,4 @@
-import MediaLibraryPage from '@/views/pages/sellercenter/products/media';
+import MediaLibraryPage from '@/views/pages/admin/media';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -27,10 +27,11 @@ import { useMutationUpdateProfile } from '@/hooks/api/mutations/use-update-profi
 import { toastify } from '@/components/ToastNotification';
 import { useTranslation } from 'react-i18next';
 import { LoadingDialog } from '@/components/loading/LoadingDialog';
+import { uploadFile } from '@/services/media.service';
 
 type TProfileForm = {
   name: string;
-  avatar: string | null;
+  avatar: string | File | null;
   email: string;
   phoneNumber: string;
   day: string;
@@ -45,7 +46,7 @@ const years = Array.from({ length: 100 }, (_, i) => (2025 - i).toString());
 
 const schema = yup.object({
   name: yup.string().required('Name is required'),
-  avatar: yup.string().url().nullable().default(null).notRequired(),
+  avatar: yup.mixed<string | File>().nullable().default(null).notRequired(),
   email: yup.string().email('Invalid email').required('Email is required'),
   phoneNumber: yup
     .string()
@@ -101,6 +102,8 @@ export default function AccountPage() {
     },
   });
 
+  const [isUploading, setIsUploading] = useState(false);
+
   const { isPending, mutate: mutateUpdateProfile } = useMutationUpdateProfile({
     onSuccess: () => {
       toastify.success('', 'Update profile successfully!');
@@ -110,19 +113,41 @@ export default function AccountPage() {
     },
   });
 
-  const onSubmit = (formData: TProfileForm) => {
-    const { day, month, year, email, ...rest } = formData;
+  const onSubmit = async (formData: TProfileForm) => {
+    const { day, month, year, email, avatar, ...rest } = formData;
 
     const dateOfBirth = new Date(Number(year), Number(month) - 1, Number(day));
 
-    const payload = { ...rest, dateOfBirth };
+    let finalAvatarUrl: string | null = data?.avatar ?? null;
+
+    if (avatar instanceof File) {
+      try {
+        setIsUploading(true);
+        const uploadRes = await uploadFile(avatar, true);
+        finalAvatarUrl = uploadRes.data?.url || null;
+      } catch (error) {
+        toastify.error('Avatar', 'Failed to upload avatar image');
+        setIsUploading(false);
+        return;
+      } finally {
+        setIsUploading(false);
+      }
+    } else if (typeof avatar === 'string') {
+      finalAvatarUrl = avatar;
+    }
+
+    const payload = {
+      ...rest,
+      avatar: finalAvatarUrl,
+      dateOfBirth,
+    };
 
     mutateUpdateProfile(payload);
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 h-full">
-      {isLoading && <LoadingDialog isLoading />}
+      {(isLoading || isUploading) && <LoadingDialog isLoading />}
       <div className="flex-[7]">
         <h1 className="text-lg font-medium text-muted-foreground mb-6">
           {t('account.accountInfo')}
@@ -131,7 +156,13 @@ export default function AccountPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Profile Avatar */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <ProfileAvatar avatar={data?.avatar} />
+            <Controller
+              name="avatar"
+              control={control}
+              render={({ field }) => (
+                <ProfileAvatar avatar={field.value} onChange={field.onChange} />
+              )}
+            />
             <div className="flex-1 space-y-4">
               <div>
                 <Label htmlFor="name" className="text-sm font-medium">
@@ -226,9 +257,10 @@ export default function AccountPage() {
           {/* Submit */}
           <Button
             type="submit"
+            disabled={isPending || isUploading}
             className="w-full bg-primary hover:bg-primary/90 cursor-pointer"
           >
-            {isPending ? 'Updating...' : t('common.update')}
+            {isPending || isUploading ? 'Updating...' : t('common.update')}
           </Button>
         </form>
       </div>

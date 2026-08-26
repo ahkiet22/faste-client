@@ -198,6 +198,7 @@ export const ADMIN_MENU_ITEMS: IMenuItem[] = [
     icon: 'fluent:content-settings-20-regular',
     items: [
       { title: 'Bài viết / Blog', url: ROUTE_CONFIG.ADMIN.CONTENT.BLOG },
+      { title: 'Thư viện Media', url: ROUTE_CONFIG.ADMIN.MEDIA },
       { title: 'Gửi thông báo', url: ROUTE_CONFIG.ADMIN.NOTIFICATION.SEND },
       { title: 'Trang tĩnh (Pages)', url: ROUTE_CONFIG.ADMIN.CONTENT.PAGES },
     ],

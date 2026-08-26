@@ -36,6 +36,7 @@ interface InfoBasicProps {
   categorys: any[];
   handleDeleteImage: (index: number) => void;
   handleImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  isUploading?: boolean;
 }
 
 const InfoBasic = memo(function InfoBasic({
@@ -47,6 +48,7 @@ const InfoBasic = memo(function InfoBasic({
   categorys,
   handleDeleteImage,
   handleImageChange,
+  isUploading,
 }: InfoBasicProps) {
   const { t } = useTranslation();
 
@@ -200,7 +202,7 @@ const InfoBasic = memo(function InfoBasic({
         <Label htmlFor="brandId">{`${t('sellercenter.products.create.images')} (${getValues('images')?.length > 0 ? getValues('images').length : 0}/8)`}</Label>
         <div className="flex gap-x-2">
           {getValues('images') &&
-            getValues('images').map((image: string, index: number) => (
+            getValues('images').map((image: any, index: number) => (
               <div
                 className="group w-16 h-16 border-2 border-dashed border-border rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors relative"
                 key={index}
@@ -208,7 +210,7 @@ const InfoBasic = memo(function InfoBasic({
                 <Image
                   width={100}
                   height={100}
-                  src={image ? image : '/placeholder.svg'}
+                  src={image?.previewUrl ? image.previewUrl : '/placeholder.svg'}
                   alt={`product`}
                   className="w-full h-full object-cover rounded"
                 />
@@ -229,15 +231,21 @@ const InfoBasic = memo(function InfoBasic({
                 </div>
               </div>
             ))}
-          <label className="cursor-pointer">
+          <label className={`cursor-pointer ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
             <input
               type="file"
               accept="image/*"
+              multiple
+              disabled={isUploading}
               className="hidden"
               onChange={(e) => handleImageChange(e)}
             />
             <div className="w-16 h-16 border-2 border-dashed border-border rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors">
-              <ImagePlus className="w-6 h-6 text-muted-foreground" />
+              {isUploading ? (
+                <div className="w-5 h-5 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+              ) : (
+                <ImagePlus className="w-6 h-6 text-muted-foreground" />
+              )}
             </div>
           </label>
         </div>
