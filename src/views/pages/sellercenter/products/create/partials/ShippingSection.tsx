@@ -41,7 +41,7 @@ interface ShippingSectionProps {
   }>;
 }
 
-const ShippingSection: React.FC<ShippingSectionProps> = ({
+const ShippingSection: React.FC<ShippingSectionProps> = React.memo(({
   blockRefShipping,
   errors,
 }) => {
@@ -50,6 +50,7 @@ const ShippingSection: React.FC<ShippingSectionProps> = ({
   return (
     <div ref={blockRefShipping} className="bg-white p-2 h-auto rounded-lg">
       <div className="text-lg font-semibold">{t('sellercenter.products.create.shippingTitle')}</div>
+
 
       {/* Cân nặng */}
       <div className="grid gap-3">
@@ -111,6 +112,8 @@ const ShippingSection: React.FC<ShippingSectionProps> = ({
       )}
     </div>
   );
-};
+});
+
+ShippingSection.displayName = 'ShippingSection';
 
 export default ShippingSection;

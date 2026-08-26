@@ -31,7 +31,7 @@ interface ProductDescriptionProps {
   editorRef: RefObject<any>;
 }
 
-const ProductDescription: React.FC<ProductDescriptionProps> = ({
+const ProductDescription: React.FC<ProductDescriptionProps> = React.memo(({
   blockRefDescription,
   control,
   errors,
@@ -73,6 +73,8 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({
       </div>
     </div>
   );
-};
+});
+
+ProductDescription.displayName = 'ProductDescription';
 
 export default ProductDescription;

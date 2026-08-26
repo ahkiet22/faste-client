@@ -384,12 +384,13 @@ export const CreateProductPage = () => {
   // --- End Handle ---
 
   useEffect(() => {
-    const name = watch('name');
-    if (name) {
-      setValue('slugId', generateSlug(name));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getValues('name')]);
+    const subscription = watch((value, { name }) => {
+      if (name === 'name') {
+        setValue('slugId', generateSlug(value.name || ''));
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, setValue]);
 
   useEffect(() => {
     const images = getValues('images');
@@ -404,30 +405,37 @@ export const CreateProductPage = () => {
   }, [getValues('images')]);
 
   useEffect(() => {
-    if (variants.length > 0) {
-      const filteredVariants = variants
-        .map((variant) => {
-          if (variant.value === '') return null;
+    const handler = setTimeout(() => {
+      if (variants.length > 0) {
+        const filteredVariants = variants
+          .map((variant) => {
+            if (variant.value === '') return null;
 
-          const newOptions = variant.options.filter((option) => option !== '');
+            const newOptions = variant.options.filter((option) => option !== '');
 
-          return {
-            ...variant,
-            options: newOptions,
-          };
-        })
-        .filter((variant) => variant !== null);
-      const skus = generateSKUsV2(filteredVariants);
-      setSkus(skus);
-      setValue('variants', filteredVariants);
-      setValue('skus', skus);
-    } else {
-      if (skus.length > 0) {
-        setSkus([]);
+            return {
+              ...variant,
+              options: newOptions,
+            };
+          })
+          .filter((variant) => variant !== null);
+        const generatedSkus = generateSKUsV2(filteredVariants);
+        setSkus(generatedSkus);
+        setValue('variants', filteredVariants);
+      } else {
+        if (skus.length > 0) {
+          setSkus([]);
+        }
       }
-    }
+    }, 300);
+
+    return () => clearTimeout(handler);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variants]);
+
+  useEffect(() => {
+    setValue('skus', skus, { shouldValidate: true });
+  }, [skus, setValue]);
 
   return (
     <div className="w-full">
