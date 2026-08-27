@@ -1,11 +1,16 @@
 "use client"
 
-import { Calendar, Download } from "lucide-react"
+import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
 import { useTranslation } from 'react-i18next';
+import { ReportDateRange } from '@/services/report.service';
 
-export function DashboardHeader() {
+interface DashboardHeaderProps {
+  dateRange?: ReportDateRange;
+  setDateRange?: (range: ReportDateRange) => void;
+}
+
+export function DashboardHeader({ dateRange, setDateRange }: DashboardHeaderProps) {
   const { t } = useTranslation();
 
   return (
@@ -16,10 +21,18 @@ export function DashboardHeader() {
         </h1>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground">16 Sep 2025 - 13 Oct 2025</span>
-          </div>
+          {setDateRange && (
+            <select 
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value as ReportDateRange)}
+              className="flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm focus:outline-none"
+            >
+              <option value="today">Today</option>
+              <option value="last7days">Last 7 Days</option>
+              <option value="last30days">Last 30 Days</option>
+              <option value="thisMonth">This Month</option>
+            </select>
+          )}
 
           <Button variant="default" size="default" className="gap-2">
             <Download className="h-4 w-4" />

@@ -25,6 +25,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // -- Services & Hooks --
 import { useGetCategories } from '@/hooks/api/queries/useGetCategories';
+import { useGetBrands } from '@/hooks/api/queries/useGetBrands';
 // Giả định bạn có hook/service fetch & update sản phẩm:
 import { getProductById, updateProductBySeller } from '@/services/product.service';
 import { useQuery } from '@tanstack/react-query';
@@ -167,10 +168,10 @@ export const EditProductPage = () => {
     },
   );
 
-  const { data: brandData, isLoading: isLoadingBrand } = useGetCategories(
-    { page: 1, limit: 10 },
+  const { data: brandData, isLoading: isLoadingBrand } = useGetBrands(
+    { page: 1, limit: 100 },
     {
-      select: (data) => data.data,
+      select: (data) => data?.data || [],
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
@@ -209,7 +210,7 @@ export const EditProductPage = () => {
     if (productDetail) {
       reset({
         name: productDetail.name || '',
-        categories: productDetail.categories || [],
+        categories: (productDetail.categories || []).map((c: any) => c.categoryId || c.id),
         brandId: productDetail.brandId,
         images: (productDetail.images || []).map((imgUrl: string) => ({
           previewUrl: imgUrl,
@@ -381,11 +382,13 @@ export const EditProductPage = () => {
   );
 
   useEffect(() => {
-    const name = watch('name');
-    if (name) {
-      setValue('slugId', generateSlug(name));
-    }
-  }, [watch('name'), setValue]);
+    const subscription = watch((value, { name }) => {
+      if (name === 'name') {
+        setValue('slugId', generateSlug(value.name || ''));
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, setValue]);
 
   useEffect(() => {
     const images = getValues('images');
@@ -399,25 +402,33 @@ export const EditProductPage = () => {
   }, [getValues]);
 
   useEffect(() => {
-    if (variants.length > 0) {
-      const filteredVariants = variants
-        .map((variant) => {
-          if (variant.value === '') return null;
-          const newOptions = variant.options.filter((option) => option !== '');
-          return { ...variant, options: newOptions };
-        })
-        .filter((variant): variant is NonNullable<typeof variant> => variant !== null);
+    const handler = setTimeout(() => {
+      if (variants.length > 0) {
+        const filteredVariants = variants
+          .map((variant) => {
+            if (variant.value === '') return null;
+            const newOptions = variant.options.filter((option) => option !== '');
+            return { ...variant, options: newOptions };
+          })
+          .filter((variant): variant is NonNullable<typeof variant> => variant !== null);
 
-      const generatedSkus = generateSKUsV2(filteredVariants);
-      setSkus(generatedSkus);
-      setValue('variants', filteredVariants);
-      setValue('skus', generatedSkus);
-    } else {
-      if (skus.length > 0) {
-        setSkus([]);
+        const generatedSkus = generateSKUsV2(filteredVariants);
+        setSkus(generatedSkus);
+        setValue('variants', filteredVariants);
+      } else {
+        if (skus.length > 0) {
+          setSkus([]);
+        }
       }
-    }
-  }, [variants, setValue]);
+    }, 300);
+
+    return () => clearTimeout(handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [variants]);
+
+  useEffect(() => {
+    setValue('skus', skus, { shouldValidate: true });
+  }, [skus, setValue]);
 
   const isLoadingPage = isLoadingCategories || isLoadingBrand || isLoadingProduct || isSubmitting || isUploading;
 

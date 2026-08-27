@@ -21,7 +21,7 @@ const ProductCharacteristics = memo(function ProductCharacteristics({
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index} className="p-2 flex flex-col gap-y-2">
             <Label>{t('sellercenter.products.create.characteristicLabel', { index: index + 1 })}</Label>
-            <Input value={index} placeholder={t('sellercenter.products.create.enterValue')} />
+            <Input placeholder={t('sellercenter.products.create.enterValue')} />
           </div>
         ))}
       </div>

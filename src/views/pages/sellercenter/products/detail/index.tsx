@@ -157,11 +157,15 @@ export const ProductDetailPage = () => {
                     Danh mục
                   </label>
                   <div className="flex flex-wrap gap-1">
-                    {/* {product.categories?.map((catId: number, idx: number) => (
-                      <Badge key={idx} variant="outline">
-                        Category #{catId}
-                      </Badge>
-                    )) || <span className="text-sm text-gray-500">Chưa chọn</span>} */}
+                    {product.categories && product.categories.length > 0 ? (
+                      product.categories.map((cat: any, idx: number) => (
+                        <Badge key={idx} variant="outline">
+                          {cat.category?.name || `Category #${cat.categoryId || cat.id}`}
+                        </Badge>
+                      ))
+                    ) : (
+                      <span className="text-sm text-gray-500">Chưa chọn</span>
+                    )}
                   </div>
                 </div>
 
@@ -170,7 +174,7 @@ export const ProductDetailPage = () => {
                     Thương hiệu
                   </label>
                   <p className="text-sm font-medium text-gray-900">
-                    {product.brandId ? `Brand ID: ${product.brandId}` : 'Không có'}
+                    {product.brand?.name || (product.brandId ? `Brand ID: ${product.brandId}` : 'Không có')}
                   </p>
                 </div>
               </div>

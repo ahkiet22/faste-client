@@ -7,4 +7,11 @@ export const QUERY_KEYS = {
   PRODUCTSSHOP: 'products_shop',
   CART: 'cart',
   MEDIA: 'media',
+  SELLER_OVERVIEW_REPORT: 'seller_overview_report',
+  SELLER_TREND_REPORT: 'seller_trend_report',
+  SELLER_TOP_PRODUCTS_REPORT: 'seller_top_products_report',
+  ADMIN_OVERVIEW_REPORT: 'admin_overview_report',
+  ADMIN_TREND_REPORT: 'admin_trend_report',
+  ADMIN_TOP_PRODUCTS_REPORT: 'admin_top_products_report',
+  ADMIN_TOP_SELLERS_REPORT: 'admin_top_sellers_report',
 };

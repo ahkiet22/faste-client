@@ -24,6 +24,7 @@ import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useGetCategories } from '@/hooks/api/queries/useGetCategories';
+import { useGetBrands } from '@/hooks/api/queries/useGetBrands';
 
 // -- Icon --
 import { Icon } from '@iconify/react';
@@ -154,13 +155,13 @@ export const CreateProductPage = () => {
     },
   );
 
-  const { data: brandData, isLoading: isLoadingBrand } = useGetCategories(
+  const { data: brandData, isLoading: isLoadingBrand } = useGetBrands(
     {
       page: 1,
-      limit: 10,
+      limit: 100,
     },
     {
-      select: (data) => data.data,
+      select: (data) => data?.data || [],
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,

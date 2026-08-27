@@ -6,9 +6,9 @@ import { ArrowRight } from "lucide-react"
 
 interface MetricCardProps {
   label: string
-  value: string
-  change: string
-  trend: "up" | "down"
+  value: string | number
+  change?: string
+  trend?: "up" | "down"
 }
 
 import { useTranslation } from 'react-i18next';
@@ -23,13 +23,15 @@ export function MetricCard({ label, value, change, trend }: MetricCardProps) {
         <div className="space-y-4">
           <div className="flex items-start justify-between">
             <p className="text-sm text-muted-foreground">{t(label)}</p>
-            <span
-              className={`text-sm font-medium ${
-                isPositive ? 'text-success' : 'text-destructive'
-              }`}
-            >
-              {change}
-            </span>
+            {change && trend && (
+              <span
+                className={`text-sm font-medium ${
+                  isPositive ? 'text-success' : 'text-destructive'
+                }`}
+              >
+                {change}
+              </span>
+            )}
           </div>
 
           <p className="text-3xl font-bold">{value}</p>
